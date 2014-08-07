@@ -1,13 +1,13 @@
 package gr.scify.icsee.filters.opencv;
 
-import gr.scify.icsee.filters.IBitmapFilter;
+import android.util.Log;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import android.util.Log;
+import gr.scify.icsee.filters.IBitmapFilter;
 
 public class OpenCVSharpenFilter extends OpenCVNegative {
 	@Override

@@ -1,15 +1,16 @@
 package gr.scify.icsee.filters.cpu;
 
 //import java.awt.image.BufferedImage;
-import gr.scify.icsee.filters.IBitmapFilter;
+
+import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import android.graphics.Bitmap;
-import android.util.Log;
+import gr.scify.icsee.filters.IBitmapFilter;
 
 /**
  * <p><em>This software has been released into the public domain.

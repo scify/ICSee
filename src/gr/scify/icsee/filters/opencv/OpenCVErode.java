@@ -1,6 +1,6 @@
 package gr.scify.icsee.filters.opencv;
 
-import gr.scify.icsee.filters.IBitmapFilter;
+import android.util.Log;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
@@ -8,7 +8,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import android.util.Log;
+import gr.scify.icsee.filters.IBitmapFilter;
 
 public class OpenCVErode extends OpenCVNegative {
 	@Override

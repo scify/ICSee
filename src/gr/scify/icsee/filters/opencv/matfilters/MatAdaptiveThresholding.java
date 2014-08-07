@@ -1,12 +1,12 @@
 package gr.scify.icsee.filters.opencv.matfilters;
 
-import gr.scify.icsee.filters.IMatFilter;
+import android.util.Log;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import android.util.Log;
+import gr.scify.icsee.filters.IMatFilter;
 
 public class MatAdaptiveThresholding extends MatBinarizationFilter {
 	@Override

@@ -1,11 +1,11 @@
 package gr.scify.icsee.filters.opencv.matfilters;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import gr.scify.icsee.filters.IMatFilter;
 

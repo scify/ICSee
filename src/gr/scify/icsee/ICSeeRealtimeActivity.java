@@ -1,17 +1,7 @@
 package gr.scify.icsee;
 
-import gr.scify.icsee.camera.RealtimeFilterView;
-import gr.scify.icsee.filters.opencv.matfilters.MatAdaptiveThresholding;
-import gr.scify.icsee.filters.opencv.matfilters.MatBinarizationFilter;
-import gr.scify.icsee.filters.opencv.matfilters.MatNegative;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
@@ -20,165 +10,138 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+import gr.scify.icsee.camera.ModifiedLoaderCallback;
+import gr.scify.icsee.camera.RealtimeFilterView;
+
 public class ICSeeRealtimeActivity extends Activity implements
-	OnGesturePerformedListener {
-	private GestureLibrary gestureLib;
-	protected int MAX_ZOOM = 5;
-	private RealtimeFilterView mView = null;
-	
-	
-	private String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
+        OnGesturePerformedListener {
 
-    private BaseLoaderCallback  mOpenCVCallBack = new BaseLoaderCallback(this) {
 
-		@Override
-    	public void onManagerConnected(int status) {
-    		switch (status) {
-				case LoaderCallbackInterface.SUCCESS:
-				{
-					Log.i(TAG, "OpenCV loaded successfully");
-					// TODO: Determine active camera
-					
-			        // Get camera num from prefs
-//			        SharedPreferences spPrefs = ICSeeRealtimeActivity.this.getPreferences(MODE_PRIVATE);
-//					int cameraNum = spPrefs.getInt("cameraNum", 1);
-					if (mView == null) {
-					
-						// Create and set View
-						mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
-						
-						// Allow long clicks
-						mView.setLongClickable(true);
-						mView.appendFilter(new MatAdaptiveThresholding());
-						mView.appendFilter(new MatBinarizationFilter());
-						
-//						mView.appendFilter(new MatHistogramEqualization());
-//						mView.appendFilter(new MatSmoothFilterMedian());
-//						mView.appendFilter(new MatBlurFilter());
-//						mView.appendFilter(new MatEdgeDetectionCannyFilter());
-						
-						mView.appendFilter(new MatNegative());
-//						mView.appendFilter(new MatBlueFilter());
-					}
-					// Asynchronous test for surface creation
-					Thread tCheckForSurface = new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							while (mView == null) {
-								try {
-									Thread.sleep(500);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}
-							
-							while (mView.getVisibility() != View.VISIBLE) {
-								try {
-									Thread.sleep(500);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}					
-							}
-							
-							if (mView.getVisibility() == View.VISIBLE) {
-						        mView.setCvCameraViewListener(mView);
-					            mView.enableView();
-							}				
-						}
-					});
-					tCheckForSurface.start();
-				} break;
-				default:
-				{
-					super.onManagerConnected(status);
-				} break;
-			}
-    	}
-	};
-	
+    public boolean RTStarted = false;
+    public ProgressDialog mDialog;
+    private GestureLibrary gestureLib;
+    protected int MAX_ZOOM = 5;
+    public RealtimeFilterView mView = null;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		GestureOverlayView gestureOverlayView = new GestureOverlayView(this);
-	    View inflate = getLayoutInflater().inflate(R.layout.custom, null);
-	    gestureOverlayView.addView(inflate);
-	    gestureOverlayView.addOnGesturePerformedListener(this);
-	    gestureLib = GestureLibraries.fromRawResource(this, R.raw.gestures);
-	    if (!gestureLib.load()) {
-	      finish();
-	    }
-		// Init Handler
-		
-        Log.i(TAG, "Trying to load OpenCV library");
-        if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_8, this, mOpenCVCallBack))
-        {
-        	Log.e(TAG, "Cannot connect to OpenCV Manager");
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        GestureOverlayView gestureOverlayView = new GestureOverlayView(this);
+        View inflate = getLayoutInflater().inflate(R.layout.custom, null);
+        gestureOverlayView.addView(inflate);
+        gestureOverlayView.addOnGesturePerformedListener(this);
+        gestureLib = GestureLibraries.fromRawResource(this, R.raw.gestures);
+        if (!gestureLib.load()) {
+            finish();
         }
-		setContentView(R.layout.activity_main);
+
+
+
+        // Init Handler
+
+
+        setContentView(R.layout.activity_main);
 //		if (detector == null)
 //			detector = new SimpleGestureFilter(ICSeeRealtimeActivity.this, ICSeeRealtimeActivity.this);
-		inflate.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				
-				mView.focusCamera();
+        inflate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                mView.focusCamera();
 //				if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
 //					mView.FlashMode();
 //				}
 
-			}
-		});
-		inflate.setOnLongClickListener(new OnLongClickListener() {
-            public boolean onLongClick(View arg0) {
-            	if(mView.camerastate()==false){
-            		mView.pauseCamera();
-            		
-            	}else{
-            		mView.resumeCamera();
-            	}
-            	
-            	return true;                
             }
-		});
-		
-		LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, 
-					LayoutParams.MATCH_PARENT);
-		this.addContentView(gestureOverlayView, layoutParamsControl);		
-        
-	}
+        });
+        inflate.setOnLongClickListener(new OnLongClickListener() {
+            public boolean onLongClick(View arg0) {
+                if (mView.camerastate() == false) {
+                    mView.pauseCamera();
 
-	
-	@Override
-	protected void onPause() {
+                } else {
+                    mView.resumeCamera();
+                }
+
+                return true;
+            }
+        });
+
+        LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        this.addContentView(gestureOverlayView, layoutParamsControl);
+
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         if (mView != null)
             mView.disableView();
-		super.onPause();
+
 //		if (null != mView)
 //			mView.releaseCamera();
-	}
+    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_8, this, mOpenCVCallBack);
-        if (mView != null)
-            mView.enableView();
-	}
 
-	
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mView != null){
+            mView.enableView();}
+
+        class mRunnable implements Runnable {
+
+            public mRunnable(RealtimeFilterView mv) {
+                mView = mv;
+            }
+
+            @Override
+            public void run() {
+                while (mView == null) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+
+                while (mView.getVisibility() != View.VISIBLE) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (mView.getVisibility() == View.VISIBLE) {
+                    mView.setCvCameraViewListener(mView);
+                    mView.enableView();
+                }
+            }
+        }
+        Thread tCheckForSurface = new Thread(new mRunnable(mView));
+        tCheckForSurface.start();
+
+    }
+
+
 //	@Override
 //	public boolean dispatchTouchEvent(MotionEvent me) {
 //		this.detector.onTouchEvent(me);
@@ -193,46 +156,48 @@ public class ICSeeRealtimeActivity extends Activity implements
 //		int zoom = params.getZoom();
 //		switch (direction) {
 //		case SimpleGestureFilter.SWIPE_RIGHT:
-/**			String sTheme = mView.nextFilterSubset();
-			// Process frame to show results
-			mView.process(1);
+/**            String sTheme = mView.nextFilterSubset();
+ // Process frame to show results
+ mView.process(1);
 
-			if (sTheme != null)
-				Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
-					Toast.LENGTH_SHORT).show();
-			else
-				Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
-						Toast.LENGTH_SHORT).show();
-						*/
+ if (sTheme != null)
+ Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
+ Toast.LENGTH_SHORT).show();
+ else
+ Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
+ Toast.LENGTH_SHORT).show();
+ */
 //			break;
 //		case SimpleGestureFilter.SWIPE_LEFT:
-/**			sTheme = mView.previousFilterSubset();
-			// Process frame to show results
-			mView.process(1);
 
-			if (sTheme != null)
-				Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
-					Toast.LENGTH_SHORT).show();
-			else
-				Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
-						Toast.LENGTH_SHORT).show();
-						*/
+    /**
+     * sTheme = mView.previousFilterSubset();
+     * // Process frame to show results
+     * mView.process(1);
+     * <p/>
+     * if (sTheme != null)
+     * Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
+     * Toast.LENGTH_SHORT).show();
+     * else
+     * Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
+     * Toast.LENGTH_SHORT).show();
+     */
 //			break;
 //		case SimpleGestureFilter.SWIPE_UP:
 
 //			if (mView.increaseZoom())
 //				showFilters();
-				
+
 //			mView.focusCamera();
 
-			// OBSOLETE: Old zoom
+    // OBSOLETE: Old zoom
 //			if (mView.getZoom() < MAX_ZOOM) {
 //				mView.setZoom(mView.getZoom() + 0.2);
 //			}	
 //			// Process frame to show results
 //			mView.process(1);
 
-			// OBSOLETE: Filter threshold change
+    // OBSOLETE: Filter threshold change
 //			// Get filters			
 //			List<IMatFilter> lCurFilters = mView.getCurrentFilters();
 //			// Increase parameter of the last filter only
@@ -241,22 +206,22 @@ public class ICSeeRealtimeActivity extends Activity implements
 //			
 //			// Update user
 //			showFilters();
-			
+
 //			break;
 //		case SimpleGestureFilter.SWIPE_DOWN:
 //			if (mView.decreaseZoom())
 //				showFilters();
 //			mView.focusCamera();
-			
-			
-			// OBSOLETE: Old zoom
+
+
+    // OBSOLETE: Old zoom
 //			if (mView.getZoom() > 1) {
 //				mView.setZoom(mView.getZoom() - 0.2);
 //			}
 //			// Process frame to show results
 //			mView.process(1);
-			
-			// OBSOLETE: Filter threshold change
+
+    // OBSOLETE: Filter threshold change
 //			// Get filters			
 //			lCurFilters = mView.getCurrentFilters();
 //			// Decrease last parameter
@@ -264,20 +229,19 @@ public class ICSeeRealtimeActivity extends Activity implements
 //				lCurFilters.get(lCurFilters.size() - 1).decreaseParameter();
 //			// Update user
 //			showFilters();
-			
+
 //			break;
 //		}
 //	}
+    public void showFilters() {
+        String sTheme = mView.curFilterSubset();
+        Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme, Toast.LENGTH_SHORT).show();
+    }
 
-	public void showFilters() {
-		String sTheme = mView.curFilterSubset();
-		Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme, Toast.LENGTH_SHORT).show();		
-	}
-	
 //	@Override
 //	public void onLongPress() {
 //		mView.focusCamera();
-		
+
 //		mView.pauseCamera();
 //		// TODO: Get photo and process
 //		mView.disableView();
@@ -335,24 +299,24 @@ public class ICSeeRealtimeActivity extends Activity implements
 //		});
 //	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		
-		mView.enableView();
-		mView.resumeCamera();		
-	}
-	
-	
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mView.enableView();
+        mView.resumeCamera();
+    }
+
+
 //	@Override
 //	public void onDoubleTap() {
-		// Ignore for now
+    // Ignore for now
 //		mView.initFilterSubsets();
 //	}
-	
+
 //	@Override
 //	public void onSingleTapUp() {
-		// Ignore 
+    // Ignore
 //	}
 
 //	public boolean onCreateOptionsMenu(Menu menu) {
@@ -378,181 +342,180 @@ public class ICSeeRealtimeActivity extends Activity implements
 //			return super.onOptionsItemSelected(item);
 //		}
 //	}
-	
-	@SuppressWarnings("unchecked")
-	protected List<List<Object>> getCombinationsBy(Object oObj, int iBySize) {
-		List<List<Object>> uRes = new ArrayList<List<Object>>();
 
-		List<Object> lList;
-		// If unary, wrap in list.
-		if (!(oObj instanceof List)) {
-			lList = new ArrayList<Object>();
-			lList.add(oObj);
-		} else
-			lList = (List<Object>) oObj;
+    @SuppressWarnings("unchecked")
+    protected List<List<Object>> getCombinationsBy(Object oObj, int iBySize) {
+        List<List<Object>> uRes = new ArrayList<List<Object>>();
 
-		int[] indices;
-		CombinationGenerator cgGen = new CombinationGenerator(lList.size(),
-				iBySize);
-		while (cgGen.hasMore()) {
-			List<Object> cComb = new ArrayList<Object>();
-			indices = cgGen.getNext();
-			for (int i = 0; i < indices.length; i++) {
-				cComb.add(lList.get(indices[i]));
-			}
-			uRes.add(cComb);
-		}
-		return uRes;
-	}
+        List<Object> lList;
+        // If unary, wrap in list.
+        if (!(oObj instanceof List)) {
+            lList = new ArrayList<Object>();
+            lList.add(oObj);
+        } else
+            lList = (List<Object>) oObj;
+
+        int[] indices;
+        CombinationGenerator cgGen = new CombinationGenerator(lList.size(),
+                iBySize);
+        while (cgGen.hasMore()) {
+            List<Object> cComb = new ArrayList<Object>();
+            indices = cgGen.getNext();
+            for (int i = 0; i < indices.length; i++) {
+                cComb.add(lList.get(indices[i]));
+            }
+            uRes.add(cComb);
+        }
+        return uRes;
+    }
 
 
-
-    
     @Override
     public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
-      ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
-      String sTheme ;
-      TextView sliderText = (TextView)findViewById(R.id.verticalSeekbarText);
-      for (Prediction prediction : predictions) {
-        if (prediction.score > 1.0) {
-      //    Toast.makeText(this, prediction.name, Toast.LENGTH_SHORT)
-        //      .show();
-          if(prediction.name.contains("right")){
-        	  sTheme = mView.nextFilterSubset();
-			// Process frame to show results
-			mView.process(1);
+        ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
+        String sTheme;
+        TextView sliderText = (TextView) findViewById(R.id.verticalSeekbarText);
+        for (Prediction prediction : predictions) {
+            if (prediction.score > 1.0) {
+                //    Toast.makeText(this, prediction.name, Toast.LENGTH_SHORT)
+                //      .show();
+                if (prediction.name.contains("right")) {
+                    sTheme = mView.nextFilterSubset();
+                    // Process frame to show results
+                    mView.process(1);
 
-			if (sTheme != null){
-				sliderText.setText("Next Theme: " + sTheme);
-				//Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
-				//	Toast.LENGTH_SHORT).show();
-			}else{
-				mView.initFilterSubsets();
-				sliderText.setText("No theme applicable");
-				//Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
-				//		Toast.LENGTH_SHORT).show();
-			}
-	        }else{
-	    		sTheme = mView.previousFilterSubset();
-				// Process frame to show results
-				mView.process(1);
+                    if (sTheme != null) {
+                        sliderText.setText("Next Theme: " + sTheme);
+                        //Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
+                        //	Toast.LENGTH_SHORT).show();
+                    } else {
+                        mView.initFilterSubsets();
+                        sliderText.setText("No theme applicable");
+                        //Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
+                        //		Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    sTheme = mView.previousFilterSubset();
+                    // Process frame to show results
+                    mView.process(1);
 
-				if (sTheme != null){
-					sliderText.setText("Previous Theme: " + sTheme);
-					//Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
-					//	Toast.LENGTH_SHORT).show();
-				}else{
-					mView.initFilterSubsets();
-					sliderText.setText("No theme applicable");
-				//	Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
-				//			Toast.LENGTH_SHORT).show();
-				}
-	        }
+                    if (sTheme != null) {
+                        sliderText.setText("Previous Theme: " + sTheme);
+                        //Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
+                        //	Toast.LENGTH_SHORT).show();
+                    } else {
+                        mView.initFilterSubsets();
+                        sliderText.setText("No theme applicable");
+                        //	Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
+                        //			Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
         }
-      }
     }
 }
 
 
-
 class CombinationGenerator {
 
-	  private int[] a;
-	  private int n;
-	  private int r;
-	  private BigInteger numLeft;
-	  private BigInteger total;
+    private int[] a;
+    private int n;
+    private int r;
+    private BigInteger numLeft;
+    private BigInteger total;
 
-	  //------------
-	  // Constructor
-	  //------------
+    //------------
+    // Constructor
+    //------------
 
-	  public CombinationGenerator (int n, int r) {
-	    if (r > n) {
-	      throw new IllegalArgumentException ();
-	    }
-	    if (n < 1) {
-	      throw new IllegalArgumentException ();
-	    }
-	    this.n = n;
-	    this.r = r;
-	    a = new int[r];
-	    BigInteger nFact = getFactorial (n);
-	    BigInteger rFact = getFactorial (r);
-	    BigInteger nminusrFact = getFactorial (n - r);
-	    total = nFact.divide (rFact.multiply (nminusrFact));
-	    reset ();
-	  }
+    public CombinationGenerator(int n, int r) {
+        if (r > n) {
+            throw new IllegalArgumentException();
+        }
+        if (n < 1) {
+            throw new IllegalArgumentException();
+        }
+        this.n = n;
+        this.r = r;
+        a = new int[r];
+        BigInteger nFact = getFactorial(n);
+        BigInteger rFact = getFactorial(r);
+        BigInteger nminusrFact = getFactorial(n - r);
+        total = nFact.divide(rFact.multiply(nminusrFact));
+        reset();
+    }
 
-	  //------
-	  // Reset
-	  //------
+    //------
+    // Reset
+    //------
 
-	  public void reset () {
-	    for (int i = 0; i < a.length; i++) {
-	      a[i] = i;
-	    }
-	    numLeft = new BigInteger (total.toString ());
-	  }
+    public void reset() {
+        for (int i = 0; i < a.length; i++) {
+            a[i] = i;
+        }
+        numLeft = new BigInteger(total.toString());
+    }
 
-	  //------------------------------------------------
-	  // Return number of combinations not yet generated
-	  //------------------------------------------------
+    //------------------------------------------------
+    // Return number of combinations not yet generated
+    //------------------------------------------------
 
-	  public BigInteger getNumLeft () {
-	    return numLeft;
-	  }
+    public BigInteger getNumLeft() {
+        return numLeft;
+    }
 
-	  //-----------------------------
-	  // Are there more combinations?
-	  //-----------------------------
+    //-----------------------------
+    // Are there more combinations?
+    //-----------------------------
 
-	  public boolean hasMore () {
-	    return numLeft.compareTo (BigInteger.ZERO) == 1;
-	  }
+    public boolean hasMore() {
+        return numLeft.compareTo(BigInteger.ZERO) == 1;
+    }
 
-	  //------------------------------------
-	  // Return total number of combinations
-	  //------------------------------------
+    //------------------------------------
+    // Return total number of combinations
+    //------------------------------------
 
-	  public BigInteger getTotal () {
-	    return total;
-	  }
+    public BigInteger getTotal() {
+        return total;
+    }
 
-	  //------------------
-	  // Compute factorial
-	  //------------------
+    //------------------
+    // Compute factorial
+    //------------------
 
-	  private static BigInteger getFactorial (int n) {
-	    BigInteger fact = BigInteger.ONE;
-	    for (int i = n; i > 1; i--) {
-	      fact = fact.multiply (new BigInteger (Integer.toString (i)));
-	    }
-	    return fact;
-	  }
+    private static BigInteger getFactorial(int n) {
+        BigInteger fact = BigInteger.ONE;
+        for (int i = n; i > 1; i--) {
+            fact = fact.multiply(new BigInteger(Integer.toString(i)));
+        }
+        return fact;
+    }
 
-	  //--------------------------------------------------------
-	  // Generate next combination (algorithm from Rosen p. 286)
-	  //--------------------------------------------------------
+    //--------------------------------------------------------
+    // Generate next combination (algorithm from Rosen p. 286)
+    //--------------------------------------------------------
 
-	  public int[] getNext () {
+    public int[] getNext() {
 
-	    if (numLeft.equals (total)) {
-	      numLeft = numLeft.subtract (BigInteger.ONE);
-	      return a;
-	    }
+        if (numLeft.equals(total)) {
+            numLeft = numLeft.subtract(BigInteger.ONE);
+            return a;
+        }
 
-	    int i = r - 1;
-	    while (a[i] == n - r + i) {
-	      i--;
-	    }
-	    a[i] = a[i] + 1;
-	    for (int j = i + 1; j < r; j++) {
-	      a[j] = a[i] + j - i;
-	    }
+        int i = r - 1;
+        while (a[i] == n - r + i) {
+            i--;
+        }
+        a[i] = a[i] + 1;
+        for (int j = i + 1; j < r; j++) {
+            a[j] = a[i] + j - i;
+        }
 
-	    numLeft = numLeft.subtract (BigInteger.ONE);
-	    return a;
+        numLeft = numLeft.subtract(BigInteger.ONE);
+        return a;
 
-	  }
+    }
 }
+
+

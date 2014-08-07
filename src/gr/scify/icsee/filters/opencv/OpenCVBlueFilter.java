@@ -1,16 +1,16 @@
 package gr.scify.icsee.filters.opencv;
 
-import gr.scify.icsee.filters.IBitmapFilter;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-import android.util.Log;
+import java.util.ArrayList;
+import java.util.List;
+
+import gr.scify.icsee.filters.IBitmapFilter;
 
 public class OpenCVBlueFilter extends OpenCVGreenFilter {
 	

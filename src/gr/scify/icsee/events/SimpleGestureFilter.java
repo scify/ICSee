@@ -2,8 +2,8 @@ package gr.scify.icsee.events;
 
 import android.app.Activity;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
 
 public class SimpleGestureFilter extends SimpleOnGestureListener {
     

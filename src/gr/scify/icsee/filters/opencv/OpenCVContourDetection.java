@@ -1,7 +1,6 @@
 package gr.scify.icsee.filters.opencv;
 
-import gr.scify.icsee.filters.IBitmapFilter;
-import java.util.ArrayList;
+import android.util.Log;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
@@ -10,7 +9,9 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-import android.util.Log;
+import java.util.ArrayList;
+
+import gr.scify.icsee.filters.IBitmapFilter;
 
 public class OpenCVContourDetection extends OpenCVNegative {
 	// Init resources

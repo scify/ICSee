@@ -1,8 +1,9 @@
 package gr.scify.icsee.filters.cpu;
 
-import gr.scify.icsee.filters.IBitmapFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+
+import gr.scify.icsee.filters.IBitmapFilter;
 
 public class InvertGrayScaleFilter extends GrayScaleFilter {
 

@@ -1,13 +1,13 @@
 package gr.scify.icsee.filters.opencv.matfilters;
 
-import static org.opencv.imgproc.Imgproc.THRESH_BINARY;
-import static org.opencv.imgproc.Imgproc.threshold;
+import org.opencv.imgproc.Imgproc;
 
 import java.util.Locale;
 
-import org.opencv.imgproc.Imgproc;
-
 import gr.scify.icsee.filters.IMatFilter;
+
+import static org.opencv.imgproc.Imgproc.THRESH_BINARY;
+import static org.opencv.imgproc.Imgproc.threshold;
 
 public class MatBinarizationFilter extends MatEdgeDetectionCannyFilter {
 	int iThreshold = 128;

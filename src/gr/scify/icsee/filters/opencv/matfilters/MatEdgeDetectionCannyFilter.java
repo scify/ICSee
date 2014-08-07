@@ -1,9 +1,9 @@
 package gr.scify.icsee.filters.opencv.matfilters;
 
-import gr.scify.icsee.filters.IMatFilter;
-
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+
+import gr.scify.icsee.filters.IMatFilter;
 
 public class MatEdgeDetectionCannyFilter implements IMatFilter {
     protected Mat mIntermediateMat = new Mat();

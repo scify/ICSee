@@ -1,11 +1,12 @@
 package gr.scify.icsee.filters.cpu;
 
-import gr.scify.icsee.filters.IBitmapFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import gr.scify.icsee.filters.IBitmapFilter;
 
 public class GrayScaleFilter implements IBitmapFilter {
 	protected Bitmap lastBitmap = null;

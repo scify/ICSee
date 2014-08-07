@@ -2,7 +2,18 @@ package gr.scify.icsee.camera;
 
 //import gr.scify.icsee.filters.IBitmapFilter;
 
-import gr.scify.icsee.filters.IMatFilter;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.hardware.Camera;
+import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.ShutterCallback;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.SurfaceHolder;
+
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,18 +24,8 @@ import java.util.ListIterator;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.hardware.Camera;
-import android.hardware.Camera.PictureCallback;
-import android.hardware.Camera.ShutterCallback;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.SurfaceHolder;
 import gr.scify.icsee.camera.ModifiedCameraBridgeViewBase.CvCameraViewListener;
+import gr.scify.icsee.filters.IMatFilter;
 
 public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCameraViewListener { //RealtimeViewBase {
 	protected static final String TAG = RealtimeFilterView.class.getName();

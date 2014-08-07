@@ -1,9 +1,10 @@
 package gr.scify.icsee.filters.opencv;
 
+import android.util.Log;
+
 import org.opencv.android.Utils;
 import org.opencv.imgproc.Imgproc;
 
-import android.util.Log;
 import gr.scify.icsee.filters.IBitmapFilter;
 
 public class OpenCVHistogramEqualization extends OpenCVNegative {

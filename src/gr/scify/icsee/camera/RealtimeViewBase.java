@@ -1,18 +1,18 @@
 package gr.scify.icsee.camera;
 
-import java.util.Date;
-import java.util.List;
-
-import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
-import org.opencv.highgui.VideoCapture;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
+import org.opencv.core.Size;
+import org.opencv.highgui.Highgui;
+import org.opencv.highgui.VideoCapture;
+
+import java.util.Date;
+import java.util.List;
 
 public abstract class RealtimeViewBase extends GLSurfaceView implements SurfaceHolder.Callback, Runnable {
     private static final String TAG = RealtimeViewBase.class.getCanonicalName();

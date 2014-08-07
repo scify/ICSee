@@ -1,13 +1,14 @@
 package gr.scify.icsee.filters.opencv;
 
-import static org.opencv.imgproc.Imgproc.THRESH_BINARY;
-import static org.opencv.imgproc.Imgproc.threshold;
-import gr.scify.icsee.filters.IBitmapFilter;
+import android.util.Log;
 
 import org.opencv.android.Utils;
 import org.opencv.imgproc.Imgproc;
 
-import android.util.Log;
+import gr.scify.icsee.filters.IBitmapFilter;
+
+import static org.opencv.imgproc.Imgproc.THRESH_BINARY;
+import static org.opencv.imgproc.Imgproc.threshold;
 
 public class OpenCVThresholdFilter extends OpenCVNegative {
 	@Override

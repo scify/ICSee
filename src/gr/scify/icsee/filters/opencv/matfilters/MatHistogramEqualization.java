@@ -1,8 +1,8 @@
 package gr.scify.icsee.filters.opencv.matfilters;
 
-import gr.scify.icsee.filters.IMatFilter;
-
 import org.opencv.imgproc.Imgproc;
+
+import gr.scify.icsee.filters.IMatFilter;
 
 public class MatHistogramEqualization extends MatBlueFilter {
 	@Override

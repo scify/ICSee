@@ -1,14 +1,15 @@
 package gr.scify.icsee;
 
-import gr.scify.icsee.events.SimpleGestureFilter;
-import gr.scify.icsee.events.SimpleGestureFilter.SimpleGestureListener;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ImageView;
+
+import gr.scify.icsee.events.SimpleGestureFilter;
+import gr.scify.icsee.events.SimpleGestureFilter.SimpleGestureListener;
 
 public class ImgViewerActivity extends Activity implements SimpleGestureListener {
 	public final static String IMG_ITEM = "photo";
