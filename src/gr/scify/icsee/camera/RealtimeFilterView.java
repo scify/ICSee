@@ -34,7 +34,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     public static final int     VIEW_MODE_GRAY  = 1;
     public static final int     VIEW_MODE_CANNY = 2;
 
-    private Mat mRgba;
+    private Mat mRgba = new Mat();
     private Mat mScaledRgba; // Use
 //    private Bitmap bToFilter = null;
     
@@ -91,8 +91,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         catch (Exception e){
             Log.e(TAG, "Camera is not available (in use or does not exist): " + e.getLocalizedMessage());
         }
-    	
-    	
     }
     
     public void process(int iMoreFrames) {
@@ -332,15 +330,16 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     @Override
 	protected void AllocateCache() {
         mCacheBitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
-	}    
+	}
     
     
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-	    mRgba = new Mat();
+
 //	    mIntermediateMat = new Mat();
 	    
 		super.surfaceCreated(holder);
+        mRgba = new Mat();
 	}    
 
 }

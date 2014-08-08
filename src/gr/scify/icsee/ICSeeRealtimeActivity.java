@@ -1,7 +1,9 @@
 package gr.scify.icsee;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
@@ -24,6 +26,10 @@ import java.util.List;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
 import gr.scify.icsee.camera.RealtimeFilterView;
+import gr.scify.icsee.camera.Utils;
+import gr.scify.icsee.filters.opencv.matfilters.MatAdaptiveThresholding;
+import gr.scify.icsee.filters.opencv.matfilters.MatBinarizationFilter;
+import gr.scify.icsee.filters.opencv.matfilters.MatNegative;
 
 public class ICSeeRealtimeActivity extends Activity implements
         OnGesturePerformedListener {
@@ -39,6 +45,16 @@ public class ICSeeRealtimeActivity extends Activity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Allow long clicks
+
+
+
+//					mView.appendFilter(new MatHistogramEqualization());
+//					mView.appendFilter(new MatSmoothFilterMedian());
+//					mView.appendFilter(new MatBlurFilter());
+//					mView.appendFilter(new MatEdgeDetectionCannyFilter());
+//				    mView.appendFilter(new MatBlueFilter());
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         GestureOverlayView gestureOverlayView = new GestureOverlayView(this);
@@ -87,6 +103,16 @@ public class ICSeeRealtimeActivity extends Activity implements
 
     }
 
+@Override
+protected void onStart() {
+    super.onStart();
+    mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
+    mView.setLongClickable(true);
+    mView.appendFilter(new MatAdaptiveThresholding());
+    mView.appendFilter(new MatBinarizationFilter());
+    mView.appendFilter(new MatNegative());
+ }
+
 
     @Override
     protected void onPause() {
@@ -107,9 +133,7 @@ public class ICSeeRealtimeActivity extends Activity implements
 
         class mRunnable implements Runnable {
 
-            public mRunnable(RealtimeFilterView mv) {
-                mView = mv;
-            }
+
 
             @Override
             public void run() {
@@ -136,7 +160,7 @@ public class ICSeeRealtimeActivity extends Activity implements
                 }
             }
         }
-        Thread tCheckForSurface = new Thread(new mRunnable(mView));
+        Thread tCheckForSurface = new Thread(new mRunnable());
         tCheckForSurface.start();
 
     }
@@ -193,17 +217,17 @@ public class ICSeeRealtimeActivity extends Activity implements
     // OBSOLETE: Old zoom
 //			if (mView.getZoom() < MAX_ZOOM) {
 //				mView.setZoom(mView.getZoom() + 0.2);
-//			}	
+//			}
 //			// Process frame to show results
 //			mView.process(1);
 
     // OBSOLETE: Filter threshold change
-//			// Get filters			
+//			// Get filters
 //			List<IMatFilter> lCurFilters = mView.getCurrentFilters();
 //			// Increase parameter of the last filter only
 //			if (lCurFilters.size() > 0)
 //				lCurFilters.get(lCurFilters.size() - 1).increaseParameter();
-//			
+//
 //			// Update user
 //			showFilters();
 
@@ -222,7 +246,7 @@ public class ICSeeRealtimeActivity extends Activity implements
 //			mView.process(1);
 
     // OBSOLETE: Filter threshold change
-//			// Get filters			
+//			// Get filters
 //			lCurFilters = mView.getCurrentFilters();
 //			// Decrease last parameter
 //			if (lCurFilters.size() > 0)
@@ -245,28 +269,28 @@ public class ICSeeRealtimeActivity extends Activity implements
 //		mView.pauseCamera();
 //		// TODO: Get photo and process
 //		mView.disableView();
-//		
+//
 //		mView.getPhoto(new Camera.ShutterCallback() {
-//			
+//
 //			@Override
 //			public void onShutter() {
 //				// Ignore
-//				
+//
 //			}
 //		}, new Camera.PictureCallback() {
-//			
+//
 //			@Override
 //			public void onPictureTaken(byte[] data, Camera camera) {
 //				// Ignore
-//				
+//
 //			}
 //		}, new Camera.PictureCallback() {
-//			
+//
 //			@Override
 //			public void onPictureTaken(byte[] data, Camera camera) {
 //				if (data == null) // If no data provided
 //					return; // Ignore call
-//				
+//
 //				// Got photo
 //				// Init memory
 //				Mat mPhoto = new Mat();
@@ -278,7 +302,7 @@ public class ICSeeRealtimeActivity extends Activity implements
 //				Utils.matToBitmap(mPhoto, bCur);
 //				// Clear existing mat
 //				mPhoto.release();
-//				
+//
 //				//Convert to byte array
 //				ByteArrayOutputStream stream = new ByteArrayOutputStream();
 //				bCur.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -305,7 +329,15 @@ public class ICSeeRealtimeActivity extends Activity implements
 
         mView.enableView();
         mView.resumeCamera();
+        finish();
     }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Toast.makeText(ICSeeRealtimeActivity.this, "Back Button Pressed",Toast.LENGTH_SHORT).show();
+        System.exit(0);
+}
 
 
 //	@Override
@@ -368,6 +400,8 @@ public class ICSeeRealtimeActivity extends Activity implements
         }
         return uRes;
     }
+
+
 
 
     @Override

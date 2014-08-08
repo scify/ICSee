@@ -49,35 +49,21 @@ public final class Utils {
 	public static int findFrontFacingCamera() {
         int cameraId = -1;
         // Search for the front facing camera
-        int numberOfCameras = Camera.getNumberOfCameras();
-        for (int i = 0; i < numberOfCameras; i++) {
+        int numberOfCameras = Camera.getNumberOfCameras()-1;
+        for (int i = 0; i == numberOfCameras; i++) {
+
             CameraInfo info = new CameraInfo();
             Camera.getCameraInfo(i, info);
-            if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
-                Log.d(DEBUG_TAG, "Camera found");
-                cameraId = i;
+            if (info.facing==0) {
+                Log.d(DEBUG_TAG, "Back Camera found");
+                cameraId = 0;
+
                 break;
             } else {
                 cameraId = -1;
+
             }
-            return cameraId;
-        }
 
-        if (cameraId < 0) {
-
-
-            AlertDialog noBackCamera = new AlertDialog.Builder(getContext()).create();
-            noBackCamera.setCancelable(false);
-            noBackCamera.setMessage("Your device does not have a back camera");
-
-            noBackCamera.setButton(DialogInterface.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    System.exit(0);
-
-                }
-            });
-            noBackCamera.show();
         }
         return cameraId;
     }

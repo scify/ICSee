@@ -7,8 +7,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.core.Mat;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
+
+import static gr.scify.icsee.ICSeeStartActivity.*;
 
 /**
  * Created by scifi on 6/8/2014.
@@ -27,26 +30,13 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        switch (mOpenCVCallBack.processStatus){
-            case LoaderCallbackInterface.SUCCESS:
-            {
-                Log.i(TAG, "OpenCV loaded successfully");
-
-
-                return null;
+        while (mOpenCVCallBack.processStatus == Integer.MIN_VALUE) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
-            default:
-            {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } break;
-
         }
-
         return null;
     }
 
@@ -54,10 +44,19 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-
-        Intent strt = new Intent(mContext,ICSeeRealtimeActivity.class);
-
-        mContext.startActivity(strt);
-
+            switch (mOpenCVCallBack.processStatus) {
+                case LoaderCallbackInterface.SUCCESS: {
+                    Log.i(TAG, "OpenCV loaded successfully");
+                    Intent strt = new Intent(mContext,ICSeeRealtimeActivity.class);
+                    strt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    mContext.startActivity(strt);
+                    break;
+            }
+                default: {
+                    Log.i(TAG, "OpenCV didn't load successfully");
+                    }
+         break;
+        }
+        return;
     }
 }

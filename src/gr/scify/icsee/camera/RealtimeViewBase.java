@@ -24,7 +24,8 @@ public abstract class RealtimeViewBase extends GLSurfaceView implements SurfaceH
 	private boolean 			bAnalysisOngoing = false;
 
 	public VideoCapture getCamera() {
-		return mCamera;
+		openCamera(Utils.findFrontFacingCamera());
+        return mCamera;
 	}
 
     public RealtimeViewBase(Context context) {

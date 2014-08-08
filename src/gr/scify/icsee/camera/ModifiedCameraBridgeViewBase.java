@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -64,11 +65,10 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
         Log.d(TAG, "Attr count: " + Integer.valueOf(count));
 
        // TypedArray styledAttrs = getContext().obtainStyledAttributes(attrs, R.styleable.CameraBridgeViewBase);
-        //if (styledAttrs.getBoolean(R.styleable.CameraBridgeViewBase_show_fps, false))
-            enableFpsMeter();
+       //if (styledAttrs.getBoolean(R.styleable.CameraBridgeViewBase_show_fps, false))
+       //     enableFpsMeter();
 
-        //mCameraIndex = styledAttrs.getInt(R.styleable.CameraBridgeViewBase_camera_id, -1);
-        mCameraIndex = 1;
+        mCameraIndex = gr.scify.icsee.camera.Utils.findFrontFacingCamera();
         getHolder().addCallback(this);
         mMaxWidth = MAX_UNSPECIFIED;
         mMaxHeight = MAX_UNSPECIFIED;

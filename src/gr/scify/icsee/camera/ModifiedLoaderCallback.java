@@ -17,12 +17,10 @@ import gr.scify.icsee.filters.opencv.matfilters.MatNegative;
  */
 public class ModifiedLoaderCallback extends BaseLoaderCallback {
     public int processStatus=Integer.MIN_VALUE; // Not yet initialized
-    protected RealtimeFilterView mView;
 
 
-    public ModifiedLoaderCallback(Context AppContext, RealtimeFilterView mView) {
+    public ModifiedLoaderCallback(Context AppContext) {
         super(AppContext);
-        this.mView = mView;
 
     }
 
@@ -33,23 +31,13 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS:
                 {
-                    // Allow long clicks
 
-                    mView.setLongClickable(true);
-                    mView.appendFilter(new MatAdaptiveThresholding());
-                    mView.appendFilter(new MatBinarizationFilter());
-                    mView.appendFilter(new MatNegative());
-
-//					mView.appendFilter(new MatHistogramEqualization());
-//					mView.appendFilter(new MatSmoothFilterMedian());
-//					mView.appendFilter(new MatBlurFilter());
-//					mView.appendFilter(new MatEdgeDetectionCannyFilter());
-//				    mView.appendFilter(new MatBlueFilter());
                 } break;
                 default:
                 {
-                    super.onManagerConnected(status);
+
                 } break;
             }
+            super.onManagerConnected(status);
         }
 }

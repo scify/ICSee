@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
+import org.opencv.core.Mat;
 import org.opencv.android.OpenCVLoader;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
@@ -29,7 +29,7 @@ public class ICSeeStartActivity extends Activity {
         super.onCreate(savedInstanceState);
         mContext = this;
 
-        mOpenCVCallBack = new ModifiedLoaderCallback(this, (RealtimeFilterView) findViewById(R.id.pbPreview));
+        mOpenCVCallBack = new ModifiedLoaderCallback(this);
         Log.i(TAG, "Trying to load OpenCV library");
 
     }
@@ -42,19 +42,24 @@ public class ICSeeStartActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-//        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_8, this, mOpenCVCallBack);
-        if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_8, this, mOpenCVCallBack)) {
-            Log.e(TAG, "Cannot start connecting to OpenCV Manager");
-        }
+        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_2, this, mOpenCVCallBack);
+//        if (OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mOpenCVCallBack)) {
+//            Log.e(TAG, "Started connecting to OpenCV Manager");
+//        }
+//        else {
+//            Log.e(TAG, "Cannot start connecting to OpenCV Manager");
+//        }
         mDialog = new ProgressDialog(this);
         mDialog.setMessage("Please wait...OpenCV is Loading");
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.show();
 
         new AsyncProgressCheck(mDialog, mOpenCVCallBack,mContext).execute();
-
+        finish();
 
  }
+
+
 
 
 }
