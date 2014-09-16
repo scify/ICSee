@@ -18,7 +18,7 @@
             android:minHeight="20dp"
             android:text="@string/welcome_label"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/pbMainBar"

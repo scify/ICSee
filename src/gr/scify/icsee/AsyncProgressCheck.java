@@ -1,9 +1,11 @@
 package gr.scify.icsee;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.sax.StartElementListener;
 import android.util.Log;
 
 import org.opencv.android.LoaderCallbackInterface;
@@ -17,11 +19,11 @@ import static gr.scify.icsee.ICSeeStartActivity.*;
  * Created by scifi on 6/8/2014.
  */
 public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
-    Context mContext;
+    ICSeeStartActivity mContext;
     ProgressDialog mDialog;
     ModifiedLoaderCallback mOpenCVCallBack;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
-    AsyncProgressCheck (ProgressDialog pd, ModifiedLoaderCallback aa,Context cc) {
+    AsyncProgressCheck (ProgressDialog pd, ModifiedLoaderCallback aa,ICSeeStartActivity cc) {
         mDialog = pd;
         mOpenCVCallBack = aa;
         mContext=cc;
@@ -30,8 +32,16 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        while (mOpenCVCallBack.processStatus == Integer.MIN_VALUE) {
+    	// Check for back camera
+    	// If not found
+    	if (gr.scify.icsee.camera.Utils.findFrontFacingCamera() == -1) {
+    		mContext.showErrorMessage("No back camera found.", true);
+    		return null;
+    	}
+    	// While there has been no return from OpenCV
+        while (mOpenCVCallBack.processStatus < 0) {
             try {
+            	// Wait for a while
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -41,21 +51,38 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
     }
 
 
-    @Override
+
+	@Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
             switch (mOpenCVCallBack.processStatus) {
                 case LoaderCallbackInterface.SUCCESS: {
                     Log.i(TAG, "OpenCV loaded successfully");
+                    // Prepare new intent
                     Intent strt = new Intent(mContext,ICSeeRealtimeActivity.class);
+                    // First stop showing the "wait" dialog
+                    //mDialog.dismiss();
+                    // Make sure that the first activity is dismissed
                     strt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mContext.startActivity(strt);
+                    mContext.finish();
                     break;
-            }
+                }
+                case LoaderCallbackInterface.INSTALL_CANCELED:  {
+                    Log.i(TAG, "OpenCV installation cancelled by user.");
+                    mContext.showErrorMessage("OpenCV was not installed. Cannot continue.", 
+                    		true);
+                    return;
+                    //mDialog.setMessage("OpenCV loading failed.");
+                    //mDialog.dismiss();
+                }
                 default: {
                     Log.i(TAG, "OpenCV didn't load successfully");
-                    }
-         break;
+                    mContext.showErrorMessage("OpenCV didn't load successfully. Cannot continue.", 
+                    		true);
+                    //mDialog.setMessage("OpenCV loading failed.");
+                    //mDialog.dismiss();
+                }
         }
         return;
     }

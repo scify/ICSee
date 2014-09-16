@@ -50,7 +50,7 @@ public final class Utils {
         int cameraId = -1;
         // Search for the front facing camera
         int numberOfCameras = Camera.getNumberOfCameras()-1;
-        for (int i = 0; i == numberOfCameras; i++) {
+        for (int i = 0; i <= numberOfCameras; i++) {
 
             CameraInfo info = new CameraInfo();
             Camera.getCameraInfo(i, info);

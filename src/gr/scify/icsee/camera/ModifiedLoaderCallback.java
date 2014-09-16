@@ -28,16 +28,16 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
         public void onManagerConnected(int status){
             processStatus = status;
 
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                {
-
-                } break;
-                default:
-                {
-
-                } break;
-            }
+//            switch (status) {
+//                case LoaderCallbackInterface.SUCCESS:
+//                {
+//
+//                } break;
+//                default:
+//                {
+//
+//                } break;
+//            }
             super.onManagerConnected(status);
         }
 }

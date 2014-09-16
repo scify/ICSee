@@ -173,19 +173,19 @@ import java.util.List;
 	                    if (FocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
 	                    {
 	                        params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-	                		AutoFocusCallback myAutoFocusCallback = new AutoFocusCallback(){
+//	                		AutoFocusCallback myAutoFocusCallback = new AutoFocusCallback(){
 
-	                        	  @Override
-	                        	  public void onAutoFocus(boolean arg0, Camera arg1) {
+//	                        	  @Override
+//	                        	  public void onAutoFocus(boolean arg0, Camera arg1) {
 	                        	   // TODO Auto-generated method stub
 	                        	   
-	                        	  }};
-	                  		mCamera.autoFocus(myAutoFocusCallback);
-	                    }
-	                    else
-		                    if (FocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO))
-		                    {
-		                        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+//	                        	  }};
+//	                  		mCamera.autoFocus(myAutoFocusCallback);
+//	                    }
+//	                    else
+//		                    if (FocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO))
+//		                    {
+//		                        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
 		                    }
 
 	                    // Save min, max zoom capabilities

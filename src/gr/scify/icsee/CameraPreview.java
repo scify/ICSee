@@ -49,22 +49,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // If your preview can change or rotate, take care of those events here.
         // Make sure to stop the preview before resizing or reformatting it.
 
-        if (mHolder.getSurface() == null){
-          // preview surface does not exist
-          return;
-        }
-
-//        // stop preview before making changes
-//        try {
-//            mCamera.stopPreview();
-//    		Toast.makeText(this.MainActivityInstance,"Preview Stopped", Toast.LENGTH_SHORT).show();            
-//        } catch (Exception e){
-//          // ignore: tried to stop a non-existent preview
-//        }
-
-
      // start preview with new settings
         try {
+            if (mHolder.getSurface() == null){
+                // preview surface does not exist
+                return;
+            }
+            
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
 //    		Toast.makeText(this.MainActivityInstance,"Preview Restarted", Toast.LENGTH_SHORT).show();            
