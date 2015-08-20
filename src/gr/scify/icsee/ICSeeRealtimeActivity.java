@@ -30,6 +30,7 @@ import gr.scify.icsee.camera.Utils;
 import gr.scify.icsee.filters.opencv.matfilters.MatAdaptiveThresholding;
 import gr.scify.icsee.filters.opencv.matfilters.MatBinarizationFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatBlackYellowFilter;
+import gr.scify.icsee.filters.opencv.matfilters.MatBlueYellowFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatBlueFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatBlurFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatEdgeDetectionCannyFilter;
@@ -114,10 +115,11 @@ protected void onStart() {
     super.onStart();
     mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
     mView.setLongClickable(true);
-    mView.appendFilter(new MatAdaptiveThresholding());  // black background, white letters
-    mView.appendFilter(new MatBinarizationFilter());    // white background, black letters
-    mView.appendFilter(new MatNegative());              // negative
-    mView.appendFilter(new MatBlackYellowFilter());     // black background, yellow letters
+//    mView.appendFilter(new MatAdaptiveThresholding());  // black background, white letters
+//    mView.appendFilter(new MatBinarizationFilter());    // white background, black letters
+//    mView.appendFilter(new MatNegative());              // negative
+//    mView.appendFilter(new MatBlackYellowFilter());     // black background, yellow letters
+    mView.appendFilter(new MatBlueYellowFilter());     // blue background, yellow letters
  }
 
 
