@@ -37,6 +37,7 @@ import gr.scify.icsee.filters.opencv.matfilters.MatEdgeDetectionCannyFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatHistogramEqualization;
 import gr.scify.icsee.filters.opencv.matfilters.MatNegative;
 import gr.scify.icsee.filters.opencv.matfilters.MatSmoothFilterMedian;
+import gr.scify.icsee.filters.opencv.matfilters.MatWhiteRedFilter;
 
 public class ICSeeRealtimeActivity extends Activity implements
         OnGesturePerformedListener {
@@ -115,11 +116,12 @@ protected void onStart() {
     super.onStart();
     mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
     mView.setLongClickable(true);
-//    mView.appendFilter(new MatAdaptiveThresholding());  // black background, white letters
-//    mView.appendFilter(new MatBinarizationFilter());    // white background, black letters
-//    mView.appendFilter(new MatNegative());              // negative
-//    mView.appendFilter(new MatBlackYellowFilter());     // black background, yellow letters
-    mView.appendFilter(new MatBlueYellowFilter());     // blue background, yellow letters
+    mView.appendFilter(new MatAdaptiveThresholding());  // black background, white letters
+    mView.appendFilter(new MatBinarizationFilter());    // white background, black letters
+    mView.appendFilter(new MatNegative());              // negative
+    mView.appendFilter(new MatBlackYellowFilter());     // black background, yellow letters
+    mView.appendFilter(new MatBlueYellowFilter());      // blue background, yellow letters
+    mView.appendFilter(new MatWhiteRedFilter());        // white background, red letters
  }
 
 

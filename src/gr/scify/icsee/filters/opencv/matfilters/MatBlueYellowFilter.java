@@ -17,7 +17,7 @@ public class MatBlueYellowFilter extends MatBinarizationFilter {
         // Apply threshold
         threshold(mIntermediateMat, mIntermediateMat, iThreshold, 255, Imgproc.THRESH_BINARY_INV);
 
-        // Create mask that shows which pixels should be turned to yellow later
+        // Create masks that show which pixels should be turned to yellow and blue later
         Mat yellowMask = new Mat();
         Mat blueMask = new Mat();
         threshold(mIntermediateMat, yellowMask, 1, 1, Imgproc.THRESH_BINARY);
