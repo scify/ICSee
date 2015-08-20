@@ -6,6 +6,8 @@ import org.opencv.imgproc.Imgproc;
 
 import gr.scify.icsee.filters.IMatFilter;
 
+import static org.opencv.imgproc.Imgproc.THRESH_BINARY;
+import static org.opencv.imgproc.Imgproc.THRESH_BINARY_INV;
 import static org.opencv.imgproc.Imgproc.threshold;
 
 public class MatBlueYellowFilter extends MatBinarizationFilter {
@@ -15,13 +17,13 @@ public class MatBlueYellowFilter extends MatBinarizationFilter {
         Imgproc.cvtColor(mRGBA, mIntermediateMat, Imgproc.COLOR_BGRA2GRAY, 1);
 
         // Apply threshold
-        threshold(mIntermediateMat, mIntermediateMat, iThreshold, 255, Imgproc.THRESH_BINARY_INV);
+        threshold(mIntermediateMat, mIntermediateMat, iThreshold, 255, THRESH_BINARY_INV);
 
         // Create masks that show which pixels should be turned to yellow and blue later
         Mat yellowMask = new Mat();
         Mat blueMask = new Mat();
-        threshold(mIntermediateMat, yellowMask, 1, 1, Imgproc.THRESH_BINARY);
-        threshold(mIntermediateMat, blueMask, 1, 1, Imgproc.THRESH_BINARY_INV);
+        threshold(mIntermediateMat, yellowMask, 1, 1, THRESH_BINARY);
+        threshold(mIntermediateMat, blueMask, 1, 1, THRESH_BINARY_INV);
 
         // Convert to color
         Imgproc.cvtColor(mIntermediateMat, mRGBA, Imgproc.COLOR_GRAY2BGRA, 4);
@@ -37,6 +39,6 @@ public class MatBlueYellowFilter extends MatBinarizationFilter {
 
     @Override
     public String toString() {
-        return "Black and Yellow";
+        return "Blue and Yellow";
     }
 }
