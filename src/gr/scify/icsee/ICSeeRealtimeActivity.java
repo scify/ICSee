@@ -29,7 +29,13 @@ import gr.scify.icsee.camera.RealtimeFilterView;
 import gr.scify.icsee.camera.Utils;
 import gr.scify.icsee.filters.opencv.matfilters.MatAdaptiveThresholding;
 import gr.scify.icsee.filters.opencv.matfilters.MatBinarizationFilter;
+import gr.scify.icsee.filters.opencv.matfilters.MatBlackYellowFilter;
+import gr.scify.icsee.filters.opencv.matfilters.MatBlueFilter;
+import gr.scify.icsee.filters.opencv.matfilters.MatBlurFilter;
+import gr.scify.icsee.filters.opencv.matfilters.MatEdgeDetectionCannyFilter;
+import gr.scify.icsee.filters.opencv.matfilters.MatHistogramEqualization;
 import gr.scify.icsee.filters.opencv.matfilters.MatNegative;
+import gr.scify.icsee.filters.opencv.matfilters.MatSmoothFilterMedian;
 
 public class ICSeeRealtimeActivity extends Activity implements
         OnGesturePerformedListener {
@@ -108,9 +114,10 @@ protected void onStart() {
     super.onStart();
     mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
     mView.setLongClickable(true);
-    mView.appendFilter(new MatAdaptiveThresholding());
-    mView.appendFilter(new MatBinarizationFilter());
-    mView.appendFilter(new MatNegative());
+    mView.appendFilter(new MatAdaptiveThresholding());  // black background, white letters
+    mView.appendFilter(new MatBinarizationFilter());    // white background, black letters
+    mView.appendFilter(new MatNegative());              // negative
+    mView.appendFilter(new MatBlackYellowFilter());     // black background, yellow letters
  }
 
 
@@ -411,8 +418,8 @@ protected void onStart() {
         TextView sliderText = (TextView) findViewById(R.id.verticalSeekbarText);
         for (Prediction prediction : predictions) {
             if (prediction.score > 1.0) {
-                //    Toast.makeText(this, prediction.name, Toast.LENGTH_SHORT)
-                //      .show();
+                    Toast.makeText(this, prediction.name, Toast.LENGTH_SHORT)
+                      .show();
                 if (prediction.name.contains("right")) {
                     sTheme = mView.nextFilterSubset();
                     // Process frame to show results
@@ -420,13 +427,13 @@ protected void onStart() {
 
                     if (sTheme != null) {
                         sliderText.setText("Next Theme: " + sTheme);
-                        //Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
-                        //	Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
+                        	Toast.LENGTH_SHORT).show();
                     } else {
                         mView.initFilterSubsets();
                         sliderText.setText("No theme applicable");
-                        //Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
-                        //		Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
+                        		Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     sTheme = mView.previousFilterSubset();
@@ -435,13 +442,13 @@ protected void onStart() {
 
                     if (sTheme != null) {
                         sliderText.setText("Previous Theme: " + sTheme);
-                        //Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
-                        //	Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
+                        	Toast.LENGTH_SHORT).show();
                     } else {
                         mView.initFilterSubsets();
                         sliderText.setText("No theme applicable");
-                        //	Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
-                        //			Toast.LENGTH_SHORT).show();
+                        	Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
+                        			Toast.LENGTH_SHORT).show();
                     }
                 }
             }

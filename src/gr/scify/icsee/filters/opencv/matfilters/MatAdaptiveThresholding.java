@@ -3,6 +3,7 @@ package gr.scify.icsee.filters.opencv.matfilters;
 import android.util.Log;
 
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -27,7 +28,7 @@ public class MatAdaptiveThresholding extends MatBinarizationFilter {
 		Mat temp = new Mat();
 		Mat image = mIntermediateMat;
 
-		Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(9,9));		
+		Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(9,9));
 		Log.w("Kernel", "OK");
 		Imgproc.resize(image, temp, new Size(image.rows()/4, image.cols()/4));
 		Log.w("Resize reduce", "OK");
@@ -41,13 +42,12 @@ public class MatAdaptiveThresholding extends MatBinarizationFilter {
 //		Log.w("Normalize", "OK");
 
 		Imgproc.threshold(image, image, -1, 255, 
-		    Imgproc.THRESH_BINARY_INV+Imgproc.THRESH_OTSU);		
+		    Imgproc.THRESH_BINARY_INV+Imgproc.THRESH_OTSU);
 		Log.w("Threshold", "OK");
-		
+
 		// Return to RGBA
 	    Imgproc.cvtColor(mIntermediateMat, mRGBA, Imgproc.COLOR_GRAY2BGRA, 4);
 		Log.w("Back to RGBA", "OK");
-	    
 
 		return this;
 	}

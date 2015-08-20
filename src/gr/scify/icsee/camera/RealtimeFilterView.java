@@ -50,7 +50,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 	protected LinkedList<NavigableSet<IMatFilter>> lPreviousSettings;
 	
 	protected boolean bProcessing = false;
-	protected boolean bPaused ;
+	protected boolean bPaused;
 	protected int processNextNFrames = 0;
 
 	public RealtimeFilterView(Context context, AttributeSet attrs) {

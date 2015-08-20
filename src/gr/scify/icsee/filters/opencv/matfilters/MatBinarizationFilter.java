@@ -26,7 +26,7 @@ public class MatBinarizationFilter extends MatEdgeDetectionCannyFilter {
 	public IMatFilter applyfilter() {
 	    // Convert to grayscale
 	    Imgproc.cvtColor(mRGBA, mIntermediateMat, Imgproc.COLOR_BGRA2GRAY, 1);
-		
+
 		// Apply threshold
 	    threshold(mIntermediateMat, mIntermediateMat, iThreshold, 255, THRESH_BINARY);
 	    
