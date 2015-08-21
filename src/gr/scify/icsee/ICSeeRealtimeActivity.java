@@ -11,6 +11,7 @@ import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,15 +57,6 @@ public class ICSeeRealtimeActivity extends Activity implements
         super.onCreate(savedInstanceState);
 
         // Allow long clicks
-
-
-
-//					mView.appendFilter(new MatHistogramEqualization());
-//					mView.appendFilter(new MatSmoothFilterMedian());
-//					mView.appendFilter(new MatBlurFilter());
-//					mView.appendFilter(new MatEdgeDetectionCannyFilter());
-//				    mView.appendFilter(new MatBlueFilter());
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         GestureOverlayView gestureOverlayView = new GestureOverlayView(this);
         View inflate = getLayoutInflater().inflate(R.layout.custom, null);
@@ -78,14 +70,16 @@ public class ICSeeRealtimeActivity extends Activity implements
 
 
         // Init Handler
-
-
         setContentView(R.layout.activity_main);
 //		if (detector == null)
 //			detector = new SimpleGestureFilter(ICSeeRealtimeActivity.this, ICSeeRealtimeActivity.this);
         inflate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                // Play start focus sound
+                MediaPlayer mp = MediaPlayer.create(ICSeeRealtimeActivity.this, R.raw.alienxxxbeep);
+                mp.start();
+                //todo: make it soundpool
 
                 mView.focusCamera();
 //				if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
@@ -96,9 +90,9 @@ public class ICSeeRealtimeActivity extends Activity implements
         });
         inflate.setOnLongClickListener(new OnLongClickListener() {
             public boolean onLongClick(View arg0) {
+                // Resume or pause the camera
                 if (mView.camerastate() == false) {
                     mView.pauseCamera();
-
                 } else {
                     mView.resumeCamera();
                 }
@@ -109,7 +103,6 @@ public class ICSeeRealtimeActivity extends Activity implements
 
         LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         this.addContentView(gestureOverlayView, layoutParamsControl);
-
     }
 
 @Override
@@ -413,9 +406,6 @@ protected void onStart() {
         }
         return uRes;
     }
-
-
-
 
     @Override
     public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {

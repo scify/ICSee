@@ -27,8 +27,6 @@ public class ICSeeStartActivity extends Activity {
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
     boolean bFirstRun = true;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +34,10 @@ public class ICSeeStartActivity extends Activity {
         mContext = this;
         
         mOpenCVCallBack = new ModifiedLoaderCallback(this);
-
     }
 
     protected void onPause() {
         super.onPause();
-
     }
 
     protected void onResume() {

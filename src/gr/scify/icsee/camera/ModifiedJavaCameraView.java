@@ -9,6 +9,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PreviewCallback;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -21,7 +22,9 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.List;
 
-	/**
+import gr.scify.icsee.R;
+
+/**
 	 * This class is an implementation of the Bridge View between OpenCV and Java Camera.
 	 * This class relays on the functionality available in base class and only implements
 	 * required functions:
@@ -53,7 +56,12 @@ import java.util.List;
 				
 				@Override
 				public void onAutoFocus(boolean success, Camera camera) {
-					
+                    // Play sound depending on success or failure or focus
+                    if (success) {
+                        //todo: play sounds here
+					} else {
+
+                    }
 				}
 			});
 		}
