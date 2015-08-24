@@ -11,7 +11,9 @@ import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,17 +42,14 @@ import gr.scify.icsee.filters.opencv.matfilters.MatHistogramEqualization;
 import gr.scify.icsee.filters.opencv.matfilters.MatNegative;
 import gr.scify.icsee.filters.opencv.matfilters.MatSmoothFilterMedian;
 import gr.scify.icsee.filters.opencv.matfilters.MatWhiteRedFilter;
+import gr.scify.icsee.sounds.SoundPlayer;
 
-public class ICSeeRealtimeActivity extends Activity implements
-        OnGesturePerformedListener {
-
-
+public class ICSeeRealtimeActivity extends Activity implements OnGesturePerformedListener {
     public boolean RTStarted = false;
     public ProgressDialog mDialog;
     private GestureLibrary gestureLib;
     protected int MAX_ZOOM = 5;
     public RealtimeFilterView mView = null;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,8 +66,6 @@ public class ICSeeRealtimeActivity extends Activity implements
             finish();
         }
 
-
-
         // Init Handler
         setContentView(R.layout.activity_main);
 //		if (detector == null)
@@ -77,9 +74,7 @@ public class ICSeeRealtimeActivity extends Activity implements
             @Override
             public void onClick(View arg0) {
                 // Play start focus sound
-                MediaPlayer mp = MediaPlayer.create(ICSeeRealtimeActivity.this, R.raw.alienxxxbeep);
-                mp.start();
-                //todo: make it soundpool
+                SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S1);
 
                 mView.focusCamera();
 //				if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
@@ -147,7 +142,6 @@ protected void onStart() {
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }

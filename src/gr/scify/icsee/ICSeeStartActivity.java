@@ -48,37 +48,34 @@ public class ICSeeStartActivity extends Activity {
 
 
         new AsyncProgressCheck(mDialog, mOpenCVCallBack,this).execute();
- }
+    }
 
- public void showErrorMessage(String sMsg, boolean bShouldClose) {
-	 // Hide progress bar
-	 ProgressBar pb = (ProgressBar)findViewById(R.id.progressBar);
-	 pb.setVisibility(pb.INVISIBLE);
-	 // Set errorMessage text
-	 TextView tvMsg = (TextView)findViewById(R.id.errorMessage);
-	 tvMsg.setText(sMsg);
-	 // Show errorMessage text
-	 tvMsg.setVisibility(tvMsg.VISIBLE);
-	 // Show button
-	 Button bExitBtn = (Button)findViewById(R.id.exitButton);
-	 bExitBtn.setVisibility(bExitBtn.VISIBLE);
-	 // If bShouldClose
-	 if (bShouldClose) {
-		 bExitBtn.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-			 	// exit activity
-				finish();
-				
-			}
-		});
-	 }
-	 else {
-		 // TODO: Implement if needed
-	 }
- }
+    public void showErrorMessage(String sMsg, boolean bShouldClose) {
+        // Hide progress bar
+        ProgressBar pb = (ProgressBar)findViewById(R.id.progressBar);
+        pb.setVisibility(pb.INVISIBLE);
 
+        // Set errorMessage text
+        TextView tvMsg = (TextView)findViewById(R.id.errorMessage);
+        tvMsg.setText(sMsg);
 
+        // Show errorMessage text
+        tvMsg.setVisibility(tvMsg.VISIBLE);
+
+        // Show button
+        Button bExitBtn = (Button)findViewById(R.id.exitButton);
+        bExitBtn.setVisibility(bExitBtn.VISIBLE);
+
+        // If bShouldClose
+        if (bShouldClose) {
+            bExitBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // exit activity
+                    finish();
+                }
+            });
+        }
+    }
 }
 
