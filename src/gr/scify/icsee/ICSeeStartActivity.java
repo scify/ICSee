@@ -34,6 +34,7 @@ public class ICSeeStartActivity extends Activity {
         setContentView(R.layout.start_activity);
         mContext = this;
 
+        // Initialize sounds here so they should have loaded when the camera view starts
         SoundPlayer.initSounds(this.getApplicationContext());
         
         mOpenCVCallBack = new ModifiedLoaderCallback(this);
