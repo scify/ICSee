@@ -17,6 +17,7 @@ import org.opencv.android.OpenCVLoader;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
 import gr.scify.icsee.camera.RealtimeFilterView;
+import gr.scify.icsee.sounds.SoundPlayer;
 
 
 public class ICSeeStartActivity extends Activity {
@@ -32,6 +33,8 @@ public class ICSeeStartActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_activity);
         mContext = this;
+
+        SoundPlayer.initSounds(this.getApplicationContext());
         
         mOpenCVCallBack = new ModifiedLoaderCallback(this);
     }
@@ -45,7 +48,6 @@ public class ICSeeStartActivity extends Activity {
 
         Log.i(TAG, "Trying to load OpenCV library");
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mOpenCVCallBack);
-
 
         new AsyncProgressCheck(mDialog, mOpenCVCallBack,this).execute();
     }
