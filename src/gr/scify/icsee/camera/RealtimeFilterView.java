@@ -212,8 +212,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     		{
     			// If some filters are already used
     			if (nsCurFilters.size() > 0)
-	        		// We remove last filter to replace it
-	    			// without increasing the number of filters
+	        		// We remove last filter to replace it without increasing the number of filters
 	    			nsCurFilters.remove(nsCurFilters.last());
     		}
     		
@@ -263,6 +262,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
             synchronized (nsCurFilters) {
 	            for (IMatFilter bfCur : nsCurFilters) {
 	            	bfCur.setMat(mToUse);
+
 	            	// Get filter
 	            	bfCur.applyfilter();
 	            	mToUse = bfCur.getMat();

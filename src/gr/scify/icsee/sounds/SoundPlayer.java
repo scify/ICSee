@@ -20,7 +20,7 @@ public class SoundPlayer {
     public static final int S2 = R.raw.greencouchbeeps;
     public static final int S3 = R.raw.keykrushermicrowavebeep;
     public static final int S4 = R.raw.kodackbeepbeep;
-    public static final int S5 = R.raw.kwahmah02fivebeeps;
+    public static final int S5 = R.raw.emptybellbeep;
     public static final int S6 = R.raw.pan14tonebeep;
 
     private static SoundPool sp;                    // SoundPool to play the sounds

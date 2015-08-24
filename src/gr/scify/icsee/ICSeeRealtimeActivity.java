@@ -92,6 +92,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                     mView.resumeCamera();
                 }
 
+                SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S5);
+
                 return true;
             }
         });

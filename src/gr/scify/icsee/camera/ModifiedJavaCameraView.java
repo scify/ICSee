@@ -186,16 +186,15 @@ import gr.scify.icsee.sounds.SoundPlayer;
 
 //	                        	  @Override
 //	                        	  public void onAutoFocus(boolean arg0, Camera arg1) {
-	                        	   // TODO Auto-generated method stub
-	                        	   
+//
 //	                        	  }};
 //	                  		mCamera.autoFocus(myAutoFocusCallback);
-//	                    }
+	                    }
 //	                    else
 //		                    if (FocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO))
 //		                    {
 //		                        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-		                    }
+//		                    }
 
 	                    // Save min, max zoom capabilities
 	                    iMinZoom = 0; // Declared as default by Android camera
@@ -302,7 +301,7 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	            synchronized (this) {
 	                this.notify();
 	            }
-	            Log.d(TAG, "Wating for thread");
+	            Log.d(TAG, "Waiting for thread");
 	            if (mThread != null)
 	                mThread.join();
 	        } catch (InterruptedException e) {
