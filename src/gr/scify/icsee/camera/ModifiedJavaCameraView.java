@@ -23,6 +23,7 @@ import org.opencv.imgproc.Imgproc;
 import java.util.List;
 
 import gr.scify.icsee.R;
+import gr.scify.icsee.sounds.SoundPlayer;
 
 /**
 	 * This class is an implementation of the Bridge View between OpenCV and Java Camera.
@@ -56,11 +57,11 @@ import gr.scify.icsee.R;
 				
 				@Override
 				public void onAutoFocus(boolean success, Camera camera) {
-                    // Play sound depending on success or failure or focus
+                    // Play sound depending on success or failure of focus
                     if (success) {
-                        //todo: play sounds here
+						SoundPlayer.playSound(getContext(), SoundPlayer.S4);
 					} else {
-
+						SoundPlayer.playSound(getContext(), SoundPlayer.S6);
                     }
 				}
 			});
