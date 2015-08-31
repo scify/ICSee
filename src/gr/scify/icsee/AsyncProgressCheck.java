@@ -73,15 +73,11 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
                     mContext.showErrorMessage("OpenCV was not installed. Cannot continue.", 
                     		true);
                     return;
-                    //mDialog.setMessage("OpenCV loading failed.");
-                    //mDialog.dismiss();
                 }
                 default: {
                     Log.i(TAG, "OpenCV didn't load successfully");
                     mContext.showErrorMessage("OpenCV didn't load successfully. Cannot continue.", 
                     		true);
-                    //mDialog.setMessage("OpenCV loading failed.");
-                    //mDialog.dismiss();
                 }
         }
         return;

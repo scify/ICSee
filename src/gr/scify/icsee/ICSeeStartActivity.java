@@ -21,12 +21,10 @@ import gr.scify.icsee.sounds.SoundPlayer;
 
 
 public class ICSeeStartActivity extends Activity {
-
     protected Context mContext;
     public ModifiedLoaderCallback mOpenCVCallBack;
     public ProgressDialog mDialog;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
-    boolean bFirstRun = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

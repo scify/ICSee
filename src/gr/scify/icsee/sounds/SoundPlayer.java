@@ -8,11 +8,12 @@ import java.util.HashMap;
 
 import gr.scify.icsee.R;
 
-
 /**
  * How to add new sounds:
- * 1. Add a new public static final int variable for the sound in the beginning of the class (STEP 1)
- * 2. Add it to the hashmap in initSounds() (STEP 2)
+ * 1. Add a new public static final int variable for the sound in the beginning of the class
+ * 2. Add it to the hashmap in initSounds()
+ * 3. ???
+ * 4. PROFIT!
  */
 public class SoundPlayer {
     // Static sound variables (STEP 1)

@@ -37,7 +37,13 @@ int layout custom 0x7f030002
 int layout start_activity 0x7f030003
 int menu activity_main 0x7f0b0000
 int menu img_viewer 0x7f0b0001
-int raw gestures 0x7f050000
+int raw alienxxxbeep 0x7f050000
+int raw emptybellbeep 0x7f050001
+int raw gestures 0x7f050002
+int raw greencouchbeeps 0x7f050003
+int raw keykrushermicrowavebeep 0x7f050004
+int raw kodackbeepbeep 0x7f050005
+int raw pan14tonebeep 0x7f050006
 int string action_settings 0x7f080006
 int string app_description 0x7f080008
 int string app_name 0x7f080000

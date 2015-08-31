@@ -20,9 +20,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // underlying surface is created and destroyed.
         mHolder = getHolder();
         mHolder.addCallback(this);
-        // deprecated setting, but required on Android versions prior to 3.0
-//        mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-//        mHolder.setType(SurfaceHolder.SURFACE_TYPE_NORMAL);
     }
 
     public void setCamera(Camera camera) {
@@ -49,7 +46,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // If your preview can change or rotate, take care of those events here.
         // Make sure to stop the preview before resizing or reformatting it.
 
-     // start preview with new settings
+        // start preview with new settings
         try {
             if (mHolder.getSurface() == null){
                 // preview surface does not exist
@@ -58,8 +55,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
-//    		Toast.makeText(this.MainActivityInstance,"Preview Restarted", Toast.LENGTH_SHORT).show();            
-
         } catch (Exception e){
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
         }
