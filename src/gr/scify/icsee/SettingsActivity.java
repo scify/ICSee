@@ -18,8 +18,6 @@ import android.text.TextUtils;
 
 import java.util.List;
 
-//import android.preference.PreferenceCategory;
-
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,

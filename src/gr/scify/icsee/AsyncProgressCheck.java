@@ -1,34 +1,25 @@
 package gr.scify.icsee;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.sax.StartElementListener;
 import android.util.Log;
 
 import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.core.Mat;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
 
-import static gr.scify.icsee.ICSeeStartActivity.*;
-
-/**
- * Created by scifi on 6/8/2014.
- */
 public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
     ICSeeStartActivity mContext;
     ProgressDialog mDialog;
     ModifiedLoaderCallback mOpenCVCallBack;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
+
     AsyncProgressCheck (ProgressDialog pd, ModifiedLoaderCallback aa,ICSeeStartActivity cc) {
         mDialog = pd;
         mOpenCVCallBack = aa;
         mContext=cc;
     }
-
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -49,8 +40,6 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
         }
         return null;
     }
-
-
 
 	@Override
     protected void onPostExecute(Void aVoid) {
@@ -80,6 +69,7 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
                     		true);
                 }
         }
+
         return;
     }
 }

@@ -2,9 +2,7 @@ package gr.scify.icsee;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +10,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.opencv.core.Mat;
 import org.opencv.android.OpenCVLoader;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
-import gr.scify.icsee.camera.RealtimeFilterView;
 import gr.scify.icsee.sounds.SoundPlayer;
 
 

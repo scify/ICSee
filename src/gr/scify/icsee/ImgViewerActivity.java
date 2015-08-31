@@ -16,7 +16,6 @@ public class ImgViewerActivity extends Activity implements SimpleGestureListener
 	
 	protected ImageView ivCur;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,10 +27,12 @@ public class ImgViewerActivity extends Activity implements SimpleGestureListener
 		ivCur.setImageBitmap(bmp);
 		new SimpleGestureFilter(this, this);
 	}
+
 	@Override
 	public void onDoubleTap() {
 		finish();		
 	}
+
 	@Override
 	public void onLongPress() {
 		// Ignore		
