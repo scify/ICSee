@@ -6,10 +6,8 @@ import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
-import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PreviewCallback;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,7 +20,6 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.List;
 
-import gr.scify.icsee.R;
 import gr.scify.icsee.sounds.SoundPlayer;
 
 /**
@@ -179,26 +176,14 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	                    params.setPreviewSize((int)frameSize.width, (int)frameSize.height);
 
 	                    List<String> FocusModes = params.getSupportedFocusModes();
-	                    if (FocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
-	                    {
+	                    if (FocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
 	                        params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-//	                		AutoFocusCallback myAutoFocusCallback = new AutoFocusCallback(){
-
-//	                        	  @Override
-//	                        	  public void onAutoFocus(boolean arg0, Camera arg1) {
-//
-//	                        	  }};
-//	                  		mCamera.autoFocus(myAutoFocusCallback);
 	                    }
-//	                    else
-//		                    if (FocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO))
-//		                    {
-//		                        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-//		                    }
 
 	                    // Save min, max zoom capabilities
 	                    iMinZoom = 0; // Declared as default by Android camera
-	                    iMaxZoom = params.getMaxZoom();	                    
+	                    iMaxZoom = params.getMaxZoom();
+
 	                    // Set max zoom
 	                    params.setZoom(params.getMaxZoom());
 	                    
@@ -229,7 +214,6 @@ import gr.scify.icsee.sounds.SoundPlayer;
 
 	                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 	                        mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
-//	                        getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 	                        mCamera.setPreviewTexture(mSurfaceTexture);
 	                    } else
 	                       mCamera.setPreviewDisplay(null);
@@ -316,8 +300,8 @@ import gr.scify.icsee.sounds.SoundPlayer;
 
 	    @TargetApi(Build.VERSION_CODES.FROYO)
 	    public void onPreviewFrame(byte[] frame, Camera arg1) {
-//	        Log.i(TAG, "Preview Frame received. Need to create MAT and deliver it to clients");
-//	        Log.i(TAG, "Frame size  is " + frame.length);
+	        Log.i(TAG, "Preview Frame received. Need to create MAT and deliver it to clients");
+	        Log.i(TAG, "Frame size  is " + frame.length);
 	        synchronized (this)
 	        {
 	            mBaseMat.put(0, 0, frame);

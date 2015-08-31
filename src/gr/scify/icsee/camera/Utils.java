@@ -1,8 +1,6 @@
 package gr.scify.icsee.camera;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -13,9 +11,6 @@ public final class Utils {
 
 	protected static String DEBUG_TAG = Utils.class.getCanonicalName();
     protected static Context bContext;
-
-
-
 
     @ViewDebug.CapturedViewProperty
     public static Context getContext() {

@@ -1,7 +1,5 @@
 package gr.scify.icsee.camera;
 
-//import gr.scify.icsee.filters.IBitmapFilter;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
@@ -30,23 +28,14 @@ import gr.scify.icsee.filters.IMatFilter;
 public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCameraViewListener { //RealtimeViewBase {
 	protected static final String TAG = RealtimeFilterView.class.getName();
 	
-    public static final int     VIEW_MODE_RGBA  = 0;
-    public static final int     VIEW_MODE_GRAY  = 1;
-    public static final int     VIEW_MODE_CANNY = 2;
-
     private Mat mRgba = new Mat();
     private Mat mScaledRgba; // Use
-//    private Bitmap bToFilter = null;
-    
+
     protected double CurrentZoom = 1.0;
-	
-//	protected LinkedList<IBitmapFilter> lFilters;
+
 	protected LinkedList<IMatFilter> lFilters;
-//	protected NavigableSet<IBitmapFilter> nsCurFilters;
 	protected NavigableSet<IMatFilter> nsCurFilters;
-//	protected ListIterator<IBitmapFilter> liCurFilter;
 	protected ListIterator<IMatFilter> liCurFilter;
-//	protected LinkedList<NavigableSet<IBitmapFilter>> lPreviousSettings;
 	protected LinkedList<NavigableSet<IMatFilter>> lPreviousSettings;
 	
 	protected boolean bProcessing = false;
@@ -207,9 +196,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     		if (!liCurFilter.hasNext()) {
     			// We reset the filter iterator
     			liCurFilter = lFilters.listIterator();
-    		}
-    		else
-    		{
+    		} else {
     			// If some filters are already used
     			if (nsCurFilters.size() > 0)
 	        		// We remove last filter to replace it without increasing the number of filters
@@ -238,6 +225,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     		else
     			return null;
     	}
+
     	return filterListToString(nsCurFilters);
     }
     
@@ -297,29 +285,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         applyCurrentFilters(mRgba);
         // Apply resize as needed
         Imgproc.resize(mRgba, mScaledRgba, mScaledRgba.size(), 0, 0, Imgproc.INTER_LINEAR);
-        
-        
-        // If zoom over 1
-        // TODO: Use zoom in the processing step to optimize performance
-//        if (CurrentZoom > 1) {
-        	// Indicate zoom changed
-//        	Toast.makeText(getContext(), "Zoom Changed to" + CurrentZoom , Toast.LENGTH_SHORT).show();
-        	// Read width and height
-//	        double origW = (double)mRgba.cols();
-//	        double origH = (double)mRgba.rows();
-//	        // Get new width and height, based on zoom
-//	        double newW = (origW / Math.pow(2.0, CurrentZoom - 1.0));
-//	        double newH = (origH / Math.pow(2.0, CurrentZoom - 1.0));
-//	        Mat mZoom = new Mat();
-//	        // Get left and top for crop
-//	        int newX =  (int)((origW - newW) / 2);
-//	        int newY =  (int)((origH - newH) / 2);
-//	        // DONE: CHECK Can I do the resize on self? (No, I don't think so...)
-//	        
-//	        Imgproc.resize(mRgba, mRgba, new Size(newW, newH), newX, newY, Imgproc.INTER_CUBIC);
-//	        mZoom.release();
-//        }
-        
 
         bProcessing = false;
         
@@ -331,13 +296,9 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 	protected void AllocateCache() {
         mCacheBitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
 	}
-    
-    
+
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-
-//	    mIntermediateMat = new Mat();
-	    
 		super.surfaceCreated(holder);
         mRgba = new Mat();
 	}    
