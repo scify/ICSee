@@ -26,4 +26,4 @@
         android:key="notifications_new_message_vibrate"
         android:title="@string/pref_title_vibrate" />
 
-</PreferenceScreen><!-- From: file:/home/leo/workspace/ICSee/res/xml/pref_notification.xml -->
+</PreferenceScreen><!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/xml/pref_notification.xml -->

@@ -12,4 +12,4 @@
         android:fragment="${packageName}.${activityClass}$DataSyncPreferenceFragment"
         android:title="@string/pref_header_data_sync" />
 
-</preference-headers><!-- From: file:/home/leo/workspace/ICSee/res/xml/pref_headers.xml -->
+</preference-headers><!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/xml/pref_headers.xml -->
