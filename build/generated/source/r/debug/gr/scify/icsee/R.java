@@ -60,7 +60,7 @@ containing a value of this type.
         public static final int action_settings=0x7f080010;
         public static final int any=0x7f080000;
         public static final int back=0x7f080001;
-        public static final int errorMessage=0x7f08000e;
+        public static final int errorMessage=0x7f08000d;
         public static final int exitButton=0x7f08000c;
         public static final int front=0x7f080002;
         public static final int imageView1=0x7f08000a;
@@ -69,7 +69,7 @@ containing a value of this type.
         public static final int pbMainBar=0x7f080007;
         public static final int pbPreview=0x7f080008;
         public static final int processedImageView=0x7f080003;
-        public static final int progressBar=0x7f08000d;
+        public static final int progressBar=0x7f08000e;
         public static final int textView1=0x7f08000b;
         public static final int topLayout=0x7f080004;
         public static final int tvStatusText=0x7f080006;
@@ -93,6 +93,7 @@ containing a value of this type.
         public static final int keykrushermicrowavebeep=0x7f050004;
         public static final int kodackbeepbeep=0x7f050005;
         public static final int pan14tonebeep=0x7f050006;
+        public static final int rain01=0x7f050007;
     }
     public static final class string {
         public static final int action_settings=0x7f090000;

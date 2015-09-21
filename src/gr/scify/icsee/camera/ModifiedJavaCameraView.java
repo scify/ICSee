@@ -11,6 +11,7 @@ import android.hardware.Camera.PreviewCallback;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -55,6 +56,7 @@ import gr.scify.icsee.sounds.SoundPlayer;
 				@Override
 				public void onAutoFocus(boolean success, Camera camera) {
                     // Play sound depending on success or failure of focus
+					Toast.makeText(getContext(), "success: " + success, Toast.LENGTH_LONG).show();
                     if (success) {
 						SoundPlayer.playSound(getContext(), SoundPlayer.S4);
 					} else {

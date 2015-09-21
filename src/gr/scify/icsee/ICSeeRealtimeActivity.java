@@ -2,6 +2,7 @@ package gr.scify.icsee;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
@@ -10,6 +11,8 @@ import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -18,6 +21,14 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +48,14 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     private GestureLibrary gestureLib;
     protected int MAX_ZOOM = 5;
     public RealtimeFilterView mView = null;
+    private static Context mContext;
+    protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.mContext = this;
         // Allow long clicks
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         GestureOverlayView gestureOverlayView = new GestureOverlayView(this);
@@ -73,11 +87,11 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 } else {
                     mView.resumeCamera();
                 }
-
                 SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S5);
 
                 return true;
             }
+
         });
 
         LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);

@@ -22,6 +22,7 @@ import java.util.ListIterator;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
+import gr.scify.icsee.ICSeeRealtimeActivity;
 import gr.scify.icsee.camera.ModifiedCameraBridgeViewBase.CvCameraViewListener;
 import gr.scify.icsee.filters.IMatFilter;
 
@@ -157,17 +158,19 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     	
     	return nsRes;
     }
-    
+	protected String TAG2 = ICSeeRealtimeActivity.class.getCanonicalName();
     // Activates previous combination of filters
     public String previousFilterSubset() {
     	synchronized (nsCurFilters) {
+			Log.i(TAG2, "nsCurFilters: " + nsCurFilters);
 			// If no filters added, ignore.
 			if (lFilters.size() == 0)
 				return null;
 	    	
-			if (lPreviousSettings.isEmpty())
+			if (lPreviousSettings.isEmpty()) {
 				return null;
-			
+			}
+
 			nsCurFilters.clear();
 			nsCurFilters = lPreviousSettings.pollLast();
 			if (liCurFilter.hasPrevious())

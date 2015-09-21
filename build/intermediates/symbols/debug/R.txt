@@ -17,7 +17,7 @@ int drawable icsee_logo4 0x7f020007
 int id action_settings 0x7f080010
 int id any 0x7f080000
 int id back 0x7f080001
-int id errorMessage 0x7f08000e
+int id errorMessage 0x7f08000d
 int id exitButton 0x7f08000c
 int id front 0x7f080002
 int id imageView1 0x7f08000a
@@ -26,7 +26,7 @@ int id menu_settings 0x7f08000f
 int id pbMainBar 0x7f080007
 int id pbPreview 0x7f080008
 int id processedImageView 0x7f080003
-int id progressBar 0x7f08000d
+int id progressBar 0x7f08000e
 int id textView1 0x7f08000b
 int id topLayout 0x7f080004
 int id tvStatusText 0x7f080006
@@ -44,6 +44,7 @@ int raw greencouchbeeps 0x7f050003
 int raw keykrushermicrowavebeep 0x7f050004
 int raw kodackbeepbeep 0x7f050005
 int raw pan14tonebeep 0x7f050006
+int raw rain01 0x7f050007
 int string action_settings 0x7f090000
 int string app_description 0x7f090001
 int string app_name 0x7f090002

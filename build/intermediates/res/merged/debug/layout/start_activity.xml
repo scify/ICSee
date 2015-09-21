@@ -24,11 +24,15 @@
         android:id="@+id/exitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:visibility="invisible"
-        android:text="exit" />
+        android:visibility="visible"
+        android:text="exit"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"/>
 
     <TextView
         android:id="@+id/errorMessage"
