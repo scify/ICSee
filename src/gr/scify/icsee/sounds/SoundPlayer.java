@@ -69,8 +69,4 @@ public class SoundPlayer {
         }
 
     }
-
-    public static void stopTutorial(Context context, int soundID) {
-
-    }
 }
