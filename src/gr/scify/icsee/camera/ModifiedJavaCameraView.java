@@ -58,9 +58,9 @@ import gr.scify.icsee.sounds.SoundPlayer;
                     // Play sound depending on success or failure of focus
 					Toast.makeText(getContext(), "success: " + success, Toast.LENGTH_LONG).show();
                     if (success) {
-						SoundPlayer.playSound(getContext(), SoundPlayer.S4);
-					} else {
 						SoundPlayer.playSound(getContext(), SoundPlayer.S6);
+					} else {
+						SoundPlayer.playSound(getContext(), SoundPlayer.S4);
                     }
 				}
 			});

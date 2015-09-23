@@ -15,6 +15,8 @@ We can support filtering on a camera-streamed image (real-time), applying a wide
 
 Compilation - Requirements
 -----------
+The minimum SDK version is 14 (Android 4.0). The targeted SDK version is 19 (Android 4.4)
+A device with a camera is required. For the auto-focus feature, the camera should support auto-focus.
 This is a Gradle-based project. The required Open-CV library is included in the Android project.
 It is required to have the <a href="http://docs.opencv.org/2.4.11/platforms/android/service/doc/index.html">OpenCV Manager</a> installed on the device. You can find it <a href="https://play.google.com/store/apps/details?id=org.opencv.engine&hl=en">here</a>
 (The ICSee app will prompt you to the appropriate Play Store page if you haven't installed OpenCV Manager already.)
