@@ -93,7 +93,7 @@ containing a value of this type.
         public static final int keykrushermicrowavebeep=0x7f050004;
         public static final int kodackbeepbeep=0x7f050005;
         public static final int pan14tonebeep=0x7f050006;
-        public static final int rain01=0x7f050007;
+        public static final int tutorial=0x7f050007;
     }
     public static final class string {
         public static final int action_settings=0x7f090000;

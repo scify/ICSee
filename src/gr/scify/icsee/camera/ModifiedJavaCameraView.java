@@ -12,7 +12,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Toast;
-
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
@@ -43,7 +42,7 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	    private int mChainIdx = 0;
 	    private Thread mThread;
 	    private boolean mStopThread;
-
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 	    protected Camera mCamera;
 	    protected Parameters pParams;
 	    protected int iMinZoom, iMaxZoom;
@@ -51,12 +50,13 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	    private SurfaceTexture mSurfaceTexture;
 	    
 	    public void focusCamera() {
+
 			mCamera.autoFocus(new Camera.AutoFocusCallback() {
 				
 				@Override
 				public void onAutoFocus(boolean success, Camera camera) {
                     // Play sound depending on success or failure of focus
-					Toast.makeText(getContext(), "success: " + success, Toast.LENGTH_LONG).show();
+					//Toast.makeText(getContext(), "success: " + success, Toast.LENGTH_LONG).show();
                     if (success) {
 						SoundPlayer.playSound(getContext(), SoundPlayer.S6);
 					} else {

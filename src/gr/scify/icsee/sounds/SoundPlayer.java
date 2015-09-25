@@ -2,12 +2,8 @@ package gr.scify.icsee.sounds;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
-
 import java.util.HashMap;
-
-import gr.scify.icsee.ICSeeRealtimeActivity;
 import gr.scify.icsee.R;
 
 /**
@@ -25,8 +21,8 @@ public class SoundPlayer {
     public static final int S4 = R.raw.kodackbeepbeep;
     public static final int S5 = R.raw.emptybellbeep;
     public static final int S6 = R.raw.pan14tonebeep;
-    public static final int Stutorial = R.raw.rain01;
-    static MediaPlayer mp;
+    public static final int Stutorial = R.raw.tutorial;
+
 
     private static SoundPool sp;                    // SoundPool to play the sounds
     private static HashMap<Integer, Integer> spMap; // Keeps the ID of each sound
@@ -52,17 +48,7 @@ public class SoundPlayer {
             initSounds(context);
         }
         if(soundID == SoundPlayer.Stutorial) {
-            if(mp != null) {
-                if(mp.isPlaying()){
-                    mp.stop();
-                } else {
-                    mp = MediaPlayer.create(context,R.raw.rain01);
-                    mp.start();
-                }
-            } else {
-                mp = MediaPlayer.create(context,R.raw.rain01);
-                mp.start();
-            }
+
 
         } else {
             sp.play(spMap.get(soundID), volume, volume, 1, 0, 1f);

@@ -162,7 +162,8 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     // Activates previous combination of filters
     public String previousFilterSubset() {
     	synchronized (nsCurFilters) {
-			Log.i(TAG2, "nsCurFilters: " + nsCurFilters);
+			Log.d("fil", "lFilters: " + lFilters);
+			Log.d("fil", "lPreviousSettings: " + lPreviousSettings);
 			// If no filters added, ignore.
 			if (lFilters.size() == 0)
 				return null;
@@ -186,6 +187,8 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     
     // Activates next combination of filter
     public String nextFilterSubset() {
+		Log.d("fil", "nsCurFilters: " + nsCurFilters);
+		Log.d("fil", "lFilters: " + lFilters);
     	synchronized (nsCurFilters) {
     		// If no filters added, ignore.
     		if (lFilters.size() == 0)

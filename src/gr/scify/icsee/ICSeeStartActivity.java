@@ -3,6 +3,8 @@ package gr.scify.icsee;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -34,6 +36,7 @@ public class ICSeeStartActivity extends Activity {
     Button mExitButton;
     ProgressBar mProgressBar;
     File file = new File("/data/data/gr.scify.icsee/files/configTutorial.txt");
+    static MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +60,57 @@ public class ICSeeStartActivity extends Activity {
 
         mExitButton = (Button)findViewById(R.id.exitButton);
         mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
-
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        unmuteAudio(audioManager);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 16, 0);
+        playTutorial(mContext);
         mExitButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Log.i(TAG, "click!");
                 Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
                 mVibrator.vibrate(250);
-                SoundPlayer.playSound(mContext, SoundPlayer.Stutorial);
+                stopTutorial();
                 new AsyncProgressCheck(mDialog, mOpenCVCallBack,ICSeeStartActivity.this).execute();
                 return false;
             }
         });
         mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar);
 
+    }
+
+    private void playTutorial(Context context) {
+        if(mp != null) {
+            if(mp.isPlaying()){
+                mp.stop();
+            } else {
+                mp = MediaPlayer.create(context,R.raw.tutorial);
+                mp.start();
+            }
+        } else {
+            mp = MediaPlayer.create(context,R.raw.tutorial);
+            mp.start();
+        }
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                new AsyncProgressCheck(mDialog, mOpenCVCallBack,ICSeeStartActivity.this).execute();
+            }
+
+        });
+    }
+
+    private void stopTutorial(){
+        mp.stop();
+    }
+
+    private void unmuteAudio(AudioManager audio) {
+        audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        audio.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
+        audio.setStreamMute(AudioManager.STREAM_ALARM,          false);
+        audio.setStreamMute(AudioManager.STREAM_MUSIC,          false);
+        audio.setStreamMute(AudioManager.STREAM_RING,           false);
+        audio.setStreamMute(AudioManager.STREAM_SYSTEM, false);
     }
 
     protected void onPause() {
