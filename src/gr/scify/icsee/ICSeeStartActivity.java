@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
 import java.io.BufferedReader;
@@ -63,45 +64,21 @@ public class ICSeeStartActivity extends Activity {
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         unmuteAudio(audioManager);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 16, 0);
-        playTutorial(mContext);
-        mExitButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-                mVibrator.vibrate(250);
-                stopTutorial();
-                new AsyncProgressCheck(mDialog, mOpenCVCallBack,ICSeeStartActivity.this).execute();
-                return false;
-            }
-        });
-        mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar);
 
-    }
 
-    private void playTutorial(Context context) {
-        if(mp != null) {
-            if(mp.isPlaying()){
-                mp.stop();
-            } else {
-                mp = MediaPlayer.create(context,R.raw.tutorial);
-                mp.start();
-            }
-        } else {
-            mp = MediaPlayer.create(context,R.raw.tutorial);
-            mp.start();
-        }
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mp, mDialog);
+        Log.i(TAG, "mOpenCVCallBack.hasManagerConnected: " + mOpenCVCallBack.hasManagerConnected);
+            mExitButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                    mVibrator.vibrate(250);
+                    mOpenCVCallBack.stopTutorial();
+                    new AsyncProgressCheck(mDialog, mOpenCVCallBack, ICSeeStartActivity.this).execute();
+                    return false;
+                }
+            });
 
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                new AsyncProgressCheck(mDialog, mOpenCVCallBack,ICSeeStartActivity.this).execute();
-            }
-
-        });
-    }
-
-    private void stopTutorial(){
-        mp.stop();
     }
 
     private void unmuteAudio(AudioManager audio) {
