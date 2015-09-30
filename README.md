@@ -1,9 +1,9 @@
-ICStudy
+ICSee
 =======
 
 Abstract
 --------
-It is an application for small portable devices (cell phones, tablets) that will help people with severe visual  impairments see more clearly.
+It is an application for small portable devices (smart phones, tablets) that will help people with severe visual  impairments see more clearly.
 How? The user simply directs the camera of his/her smartphone or tablet to the point he/she wants and… that was it! The application processes the image on the screen according to the user’s needs (conversion to negative or greyscale, increase the contrast, etc.) and provides in real time an image that is is easier for the user to see!
 Who is it for?
 It is intended to be used by people with severe visual impairments.
