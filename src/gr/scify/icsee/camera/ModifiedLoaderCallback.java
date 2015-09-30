@@ -10,10 +10,11 @@ import android.widget.ProgressBar;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 
+import java.util.Locale;
+
 import gr.scify.icsee.AsyncProgressCheck;
 import gr.scify.icsee.ICSeeStartActivity;
 import gr.scify.icsee.R;
-import gr.scify.icsee.sounds.SoundPlayer;
 
 /**
  * Created by scifi on 1/8/2014.
@@ -23,18 +24,20 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
     ProgressBar mPrograssBar;
     Context mContext;
     public boolean hasManagerConnected = false;
-    static MediaPlayer mplayer;
+    public MediaPlayer mplayer;
     public ProgressDialog mDialog;
     public ModifiedLoaderCallback mThis;
+    public ICSeeStartActivity startActivity;
 
 
-    public ModifiedLoaderCallback(Context AppContext, ProgressBar progressBar, MediaPlayer mp, ProgressDialog dialog) {
+    public ModifiedLoaderCallback(Context AppContext, ProgressBar progressBar, MediaPlayer mp, ProgressDialog dialog, ICSeeStartActivity start) {
         super(AppContext);
         mPrograssBar = progressBar;
         mContext = AppContext;
         mplayer = mp;
         mDialog = dialog;
         mThis = this;
+        startActivity = start;
     }
 
     @Override
@@ -46,23 +49,39 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
                 mPrograssBar.setVisibility(View.INVISIBLE);
                 hasManagerConnected = true;
                 playTutorial(mContext);
-                //SoundPlayer.playSound(mContext, SoundPlayer.Stutorial);
             }
         }
 
     private void playTutorial(Context context) {
+        String lang = Locale.getDefault().getDisplayLanguage();
         if(mplayer != null) {
             if(mplayer.isPlaying()){
                 mplayer.stop();
             } else {
-                mplayer = MediaPlayer.create(context, R.raw.tutorial);
-                Log.i("ModifiedLoaderCallback", "about to play");
+
+                if(lang == "Ελληνικά") {
+                    mplayer = MediaPlayer.create(context, R.raw.tutorial);
+                } else {
+                    mplayer = MediaPlayer.create(context, R.raw.tutorial);
+                }
                 mplayer.start();
             }
         } else {
-            mplayer = MediaPlayer.create(context,R.raw.tutorial);
+            if(lang == "Ελληνικά") {
+                mplayer = MediaPlayer.create(context, R.raw.tutorial);
+            } else {
+                mplayer = MediaPlayer.create(context, R.raw.tutorial);
+            }
             mplayer.start();
         }
+        mplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mPrograssBar.setVisibility(View.VISIBLE);
+                new AsyncProgressCheck(mDialog, ICSeeStartActivity.mOpenCVCallBack, startActivity).execute();
+            }
+        });
+
     }
 
     public void stopTutorial(){

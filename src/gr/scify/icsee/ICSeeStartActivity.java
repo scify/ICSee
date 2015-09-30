@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Locale;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
 import gr.scify.icsee.sounds.SoundPlayer;
@@ -31,13 +32,13 @@ import gr.scify.icsee.sounds.SoundPlayer;
 
 public class ICSeeStartActivity extends Activity {
     protected Context mContext;
-    public ModifiedLoaderCallback mOpenCVCallBack;
-    public ProgressDialog mDialog;
+    public static ModifiedLoaderCallback mOpenCVCallBack;
+    public static ProgressDialog mDialog;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
     Button mExitButton;
-    ProgressBar mProgressBar;
+    static ProgressBar mProgressBar;
     File file = new File("/data/data/gr.scify.icsee/files/configTutorial.txt");
-    static MediaPlayer mp;
+    static MediaPlayer mp = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,22 +65,28 @@ public class ICSeeStartActivity extends Activity {
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         unmuteAudio(audioManager);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 16, 0);
+        String lang = Locale.getDefault().getDisplayLanguage();
+        Log.i(TAG,"lang = " + lang);
 
+        mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mp, mDialog, ICSeeStartActivity.this);
 
-        mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mp, mDialog);
         Log.i(TAG, "mOpenCVCallBack.hasManagerConnected: " + mOpenCVCallBack.hasManagerConnected);
-            mExitButton.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-                    mVibrator.vibrate(250);
-                    mOpenCVCallBack.stopTutorial();
-                    new AsyncProgressCheck(mDialog, mOpenCVCallBack, ICSeeStartActivity.this).execute();
-                    return false;
-                }
-            });
+
+
+        mExitButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                mVibrator.vibrate(250);
+                mOpenCVCallBack.stopTutorial();
+                new AsyncProgressCheck(mDialog, mOpenCVCallBack, ICSeeStartActivity.this).execute();
+                return false;
+            }
+        });
+
 
     }
+
 
     private void unmuteAudio(AudioManager audio) {
         audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -99,6 +106,7 @@ public class ICSeeStartActivity extends Activity {
 
         Log.i(TAG, "Trying to load OpenCV library");
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mOpenCVCallBack);
+        Log.i(TAG, "mOpenCVCallBack.mplayer: " + mp);
 
     }
 

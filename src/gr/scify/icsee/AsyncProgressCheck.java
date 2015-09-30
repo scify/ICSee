@@ -15,7 +15,7 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
     ModifiedLoaderCallback mOpenCVCallBack;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
 
-    AsyncProgressCheck (ProgressDialog pd, ModifiedLoaderCallback aa,ICSeeStartActivity cc) {
+    public AsyncProgressCheck (ProgressDialog pd, ModifiedLoaderCallback aa,ICSeeStartActivity cc) {
         mDialog = pd;
         mOpenCVCallBack = aa;
         mContext=cc;
