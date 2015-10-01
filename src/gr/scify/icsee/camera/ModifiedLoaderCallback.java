@@ -62,7 +62,7 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
                 if(lang == "Ελληνικά") {
                     mplayer = MediaPlayer.create(context, R.raw.tutorial);
                 } else {
-                    mplayer = MediaPlayer.create(context, R.raw.tutorial);
+                    mplayer = MediaPlayer.create(context, R.raw.tutorial_en);
                 }
                 mplayer.start();
             }
@@ -70,7 +70,7 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
             if(lang == "Ελληνικά") {
                 mplayer = MediaPlayer.create(context, R.raw.tutorial);
             } else {
-                mplayer = MediaPlayer.create(context, R.raw.tutorial);
+                mplayer = MediaPlayer.create(context, R.raw.tutorial_en);
             }
             mplayer.start();
         }
