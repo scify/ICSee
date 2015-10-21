@@ -35,6 +35,7 @@ Main Technologies
 User/developer guidelines
 -------------------------
 Download the User Guidelines from <a href="http://icstudy.projects.development1.scify.org/www/files/ICSeeAudioInstructionsGREN.pdf">here.</a>
+
 Download the Developer Guidelines from <a href="http://icstudy.projects.development1.scify.org/www/files/ICSee_developer_guidelines.pdf">here.</a>
 
 LICENSE
