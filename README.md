@@ -32,6 +32,11 @@ Main Technologies
 
 [1]: http://www.scify.gr/site/en/projects/in-progress/icsee
 
+User/developer guidelines
+-------------------------
+Download the User Guidelines from <a href="http://icstudy.projects.development1.scify.org/www/files/ICSeeAudioInstructionsGREN.pdf">here.</a>
+Download the Developer Guidelines from <a href="http://icstudy.projects.development1.scify.org/www/files/ICSee_developer_guidelines.pdf">here.</a>
+
 LICENSE
 -----------------
 
