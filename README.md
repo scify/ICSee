@@ -43,7 +43,7 @@ Download the Developer Guidelines from <a href="http://icstudy.projects.developm
 
 <table>
   <tr>
-    <th>Α/Α</th>
+    <th width="50px">Α/ Α</th>
     <th>Περιγραφή δράσης</th>
     <th>Τεκμηρίωση</th>
   </tr>
@@ -54,13 +54,41 @@ Download the Developer Guidelines from <a href="http://icstudy.projects.developm
   </tr>
   <tr>
     <td>Β</td>
-    <td>Υλικό για διασφάλιση της δυνατότητας διάχυσης του ICSee</td>
+    <td colspan="2">Υλικό για διασφάλιση της δυνατότητας διάχυσης του ICSee</td>
   </tr>
   <tr>
     <td>Β1</td>
     <td>Προσφορά του κώδικα της εφαρμογής ως ανοικτού κώδικα.</td>
     <td>Το έργο βρισκεται στο GitHub σε αυτόν τον σύνδεσμο:
         https://github.com/ellak-monades-aristeias/ICSee-v1</td>
+  </tr>
+  <tr>
+    <td>Β2</td>
+    <td>Υποστηρικτικό υλικό (τεκμηρίωση, εγχειρίδιο κ.λπ.)</td>
+    <td>Η τεκμηρίωση είναι στο GitHub και το εγχειρίδιο είναι ενσωματωμένο ηχητικά στην εφαρμογή, προσαρμοσμένο στις ανάγκες του κοινού-στόχου.</td>
+  </tr>
+  <tr>
+    <td>Γ</td>
+    <td colspan="2">Προώθηση του ICSee</td>
+  </tr>
+  <tr>
+    <td>Γ1</td>
+    <td>Δημιουργία προωθητικού υλικού (βίντεο).</td>
+    <td>Μπορείτε να δείτε το βίντεο στο Youtube (https://youtu.be/Wb4_S6ngTjM)</td>
+  </tr>
+  <tr>
+    <td>Γ2</td>
+    <td>Προώθηση του ICSee, της συνεργασίας με την ΕΛ/ΛΑΚ, και των σημαντικών εξελίξεων του project μέσω του δικτύου συνεργατών, των δράσεων και μέσων επικοινωνίας της SciFY</td>
+    <td>Στο Newsletter της SciFY (http://eepurl.com/bAuv11)
+        Στα Social media της SciFY
+        <ul>
+        <li>Google+ (https://goo.gl/cLQQVR)</li>
+        <li>Facebook
+        (https://www.facebook.com/SciFY.org)</li>
+        <li>Twitter
+        (https://twitter.com/scify_org)</li>
+        </ul>
+        Ειδική παρουσίαση στην ημέρα Λευκού Μπαστουνιού, όπως φαίνεται και στο προφίλ μας στο Facebook</td>
   </tr>
 </table>
 
