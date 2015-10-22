@@ -38,6 +38,32 @@ Download the User Guidelines from <a href="http://icstudy.projects.development1.
 
 Download the Developer Guidelines from <a href="http://icstudy.projects.development1.scify.org/www/files/ICSee_developer_guidelines.pdf">here.</a>
 
+Πίνακας παραδοτέων
+------------------
+
+<table>
+  <tr>
+    <th>Α/Α</th>
+    <th>Περιγραφή δράσης</th>
+    <th>Τεκμηρίωση</th>
+  </tr>
+  <tr>
+    <td>Α</td>
+    <td>Έκδοση 1.0 της εφαρμογής ICSee, με επιπλέον τρία φίλτρα επεξεργασίας εικόνας</td>
+    <td>Το ICSee υπάρχει διαθέσιμο για δωρεάν κατέβασμα στο Google Play σε αυτόν τον σύνδεσμο: https://goo.gl/WnNyzn</td>
+  </tr>
+  <tr>
+    <td>Β</td>
+    <td>Υλικό για διασφάλιση της δυνατότητας διάχυσης του ICSee</td>
+  </tr>
+  <tr>
+    <td>Β1</td>
+    <td>Προσφορά του κώδικα της εφαρμογής ως ανοικτού κώδικα.</td>
+    <td>Το έργο βρισκεται στο GitHub σε αυτόν τον σύνδεσμο:
+        https://github.com/ellak-monades-aristeias/ICSee-v1</td>
+  </tr>
+</table>
+
 LICENSE
 -----------------
 
