@@ -209,14 +209,14 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
                     if (sTheme != null) {
                         sliderText.setText("Next Theme: " + sTheme);
-                        Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
-                        	Toast.LENGTH_SHORT).show();
+                        /*Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
+                        	Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S2);
                     } else {
                         mView.initFilterSubsets();
                         sliderText.setText("No theme applicable");
-                        Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
-                        		Toast.LENGTH_SHORT).show();
+                        /*Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
+                        		Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S6);
                     }
                 } else if (prediction.name.contains("left")) {
@@ -226,14 +226,14 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
                     if (sTheme != null) {
                         sliderText.setText("Previous Theme: " + sTheme);
-                        Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
-                        	Toast.LENGTH_SHORT).show();
+                        /*Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
+                        	Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S3);
                     } else {
                         mView.initFilterSubsets();
                         sliderText.setText("No theme applicable");
-                        	Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
-                        			Toast.LENGTH_SHORT).show();
+                        	/*Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
+                        			Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S6);
                     }
                 }

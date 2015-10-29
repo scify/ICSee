@@ -3,9 +3,11 @@ package gr.scify.icsee.camera;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
@@ -53,13 +55,17 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
         }
 
     private void playTutorial(Context context) {
-        String lang = Locale.getDefault().getDisplayLanguage();
+        String lang = Locale.getDefault().getLanguage();
+        TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
+        String countryCode = tm.getSimCountryIso();
+        Log.i("lang", "lang: " + lang);
+        Log.i("lang", "country: " + countryCode);
         if(mplayer != null) {
             if(mplayer.isPlaying()){
                 mplayer.stop();
             } else {
 
-                if(lang == "Ελληνικά") {
+                if(lang.equals("el") || countryCode.equals("gr")) {
                     mplayer = MediaPlayer.create(context, R.raw.tutorial);
                 } else {
                     mplayer = MediaPlayer.create(context, R.raw.tutorial_en);
@@ -67,7 +73,7 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
                 mplayer.start();
             }
         } else {
-            if(lang == "Ελληνικά") {
+            if(lang.equals("el") || countryCode.equals("gr")) {
                 mplayer = MediaPlayer.create(context, R.raw.tutorial);
             } else {
                 mplayer = MediaPlayer.create(context, R.raw.tutorial_en);
