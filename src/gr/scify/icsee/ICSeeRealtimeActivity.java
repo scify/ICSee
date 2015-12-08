@@ -10,7 +10,11 @@ import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.gesture.Prediction;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.hardware.Camera;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -19,9 +23,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import gr.scify.icsee.camera.ImageView;
 import gr.scify.icsee.camera.RealtimeFilterView;
 import gr.scify.icsee.filters.opencv.matfilters.MatAdaptiveThresholding;
 import gr.scify.icsee.filters.opencv.matfilters.MatBinarizationFilter;
@@ -72,11 +80,12 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         inflate.setOnLongClickListener(new OnLongClickListener() {
             public boolean onLongClick(View arg0) {
                 // Resume or pause the camera
-                if (mView.camerastate() == false) {
+                /*if (mView.camerastate() == false) {
                     mView.pauseCamera();
                 } else {
                     mView.resumeCamera();
-                }
+                }*/
+                mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG);
                 SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S5);
 
                 return true;
@@ -86,6 +95,47 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         this.addContentView(gestureOverlayView, layoutParamsControl);
+    }
+
+    Camera.ShutterCallback myShutterCallback = new Camera.ShutterCallback(){
+
+        @Override
+        public void onShutter() {
+            // TODO Auto-generated method stub
+
+        }};
+
+    Camera.PictureCallback myPictureCallback_RAW = new Camera.PictureCallback(){
+
+        @Override
+        public void onPictureTaken(byte[] arg0, Camera arg1) {
+            // TODO Auto-generated method stub
+
+        }};
+
+    Camera.PictureCallback myPictureCallback_JPG = new Camera.PictureCallback(){
+
+        @Override
+        public void onPictureTaken(byte[] arg0, Camera arg1) {
+            Log.i(TAG, "img: " + arg0.toString());
+            // TODO Auto-generated method stub
+            Bitmap bitmapPicture
+                    = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
+            startImageEdit(bitmapPicture);
+
+        }};
+
+    private void startImageEdit(Bitmap bitmapPicture) {
+        Log.i(TAG, "startImageEdit");
+        Intent intent = new Intent(this, ImageView.class);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmapPicture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        Log.i(TAG, "Length before: " + byteArray.length);
+        intent.putExtra("image", byteArray);
+        //intent.putExtra("image", bitmapPicture);
+        Log.i(TAG, "about to start the activity");
+        startActivity(intent);
     }
 
     @Override

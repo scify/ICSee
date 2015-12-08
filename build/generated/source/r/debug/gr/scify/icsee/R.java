@@ -57,29 +57,31 @@ containing a value of this type.
         public static final int icsee_logo4=0x7f020007;
     }
     public static final class id {
-        public static final int action_settings=0x7f080010;
+        public static final int action_settings=0x7f080011;
         public static final int any=0x7f080000;
         public static final int back=0x7f080001;
-        public static final int errorMessage=0x7f08000d;
-        public static final int exitButton=0x7f08000c;
+        public static final int errorMessage=0x7f08000e;
+        public static final int exitButton=0x7f08000d;
         public static final int front=0x7f080002;
-        public static final int imageView1=0x7f08000a;
-        public static final int mainLayout=0x7f080005;
-        public static final int menu_settings=0x7f08000f;
-        public static final int pbMainBar=0x7f080007;
-        public static final int pbPreview=0x7f080008;
-        public static final int processedImageView=0x7f080003;
-        public static final int progressBar=0x7f08000e;
-        public static final int textView1=0x7f08000b;
-        public static final int topLayout=0x7f080004;
-        public static final int tvStatusText=0x7f080006;
-        public static final int verticalSeekbarText=0x7f080009;
+        public static final int imageView=0x7f080003;
+        public static final int imageView1=0x7f08000b;
+        public static final int mainLayout=0x7f080006;
+        public static final int menu_settings=0x7f080010;
+        public static final int pbMainBar=0x7f080008;
+        public static final int pbPreview=0x7f080009;
+        public static final int processedImageView=0x7f080004;
+        public static final int progressBar=0x7f08000f;
+        public static final int textView1=0x7f08000c;
+        public static final int topLayout=0x7f080005;
+        public static final int tvStatusText=0x7f080007;
+        public static final int verticalSeekbarText=0x7f08000a;
     }
     public static final class layout {
-        public static final int activity_img_viewer=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int custom=0x7f030002;
-        public static final int start_activity=0x7f030003;
+        public static final int activity_image_edit2=0x7f030000;
+        public static final int activity_img_viewer=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int custom=0x7f030003;
+        public static final int start_activity=0x7f030004;
     }
     public static final class menu {
         public static final int activity_main=0x7f0b0000;
@@ -117,10 +119,11 @@ containing a value of this type.
         public static final int pref_title_vibrate=0x7f090011;
         public static final int processed_image=0x7f090012;
         public static final int progress_label=0x7f090013;
-        public static final int title_activity_img_viewer=0x7f090014;
-        public static final int title_activity_main=0x7f090015;
-        public static final int title_activity_settings=0x7f090016;
-        public static final int welcome_label=0x7f090017;
+        public static final int title_activity_image_edit=0x7f090014;
+        public static final int title_activity_img_viewer=0x7f090015;
+        public static final int title_activity_main=0x7f090016;
+        public static final int title_activity_settings=0x7f090017;
+        public static final int welcome_label=0x7f090018;
     }
     public static final class style {
         public static final int AppTheme=0x7f0a0000;

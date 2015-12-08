@@ -72,7 +72,8 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     public void getPhoto(ShutterCallback sc, PictureCallback pcRaw, PictureCallback pcJpg) {
 		//mCamera.setPreviewDisplay(null);
         try {
-            mCamera = Camera.open();
+            Log.i(TAG, "about to take photo");
+            //mCamera = Camera.open();
             if (mCamera != null) {
             	mCamera.takePicture(sc , pcRaw, pcJpg);
             }
@@ -158,7 +159,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     	
     	return nsRes;
     }
-	protected String TAG2 = ICSeeRealtimeActivity.class.getCanonicalName();
     // Activates previous combination of filters
     public String previousFilterSubset() {
     	synchronized (nsCurFilters) {

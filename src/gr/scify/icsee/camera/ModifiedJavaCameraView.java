@@ -302,8 +302,8 @@ import gr.scify.icsee.sounds.SoundPlayer;
 
 	    @TargetApi(Build.VERSION_CODES.FROYO)
 	    public void onPreviewFrame(byte[] frame, Camera arg1) {
-	        Log.i(TAG, "Preview Frame received. Need to create MAT and deliver it to clients");
-	        Log.i(TAG, "Frame size  is " + frame.length);
+	        //Log.i(TAG, "Preview Frame received. Need to create MAT and deliver it to clients");
+	        //Log.i(TAG, "Frame size  is " + frame.length);
 	        synchronized (this)
 	        {
 	            mBaseMat.put(0, 0, frame);

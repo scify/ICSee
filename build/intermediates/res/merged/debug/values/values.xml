@@ -59,6 +59,7 @@
     <eat-comment/>
     <string name="processed_image">Processed Image</string>
     <string name="progress_label">Progress of current task...</string>
+    <string name="title_activity_image_edit">ImageEdit</string>
     <string name="title_activity_img_viewer">Image Viewer</string>
     <string name="title_activity_main">ICSee</string>
     <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/strings_activity_settings.xml -->

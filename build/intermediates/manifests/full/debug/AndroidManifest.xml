@@ -16,6 +16,10 @@
         android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launchernew"
@@ -24,17 +28,14 @@
         android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         <activity
             android:name="gr.scify.icsee.SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
+            android:label="@string/title_activity_settings" />
         <activity
             android:name="gr.scify.icsee.ImgViewerActivity"
-            android:label="@string/title_activity_img_viewer" >
-        </activity>
+            android:label="@string/title_activity_img_viewer" />
         <activity
             android:name="gr.scify.icsee.ICSeeRealtimeActivity"
             android:label="@string/title_activity_main"
-            android:screenOrientation="landscape" >
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name="gr.scify.icsee.ICSeeStartActivity"
             android:label="ICSee"
@@ -44,6 +45,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="gr.scify.icsee.camera.ImageView"
+            android:label="@string/title_activity_image_edit"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
 
