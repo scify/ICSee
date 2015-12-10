@@ -69,7 +69,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 		return bPaused;
     }
     
-    public void getPhoto(ShutterCallback sc, PictureCallback pcRaw, PictureCallback pcJpg) {
+    public void getPhoto(ShutterCallback sc, PictureCallback pcRaw, PictureCallback pcJpg, int qualitySteps) {
 		//mCamera.setPreviewDisplay(null);
         Log.i(TAG, "current: " + this.curFilterSubset().toString());
         try {
@@ -84,9 +84,13 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
             for(int i=0; i< supportedSizes.size() ;i++) {
                 int height = supportedSizes.get(i).height;
                 int width = supportedSizes.get(i).width;
-                //Log.i(TAG, "height: " + height + " width: " + width);
+                Log.i(TAG, "height: " + height + " width: " + width);
             }
-            parameters.setPictureSize(supportedSizes.get((supportedSizes.size() / 2) +2).width, supportedSizes.get((supportedSizes.size() / 2) +2).height);
+            int pos = (supportedSizes.size() / 2) +qualitySteps;
+            if(pos == supportedSizes.size()) {
+                pos -=1;
+            }
+            parameters.setPictureSize(supportedSizes.get(pos).width, supportedSizes.get(pos).height);
             //mCamera.setParameters(parameters);
 
 			if (parameters.isZoomSupported()) {

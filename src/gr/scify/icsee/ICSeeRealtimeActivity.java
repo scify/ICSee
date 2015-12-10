@@ -89,7 +89,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 } else {
                     mView.resumeCamera();
                 }*/
-                String currentFilter = mView.curFilterSubset().toString();
+
                 focusCamera();
 
                 return true;
@@ -112,7 +112,13 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 } else {
                     //SoundPlayer.playSound(mContext, SoundPlayer.S4);
                 }
-                mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG);
+                String currentFilter = mView.curFilterSubset().toString();
+                if(currentFilter.equals("")) {
+                    mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG, 3);
+                }else {
+                    mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG, 1);
+                }
+
             }
         });
     }
@@ -189,7 +195,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
     @Override
     protected void onPause() {
-        Log.i(TAG, "onPause");
+        //Log.i(TAG, "onPause");
         super.onPause();
         /*if (mView != null)
             mView.disableView();*/
@@ -197,7 +203,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
     @Override
     protected void onStop() {
-        Log.i(TAG, "onStop");
+        //Log.i(TAG, "onStop");
         super.onStop();
         if (mView != null)
             mView.disableView();
@@ -205,7 +211,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
     @Override
     protected void onResume() {
-        Log.i(TAG, "onResume");
+        //Log.i(TAG, "onResume");
         super.onResume();
         if (mView != null){
             mView.enableView();
