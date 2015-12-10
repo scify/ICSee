@@ -89,14 +89,15 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int alienxxxbeep=0x7f050000;
-        public static final int emptybellbeep=0x7f050001;
-        public static final int gestures=0x7f050002;
-        public static final int greencouchbeeps=0x7f050003;
-        public static final int keykrushermicrowavebeep=0x7f050004;
-        public static final int kodackbeepbeep=0x7f050005;
-        public static final int pan14tonebeep=0x7f050006;
-        public static final int tutorial=0x7f050007;
-        public static final int tutorial_en=0x7f050008;
+        public static final int camerashutterclick=0x7f050001;
+        public static final int emptybellbeep=0x7f050002;
+        public static final int gestures=0x7f050003;
+        public static final int greencouchbeeps=0x7f050004;
+        public static final int keykrushermicrowavebeep=0x7f050005;
+        public static final int kodackbeepbeep=0x7f050006;
+        public static final int pan14tonebeep=0x7f050007;
+        public static final int tutorial=0x7f050008;
+        public static final int tutorial_en=0x7f050009;
     }
     public static final class string {
         public static final int action_settings=0x7f090000;

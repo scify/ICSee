@@ -71,9 +71,24 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     
     public void getPhoto(ShutterCallback sc, PictureCallback pcRaw, PictureCallback pcJpg) {
 		//mCamera.setPreviewDisplay(null);
+        Log.i(TAG, "current: " + this.curFilterSubset().toString());
         try {
             Log.i(TAG, "about to take photo");
             //mCamera = Camera.open();
+			int zoom = 0;
+			Camera.Parameters parameters = mCamera.getParameters();
+			int maxZoom = parameters.getMaxZoom();
+			Log.i(TAG, "currentZoom: " + parameters.getZoom());
+			Log.i(TAG, "maxZoom: " + maxZoom);
+			if (parameters.isZoomSupported()) {
+				if (zoom >=0 && zoom < maxZoom) {
+					parameters.setZoom(zoom);
+					mCamera.setParameters(parameters);
+
+				} else {
+					// zoom parameter is incorrect
+				}
+			}
             if (mCamera != null) {
             	mCamera.takePicture(sc , pcRaw, pcJpg);
             }

@@ -62,9 +62,10 @@ public class ICSeeStartActivity extends Activity {
 
         mExitButton = (Button)findViewById(R.id.exitButton);
         mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
-        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        //TODO: Remove comments
+       /* AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         unmuteAudio(audioManager);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 16, 0);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 16, 0);*/
         String lang = Locale.getDefault().getDisplayLanguage();
         Log.i(TAG,"lang = " + lang);
 

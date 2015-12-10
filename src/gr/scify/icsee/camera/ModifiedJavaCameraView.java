@@ -43,7 +43,7 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	    private Thread mThread;
 	    private boolean mStopThread;
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-	    protected Camera mCamera;
+	    public Camera mCamera;
 	    protected Parameters pParams;
 	    protected int iMinZoom, iMaxZoom;
 
@@ -187,7 +187,7 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	                    iMaxZoom = params.getMaxZoom();
 
 	                    // Set max zoom
-	                    params.setZoom(params.getMaxZoom());
+	                    //params.setZoom(params.getMaxZoom());
 	                    
 	                    mCamera.setParameters(params);
 	                    params = mCamera.getParameters();

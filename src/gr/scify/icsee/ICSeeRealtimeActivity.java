@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,9 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.Buffer;
@@ -85,8 +89,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 } else {
                     mView.resumeCamera();
                 }*/
-                mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG);
-                SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S5);
+
+                focusCamera();
 
                 return true;
             }
@@ -97,11 +101,31 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         this.addContentView(gestureOverlayView, layoutParamsControl);
     }
 
+    public void focusCamera() {
+
+        mView.mCamera.autoFocus(new Camera.AutoFocusCallback() {
+
+            @Override
+            public void onAutoFocus(boolean success, Camera camera) {
+                // Play sound depending on success or failure of focus
+                //Toast.makeText(getContext(), "success: " + success, Toast.LENGTH_LONG).show();
+                if (success) {
+                    //SoundPlayer.playSound(mContext, SoundPlayer.S6);
+                } else {
+                    //SoundPlayer.playSound(mContext, SoundPlayer.S4);
+                }
+                mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG);
+            }
+        });
+    }
+
     Camera.ShutterCallback myShutterCallback = new Camera.ShutterCallback(){
 
         @Override
         public void onShutter() {
-            // TODO Auto-generated method stub
+            SoundPlayer.playSound(mContext, SoundPlayer.S7);
+            Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+            mVibrator.vibrate(500);
 
         }};
 
@@ -117,21 +141,31 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         @Override
         public void onPictureTaken(byte[] arg0, Camera arg1) {
-            Log.i(TAG, "img: " + arg0.toString());
             // TODO Auto-generated method stub
             Bitmap bitmapPicture
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
-            startImageEdit(bitmapPicture);
+            //bitmapPicture = mView.applyCurrentFilters(mView.mRgba);
 
+            //Log.i(TAG, "current: " + mView.curFilterSubset().toString());
+            Log.i(TAG, "current: " + mView.getCurrentFilters().toString());
+            /*Mat imgMAT = new Mat();
+            Utils.bitmapToMat(bitmapPicture, imgMAT);
+            mView.applyCurrentFilters(imgMAT);
+            Utils.matToBitmap(imgMAT, bitmapPicture);*/
+            startImageEdit(bitmapPicture);
         }};
 
     private void startImageEdit(Bitmap bitmapPicture) {
         Log.i(TAG, "startImageEdit");
         Intent intent = new Intent(this, ImageView.class);
+
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmapPicture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        Log.i(TAG, "height: " + bitmapPicture.getHeight());
+        Log.i(TAG, "height: " + bitmapPicture.getWidth());
+        bitmapPicture.compress(Bitmap.CompressFormat.PNG, 5, stream);
         byte[] byteArray = stream.toByteArray();
-        Log.i(TAG, "Length before: " + byteArray.length);
+        //Log.i(TAG, "Length before: " + byteArray.length);
+        Log.i(TAG, "before put extra");
         intent.putExtra("image", byteArray);
         //intent.putExtra("image", bitmapPicture);
         Log.i(TAG, "about to start the activity");
@@ -150,6 +184,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         mView.appendFilter(new MatBlueYellowFilter());          // blue background, yellow letters
         mView.appendFilter(new MatBlueYellowInvertedFilter());  // yellow background, blue letters
         mView.appendFilter(new MatWhiteRedFilter());            // white background, red letters
+
     }
 
     @Override
@@ -163,7 +198,9 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     protected void onResume() {
         super.onResume();
         if (mView != null){
-            mView.enableView();}
+            mView.enableView();
+
+        }
 
         class mRunnable implements Runnable {
             @Override
