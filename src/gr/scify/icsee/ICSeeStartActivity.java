@@ -78,7 +78,7 @@ public class ICSeeStartActivity extends Activity {
             @Override
             public boolean onLongClick(View v) {
                 Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-                mVibrator.vibrate(250);
+                //mVibrator.vibrate(250);
                 mOpenCVCallBack.stopTutorial();
                 new AsyncProgressCheck(mDialog, mOpenCVCallBack, ICSeeStartActivity.this).execute();
                 return false;
@@ -100,6 +100,7 @@ public class ICSeeStartActivity extends Activity {
 
     protected void onPause() {
         super.onPause();
+        mOpenCVCallBack.stopTutorial();
     }
 
     protected void onResume() {

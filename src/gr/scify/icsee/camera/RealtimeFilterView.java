@@ -73,13 +73,22 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 		//mCamera.setPreviewDisplay(null);
         Log.i(TAG, "current: " + this.curFilterSubset().toString());
         try {
-            Log.i(TAG, "about to take photo");
             //mCamera = Camera.open();
 			int zoom = 0;
 			Camera.Parameters parameters = mCamera.getParameters();
 			int maxZoom = parameters.getMaxZoom();
-			Log.i(TAG, "currentZoom: " + parameters.getZoom());
+			//Log.i(TAG, "currentZoom: " + parameters.getZoom());
 			Log.i(TAG, "maxZoom: " + maxZoom);
+			Camera.Parameters params = mCamera.getParameters();
+			List<Camera.Size> supportedSizes = params.getSupportedPictureSizes();
+            for(int i=0; i< supportedSizes.size() ;i++) {
+                int height = supportedSizes.get(i).height;
+                int width = supportedSizes.get(i).width;
+                //Log.i(TAG, "height: " + height + " width: " + width);
+            }
+            parameters.setPictureSize(supportedSizes.get((supportedSizes.size() / 2) +2).width, supportedSizes.get((supportedSizes.size() / 2) +2).height);
+            //mCamera.setParameters(parameters);
+
 			if (parameters.isZoomSupported()) {
 				if (zoom >=0 && zoom < maxZoom) {
 					parameters.setZoom(zoom);
@@ -95,7 +104,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
             else throw new Exception("Cound not find camera... Null returned");
         }
         catch (Exception e){
-            Log.e(TAG, "Camera is not available (in use or does not exist): " + e.getLocalizedMessage());
+            Log.e(TAG, "Camera is not available!! (in use or does not exist): " + e.getLocalizedMessage() + " ," + e.getCause());
         }
     }
     

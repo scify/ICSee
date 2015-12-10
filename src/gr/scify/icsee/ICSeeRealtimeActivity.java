@@ -89,7 +89,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 } else {
                     mView.resumeCamera();
                 }*/
-
+                String currentFilter = mView.curFilterSubset().toString();
                 focusCamera();
 
                 return true;
@@ -107,8 +107,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
             @Override
             public void onAutoFocus(boolean success, Camera camera) {
-                // Play sound depending on success or failure of focus
-                //Toast.makeText(getContext(), "success: " + success, Toast.LENGTH_LONG).show();
                 if (success) {
                     //SoundPlayer.playSound(mContext, SoundPlayer.S6);
                 } else {
@@ -123,9 +121,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         @Override
         public void onShutter() {
-            SoundPlayer.playSound(mContext, SoundPlayer.S7);
-            Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-            mVibrator.vibrate(500);
 
         }};
 
@@ -133,8 +128,9 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         @Override
         public void onPictureTaken(byte[] arg0, Camera arg1) {
-            // TODO Auto-generated method stub
-
+            SoundPlayer.playSound(mContext, SoundPlayer.S7);
+            Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+            //mVibrator.vibrate(500);
         }};
 
     Camera.PictureCallback myPictureCallback_JPG = new Camera.PictureCallback(){
@@ -145,27 +141,31 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
             Bitmap bitmapPicture
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
             //bitmapPicture = mView.applyCurrentFilters(mView.mRgba);
+            String currentFilter = mView.curFilterSubset().toString();
+            //Log.i(TAG, "current: " + currentFilter);
+            if(!currentFilter.equals("")) {
 
-            //Log.i(TAG, "current: " + mView.curFilterSubset().toString());
-            Log.i(TAG, "current: " + mView.getCurrentFilters().toString());
-            /*Mat imgMAT = new Mat();
-            Utils.bitmapToMat(bitmapPicture, imgMAT);
-            mView.applyCurrentFilters(imgMAT);
-            Utils.matToBitmap(imgMAT, bitmapPicture);*/
+                Mat imgMAT = new Mat();
+                Utils.bitmapToMat(bitmapPicture, imgMAT);
+                mView.applyCurrentFilters(imgMAT);
+                Utils.matToBitmap(imgMAT, bitmapPicture);
+            } else {
+                Log.i(TAG, "no filter");
+            }
             startImageEdit(bitmapPicture);
         }};
 
     private void startImageEdit(Bitmap bitmapPicture) {
-        Log.i(TAG, "startImageEdit");
-        Intent intent = new Intent(this, ImageView.class);
+        //Log.i(TAG, "startImageEdit");
+        Intent intent = new Intent(mContext, ImageView.class);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         Log.i(TAG, "height: " + bitmapPicture.getHeight());
-        Log.i(TAG, "height: " + bitmapPicture.getWidth());
+        Log.i(TAG, "width: " + bitmapPicture.getWidth());
         bitmapPicture.compress(Bitmap.CompressFormat.PNG, 5, stream);
         byte[] byteArray = stream.toByteArray();
         //Log.i(TAG, "Length before: " + byteArray.length);
-        Log.i(TAG, "before put extra");
+        //Log.i(TAG, "before put extra");
         intent.putExtra("image", byteArray);
         //intent.putExtra("image", bitmapPicture);
         Log.i(TAG, "about to start the activity");
@@ -189,13 +189,23 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
     @Override
     protected void onPause() {
+        Log.i(TAG, "onPause");
         super.onPause();
+        /*if (mView != null)
+            mView.disableView();*/
+    }
+
+    @Override
+    protected void onStop() {
+        Log.i(TAG, "onStop");
+        super.onStop();
         if (mView != null)
             mView.disableView();
     }
 
     @Override
     protected void onResume() {
+        Log.i(TAG, "onResume");
         super.onResume();
         if (mView != null){
             mView.enableView();
