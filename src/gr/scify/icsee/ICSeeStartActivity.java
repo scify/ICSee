@@ -63,9 +63,13 @@ public class ICSeeStartActivity extends Activity {
         mExitButton = (Button)findViewById(R.id.exitButton);
         mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
         //TODO: Remove comments
-       /* AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        unmuteAudio(audioManager);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 16, 0);*/
+        AudioManager am =
+                (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        am.setStreamVolume(
+                AudioManager.STREAM_MUSIC,
+                am.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+                0);
         String lang = Locale.getDefault().getDisplayLanguage();
         Log.i(TAG,"lang = " + lang);
 
@@ -78,7 +82,7 @@ public class ICSeeStartActivity extends Activity {
             @Override
             public boolean onLongClick(View v) {
                 Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-                //mVibrator.vibrate(250);
+                mVibrator.vibrate(250);
                 mOpenCVCallBack.stopTutorial();
                 new AsyncProgressCheck(mDialog, mOpenCVCallBack, ICSeeStartActivity.this).execute();
                 return false;

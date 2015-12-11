@@ -22,4 +22,4 @@
         <intent android:action="android.settings.SYNC_SETTINGS" />
     </Preference>
 
-</PreferenceScreen><!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/xml/pref_data_sync.xml -->
+</PreferenceScreen><!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/xml/pref_data_sync.xml -->

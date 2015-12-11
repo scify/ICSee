@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values-sw720dp-land/dimens.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values-sw720dp-land/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">128dp</dimen>
 </resources>

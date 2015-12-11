@@ -3,6 +3,7 @@ package gr.scify.icsee;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
@@ -28,6 +29,9 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -107,11 +111,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
             @Override
             public void onAutoFocus(boolean success, Camera camera) {
-                if (success) {
-                    //SoundPlayer.playSound(mContext, SoundPlayer.S6);
-                } else {
-                    //SoundPlayer.playSound(mContext, SoundPlayer.S4);
-                }
                 String currentFilter = mView.curFilterSubset().toString();
                 if(currentFilter.equals("")) {
                     mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG, 3);
@@ -135,20 +134,15 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         @Override
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             SoundPlayer.playSound(mContext, SoundPlayer.S7);
-            Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-            //mVibrator.vibrate(500);
         }};
 
     Camera.PictureCallback myPictureCallback_JPG = new Camera.PictureCallback(){
 
         @Override
         public void onPictureTaken(byte[] arg0, Camera arg1) {
-            // TODO Auto-generated method stub
             Bitmap bitmapPicture
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
-            //bitmapPicture = mView.applyCurrentFilters(mView.mRgba);
             String currentFilter = mView.curFilterSubset().toString();
-            //Log.i(TAG, "current: " + currentFilter);
             if(!currentFilter.equals("")) {
 
                 Mat imgMAT = new Mat();
@@ -162,20 +156,44 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         }};
 
     private void startImageEdit(Bitmap bitmapPicture) {
-        //Log.i(TAG, "startImageEdit");
         Intent intent = new Intent(mContext, ImageView.class);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         Log.i(TAG, "height: " + bitmapPicture.getHeight());
         Log.i(TAG, "width: " + bitmapPicture.getWidth());
-        bitmapPicture.compress(Bitmap.CompressFormat.PNG, 5, stream);
-        byte[] byteArray = stream.toByteArray();
-        //Log.i(TAG, "Length before: " + byteArray.length);
-        //Log.i(TAG, "before put extra");
-        intent.putExtra("image", byteArray);
-        //intent.putExtra("image", bitmapPicture);
+        String dir = saveToInternalSorage(bitmapPicture);
+        intent.putExtra("dir", dir);
         Log.i(TAG, "about to start the activity");
         startActivity(intent);
+    }
+
+
+    private String saveToInternalSorage(Bitmap bitmapImage){
+
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        if(directory.exists()) {
+            Log.i(TAG, "Woohoo");
+        }
+        File mypath=new File(directory,"profile.png");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 5, fos);
+            Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+            mVibrator.vibrate(500);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
     }
 
     @Override

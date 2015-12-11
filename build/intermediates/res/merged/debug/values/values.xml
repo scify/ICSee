@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/strings_activity_settings.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values/strings_activity_settings.xml -->
     <eat-comment/>
     <string-array name="pref_example_list_titles">
         <item>Always</item>
@@ -29,17 +29,17 @@
         <item>-1</item>
     </string-array>
     <declare-styleable name="CameraBridgeViewBase"><attr format="boolean" name="show_fps"/><attr format="integer" name="camera_id"><enum name="any" value="-1"/><enum name="back" value="99"/><enum name="front" value="98"/></attr></declare-styleable>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/dimens.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/strings.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="app_description">A realtime camera app with filters for visually impaired people</string>
     <string name="app_name">ICSee</string>
     <string name="menu_settings">Settings</string>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/strings_activity_settings.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values/strings_activity_settings.xml -->
     <eat-comment/>
     <string name="pref_default_display_name">John Smith</string>
     <string name="pref_description_social_recommendations">Recommendations for people to contact based on your message history</string>
@@ -55,20 +55,20 @@
     <string name="pref_title_sync_frequency">Sync frequency</string>
     <string name="pref_title_system_sync_settings">System sync settings</string>
     <string name="pref_title_vibrate">Vibrate</string>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/strings.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values/strings.xml -->
     <eat-comment/>
     <string name="processed_image">Processed Image</string>
     <string name="progress_label">Progress of current task...</string>
     <string name="title_activity_image_edit">ImageEdit</string>
     <string name="title_activity_img_viewer">Image Viewer</string>
     <string name="title_activity_main">ICSee</string>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/strings_activity_settings.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values/strings_activity_settings.xml -->
     <eat-comment/>
     <string name="title_activity_settings">Settings</string>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/strings.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values/strings.xml -->
     <eat-comment/>
     <string name="welcome_label">Welcome to the ICSee world!</string>
-    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/values/styles.xml -->
+    <!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Light"/>
 </resources>

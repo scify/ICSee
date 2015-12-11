@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -50,6 +51,14 @@ public class TouchImageView extends ImageView {
         sharedConstructing(context);
     }
 
+    final Handler _handler = new Handler();
+    Runnable _longPressed = new Runnable() {
+        public void run() {
+            Log.i("info","LongPress");
+        }
+    };
+    public static int LONG_PRESS_TIME = 500;
+
     private void sharedConstructing(Context context) {
 
         super.setClickable(true);
@@ -78,7 +87,7 @@ public class TouchImageView extends ImageView {
                 switch (event.getAction()) {
 
                     case MotionEvent.ACTION_DOWN:
-
+                        _handler.postDelayed(_longPressed, LONG_PRESS_TIME);
                         last.set(curr);
 
                         start.set(last);
@@ -90,7 +99,7 @@ public class TouchImageView extends ImageView {
                     case MotionEvent.ACTION_MOVE:
 
                         if (mode == DRAG) {
-
+                            _handler.removeCallbacks(_longPressed);
                             float deltaX = curr.x - last.x;
 
                             float deltaY = curr.y - last.y;
@@ -110,7 +119,7 @@ public class TouchImageView extends ImageView {
                         break;
 
                     case MotionEvent.ACTION_UP:
-
+                        _handler.removeCallbacks(_longPressed);
                         mode = NONE;
 
                         int xDiff = (int) Math.abs(curr.x - start.x);

@@ -32,4 +32,4 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_add_friends_to_messages" />
 
-</PreferenceScreen><!-- From: file:/home/pisaris/projects/ICSee/ICSee-v1/res/xml/pref_general.xml -->
+</PreferenceScreen><!-- From: file:/home/pisaris/projects/ICSee/ICSee-v2/res/xml/pref_general.xml -->
