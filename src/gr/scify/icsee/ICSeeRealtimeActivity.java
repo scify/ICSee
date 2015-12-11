@@ -56,6 +56,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     public RealtimeFilterView mView = null;
     private static Context mContext;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
+    private static String currentFilter = "";
+    private Mat curFilter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,7 +113,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
             @Override
             public void onAutoFocus(boolean success, Camera camera) {
-                String currentFilter = mView.curFilterSubset().toString();
+                currentFilter = mView.curFilterSubset().toString();
+
                 if(currentFilter.equals("")) {
                     mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG, 3);
                 }else {
@@ -161,14 +164,14 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         Log.i(TAG, "height: " + bitmapPicture.getHeight());
         Log.i(TAG, "width: " + bitmapPicture.getWidth());
-        String dir = saveToInternalSorage(bitmapPicture);
+        String dir = saveToInternalStorage(bitmapPicture);
         intent.putExtra("dir", dir);
         Log.i(TAG, "about to start the activity");
         startActivity(intent);
     }
 
 
-    private String saveToInternalSorage(Bitmap bitmapImage){
+    private String saveToInternalStorage(Bitmap bitmapImage){
 
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
@@ -195,6 +198,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         }
         return directory.getAbsolutePath();
     }
+
 
     @Override
     protected void onStart() {
@@ -229,11 +233,11 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
     @Override
     protected void onResume() {
-        //Log.i(TAG, "onResume");
+        Log.i(TAG, "currentFilter: " + currentFilter);
+
         super.onResume();
         if (mView != null){
             mView.enableView();
-
         }
 
         class mRunnable implements Runnable {

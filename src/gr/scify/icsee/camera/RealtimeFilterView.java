@@ -35,7 +35,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     protected double CurrentZoom = 1.0;
 
 	protected LinkedList<IMatFilter> lFilters;
-	protected NavigableSet<IMatFilter> nsCurFilters;
+	public NavigableSet<IMatFilter> nsCurFilters;
 	protected ListIterator<IMatFilter> liCurFilter;
 	protected LinkedList<NavigableSet<IMatFilter>> lPreviousSettings;
 	
