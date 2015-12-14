@@ -1,10 +1,12 @@
 package gr.scify.icsee;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -12,13 +14,15 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
 
+import gr.scify.icsee.sounds.SoundPlayer;
+
 public class TouchImageView extends ImageView {
     Matrix matrix;
     // We can be in one of these 3 states
     static final int NONE = 0;
     static final int DRAG = 1;
     static final int ZOOM = 2;
-
+    protected String TAG = TouchImageView.class.getCanonicalName();
     int mode = NONE;
 
     // Remember some things for zooming
@@ -39,7 +43,7 @@ public class TouchImageView extends ImageView {
 
     ScaleGestureDetector mScaleDetector;
 
-    Context context;
+    Context mContext;
 
     public TouchImageView(Context context) {
         super(context);
@@ -48,22 +52,31 @@ public class TouchImageView extends ImageView {
 
     public TouchImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
         sharedConstructing(context);
+    }
+
+    public void finishActivity() {
+
     }
 
     final Handler _handler = new Handler();
     Runnable _longPressed = new Runnable() {
         public void run() {
-            Log.i("info","LongPress");
+            Log.i(TAG, "long click");
+            SoundPlayer.playSound(mContext, SoundPlayer.S8);
+            Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+            mVibrator.vibrate(500);
+            ((Activity) mContext).finish();
         }
     };
-    public static int LONG_PRESS_TIME = 500;
+    public static int LONG_PRESS_TIME = 800;
 
     private void sharedConstructing(Context context) {
 
         super.setClickable(true);
 
-        this.context = context;
+        this.mContext = context;
 
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 

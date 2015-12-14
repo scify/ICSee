@@ -180,8 +180,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         try {
             fos = new FileOutputStream(mypath);
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 5, fos);
-            Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-            mVibrator.vibrate(500);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
