@@ -57,7 +57,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     private static Context mContext;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
     private static String currentFilter = "";
-    private Mat curFilter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         if (!gestureLib.load()) {
             finish();
         }
-
         // Init Handler
         setContentView(R.layout.activity_main);
         inflate.setOnClickListener(new OnClickListener() {
@@ -82,7 +80,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
             public void onClick(View arg0) {
                 // Play start focus sound
                 SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S1);
-
                 mView.focusCamera();
             }
         });
@@ -147,7 +144,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
             String currentFilter = mView.curFilterSubset().toString();
             if(!currentFilter.equals("")) {
-
                 Mat imgMAT = new Mat();
                 Utils.bitmapToMat(bitmapPicture, imgMAT);
                 mView.applyCurrentFilters(imgMAT);
@@ -166,7 +162,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         Log.i(TAG, "width: " + bitmapPicture.getWidth());
         String dir = saveToInternalStorage(bitmapPicture);
         intent.putExtra("dir", dir);
-        Log.i(TAG, "about to start the activity");
         startActivity(intent);
     }
 
