@@ -70,7 +70,7 @@ public class TouchImageView extends ImageView {
             ((Activity) mContext).finish();
         }
     };
-    public static int LONG_PRESS_TIME = 800;
+    public static int LONG_PRESS_TIME = 1500;
 
     private void sharedConstructing(Context context) {
 
