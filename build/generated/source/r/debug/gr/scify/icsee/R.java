@@ -60,10 +60,10 @@ containing a value of this type.
         public static final int action_settings=0x7f080011;
         public static final int any=0x7f080000;
         public static final int back=0x7f080001;
+        public static final int button=0x7f080003;
         public static final int errorMessage=0x7f08000e;
         public static final int exitButton=0x7f08000d;
         public static final int front=0x7f080002;
-        public static final int imageView=0x7f080003;
         public static final int imageView1=0x7f08000b;
         public static final int mainLayout=0x7f080006;
         public static final int menu_settings=0x7f080010;

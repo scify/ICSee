@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     tools:context=".camera.ImageView">
 
-    <ImageView
+    <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/imageView"
+        android:text="New Button"
+        android:id="@+id/button"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false" />
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

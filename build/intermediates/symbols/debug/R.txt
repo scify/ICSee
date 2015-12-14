@@ -17,10 +17,10 @@ int drawable icsee_logo4 0x7f020007
 int id action_settings 0x7f080011
 int id any 0x7f080000
 int id back 0x7f080001
+int id button 0x7f080003
 int id errorMessage 0x7f08000e
 int id exitButton 0x7f08000d
 int id front 0x7f080002
-int id imageView 0x7f080003
 int id imageView1 0x7f08000b
 int id mainLayout 0x7f080006
 int id menu_settings 0x7f080010

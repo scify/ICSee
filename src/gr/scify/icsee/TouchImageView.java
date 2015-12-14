@@ -24,7 +24,6 @@ public class TouchImageView extends ImageView {
     static final int ZOOM = 2;
     protected String TAG = TouchImageView.class.getCanonicalName();
     int mode = NONE;
-
     // Remember some things for zooming
     PointF last = new PointF();
     PointF start = new PointF();
@@ -32,19 +31,12 @@ public class TouchImageView extends ImageView {
     float maxScale = 3f;
     float[] m;
     int viewWidth, viewHeight;
-
     static final int CLICK = 3;
-
     float saveScale = 1f;
-
     protected float origWidth, origHeight;
-
     int oldMeasuredWidth, oldMeasuredHeight;
-
     ScaleGestureDetector mScaleDetector;
-
     Context mContext;
-
     public TouchImageView(Context context) {
         super(context);
         sharedConstructing(context);
@@ -56,12 +48,8 @@ public class TouchImageView extends ImageView {
         sharedConstructing(context);
     }
 
-    public void finishActivity() {
-
-    }
-
-    final Handler _handler = new Handler();
-    Runnable _longPressed = new Runnable() {
+    final Handler mHandler = new Handler();
+    Runnable mLongPressed = new Runnable() {
         public void run() {
             Log.i(TAG, "long click");
             SoundPlayer.playSound(mContext, SoundPlayer.S8);
@@ -73,151 +61,92 @@ public class TouchImageView extends ImageView {
     public static int LONG_PRESS_TIME = 1500;
 
     private void sharedConstructing(Context context) {
-
         super.setClickable(true);
-
         this.mContext = context;
-
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-
         matrix = new Matrix();
-
         m = new float[9];
-
         setImageMatrix(matrix);
-
         setScaleType(ScaleType.MATRIX);
-
         setOnTouchListener(new OnTouchListener() {
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 mScaleDetector.onTouchEvent(event);
-
                 PointF curr = new PointF(event.getX(), event.getY());
-
                 switch (event.getAction()) {
-
                     case MotionEvent.ACTION_DOWN:
-                        _handler.postDelayed(_longPressed, LONG_PRESS_TIME);
+                        Log.i(TAG, "down");
+                        mHandler.postDelayed(mLongPressed, LONG_PRESS_TIME);
                         last.set(curr);
-
                         start.set(last);
-
                         mode = DRAG;
-
                         break;
-
                     case MotionEvent.ACTION_MOVE:
-
                         if (mode == DRAG) {
-                            _handler.removeCallbacks(_longPressed);
+                            Log.i(TAG, "drag");
                             float deltaX = curr.x - last.x;
-
                             float deltaY = curr.y - last.y;
-
+                            Log.i(TAG, "deltaX: " + String.valueOf(deltaX) + " deltaY: " + String.valueOf(deltaY));
+                            if((int)deltaX !=0 || (int) deltaY!=0) {
+                                Log.i(TAG, "remove");
+                                mHandler.removeCallbacks(mLongPressed);
+                            }
                             float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
-
                             float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
-
                             matrix.postTranslate(fixTransX, fixTransY);
-
                             fixTrans();
-
                             last.set(curr.x, curr.y);
-
                         }
-
                         break;
-
                     case MotionEvent.ACTION_UP:
-                        _handler.removeCallbacks(_longPressed);
+                        //mHandler.removeCallbacks(mLongPressed);
                         mode = NONE;
-
                         int xDiff = (int) Math.abs(curr.x - start.x);
-
                         int yDiff = (int) Math.abs(curr.y - start.y);
-
                         if (xDiff < CLICK && yDiff < CLICK)
-
                             performClick();
-
                         break;
-
                     case MotionEvent.ACTION_POINTER_UP:
-
                         mode = NONE;
-
                         break;
-
                 }
-
                 setImageMatrix(matrix);
-
                 invalidate();
-
-                return true; // indicate event was handled
-
+                return false; // indicate event was handled
             }
-
         });
     }
 
     public void setMaxZoom(float x) {
-
         maxScale = x;
-
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-
         @Override
         public boolean onScaleBegin(ScaleGestureDetector detector) {
-
             mode = ZOOM;
-
             return true;
-
         }
 
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-
             float mScaleFactor = detector.getScaleFactor();
-
             float origScale = saveScale;
-
             saveScale *= mScaleFactor;
-
             if (saveScale > maxScale) {
-
                 saveScale = maxScale;
-
                 mScaleFactor = maxScale / origScale;
-
             } else if (saveScale < minScale) {
-
                 saveScale = minScale;
-
                 mScaleFactor = minScale / origScale;
-
             }
-
             if (origWidth * saveScale <= viewWidth || origHeight * saveScale <= viewHeight)
-
                 matrix.postScale(mScaleFactor, mScaleFactor, viewWidth / 2, viewHeight / 2);
-
             else
-
                 matrix.postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
-
             fixTrans();
-
             return true;
-
         }
-
     }
 
     void fixTrans() {

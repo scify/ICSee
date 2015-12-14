@@ -36,9 +36,11 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NavigableSet;
 
 import gr.scify.icsee.camera.ImageView;
 import gr.scify.icsee.camera.RealtimeFilterView;
+import gr.scify.icsee.filters.IMatFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatAdaptiveThresholding;
 import gr.scify.icsee.filters.opencv.matfilters.MatBinarizationFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatBlackYellowFilter;
@@ -135,7 +137,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             SoundPlayer.playSound(mContext, SoundPlayer.S7);
         }};
-
+    static IMatFilter fil;
     Camera.PictureCallback myPictureCallback_JPG = new Camera.PictureCallback(){
 
         @Override
@@ -143,6 +145,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
             Bitmap bitmapPicture
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
             String currentFilter = mView.curFilterSubset().toString();
+            NavigableSet<IMatFilter> test = mView.filterListToString(currentFilter);
+            fil = test.pollFirst();
             if(!currentFilter.equals("")) {
                 Mat imgMAT = new Mat();
                 Utils.bitmapToMat(bitmapPicture, imgMAT);
@@ -226,7 +230,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
     @Override
     protected void onResume() {
-        Log.i(TAG, "currentFilter: " + currentFilter);
 
         super.onResume();
         if (mView != null){
@@ -255,6 +258,11 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setCvCameraViewListener(mView);
                     mView.enableView();
+                    Log.i(TAG, "currentFilter: " + currentFilter);
+                    if(fil != null) {
+                        Log.i(TAG, "fil: " + fil.toString());
+                        mView.applyCurrentFilters(fil.getMat());
+                    }
                 }
             }
         }
@@ -272,6 +280,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "onActivityResult called");
         super.onActivityResult(requestCode, resultCode, data);
 
         mView.enableView();
