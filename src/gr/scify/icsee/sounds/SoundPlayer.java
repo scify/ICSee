@@ -22,7 +22,7 @@ public class SoundPlayer {
     public static final int S5 = R.raw.emptybellbeep;
     public static final int S6 = R.raw.pan14tonebeep;
     public static final int S7 = R.raw.camerashutterclick;
-    public static final int S8 = R.raw.exit2;
+    public static final int S8 = R.raw.exit3;
     public static final int Stutorial = R.raw.tutorial;
 
 

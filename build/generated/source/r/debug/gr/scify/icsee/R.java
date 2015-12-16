@@ -94,14 +94,15 @@ containing a value of this type.
         public static final int emptybellbeep=0x7f050003;
         public static final int exit=0x7f050004;
         public static final int exit2=0x7f050005;
-        public static final int gestures=0x7f050006;
-        public static final int greencouchbeeps=0x7f050007;
-        public static final int keykrushermicrowavebeep=0x7f050008;
-        public static final int kodackbeepbeep=0x7f050009;
-        public static final int next=0x7f05000a;
-        public static final int pan14tonebeep=0x7f05000b;
-        public static final int tutorial=0x7f05000c;
-        public static final int tutorial_en=0x7f05000d;
+        public static final int exit3=0x7f050006;
+        public static final int gestures=0x7f050007;
+        public static final int greencouchbeeps=0x7f050008;
+        public static final int keykrushermicrowavebeep=0x7f050009;
+        public static final int kodackbeepbeep=0x7f05000a;
+        public static final int next=0x7f05000b;
+        public static final int pan14tonebeep=0x7f05000c;
+        public static final int tutorial=0x7f05000d;
+        public static final int tutorial_en=0x7f05000e;
     }
     public static final class string {
         public static final int action_settings=0x7f090000;
