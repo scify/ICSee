@@ -58,7 +58,7 @@ public class TouchImageView extends ImageView {
             ((Activity) mContext).finish();
         }
     };
-    public static int LONG_PRESS_TIME = 1500;
+    public static int LONG_PRESS_TIME = 2000;
 
     private void sharedConstructing(Context context) {
         super.setClickable(true);
@@ -99,7 +99,7 @@ public class TouchImageView extends ImageView {
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        //mHandler.removeCallbacks(mLongPressed);
+                        mHandler.removeCallbacks(mLongPressed);
                         mode = NONE;
                         int xDiff = (int) Math.abs(curr.x - start.x);
                         int yDiff = (int) Math.abs(curr.y - start.y);

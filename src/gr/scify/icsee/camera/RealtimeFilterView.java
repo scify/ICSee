@@ -1,6 +1,7 @@
 package gr.scify.icsee.camera;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -42,6 +43,10 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 	protected boolean bProcessing = false;
 	protected boolean bPaused;
 	protected int processNextNFrames = 0;
+    private static final String PREFS_FILE = "gr.scify.icsee.preferences";
+    private static final String KEY_FILTER = "key_filter";
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
 	public RealtimeFilterView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -71,7 +76,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     
     public void getPhoto(ShutterCallback sc, PictureCallback pcRaw, PictureCallback pcJpg, int qualitySteps) {
 		//mCamera.setPreviewDisplay(null);
-        Log.i(TAG, "current: " + this.curFilterSubset().toString());
+        //Log.i(TAG, "current: " + this.curFilterSubset().toString());
         try {
             //mCamera = Camera.open();
 			int zoom = 0;
@@ -129,6 +134,8 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     
     public void appendFilter(IMatFilter ibNext) {
     	lFilters.add(ibNext);
+		// Here we recompute the powerset of filters
+		// TODO: Check if we should remove
     	initFilterSubsets();
     }
     
@@ -205,9 +212,25 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     }
 
     public String curFilterSubset() {
-    	return filterListToString(nsCurFilters);    	
+    	return filterListToString(nsCurFilters);
     }
-    
+
+    /**
+     * This method selects the next sub filter, but without generating
+     * permutations of filters. Only the basic, appended list.
+     * @return
+     */
+    public String nextSingleFilter() {
+        if (!liCurFilter.hasNext()) {
+            // We reset the filter iterator
+            liCurFilter = lFilters.listIterator();
+        }
+        IMatFilter ibNext = liCurFilter.next();
+        nsCurFilters.clear();
+        nsCurFilters.add(ibNext);
+        return filterListToString(nsCurFilters);
+    }
+
     // Activates next combination of filter
     public String nextFilterSubset() {
 		Log.d("fil", "nsCurFilters: " + nsCurFilters);
@@ -257,8 +280,49 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 
     	return filterListToString(nsCurFilters);
     }
-    
-    public void onCameraViewStarted(int width, int height) {
+	static private String sFilter;
+	public void saveCurrentFilterSet() {
+		// Get string representation
+		sFilter  = curFilterSubset();
+		// TODO: Save to a setting
+		Log.i(TAG, "current filter: " + sFilter);
+        mEditor.putString(KEY_FILTER, sFilter);
+        mEditor.apply();
+	}
+	public void restoreCurrentFilterSet() {
+        mSharedPreferences = getContext().getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        mEditor = mSharedPreferences.edit();
+        //second parameter is default value
+		String sFilterName = mSharedPreferences.getString(KEY_FILTER,"");
+        if (sFilterName == null)
+            return; // We have not saved anything, so get back home
+        Log.i(TAG, "current filter (restore): " + sFilter);
+		String sCandidateFilterName = "";
+		int iPrvFilterSetSize = -1;
+		// While we have not set the saved filter as current
+        Log.i(TAG, "nsCurFilters.size(): " + nsCurFilters.size());
+		while (!sCandidateFilterName.equals(sFilterName) &&
+                // and we have not returned to less filter (i.e. restarted searching)
+				(iPrvFilterSetSize <= nsCurFilters.size())) {
+            Log.i(TAG, "sCandidateFilterName: " + sCandidateFilterName);
+			// Get next filter
+			nextFilterSubset();
+			// Update current filter name
+			sCandidateFilterName = curFilterSubset();
+            // Update last count of filter set size
+            iPrvFilterSetSize = nsCurFilters.size();
+		}
+
+		// If we reached this point and still the name is not equal
+		if (!sCandidateFilterName.equals(sFilterName)) {
+            // we did not find the filter
+            Log.i(TAG, "we did not find the filter");
+            nextFilterSubset(); // Reset to first filter
+        }
+	}
+
+
+	public void onCameraViewStarted(int width, int height) {
     	mRgba = new Mat();
     	mScaledRgba = null;
     }

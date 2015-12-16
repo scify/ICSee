@@ -137,17 +137,19 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             SoundPlayer.playSound(mContext, SoundPlayer.S7);
         }};
-    static IMatFilter fil;
+
     Camera.PictureCallback myPictureCallback_JPG = new Camera.PictureCallback(){
 
         @Override
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             Bitmap bitmapPicture
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
-            String currentFilter = mView.curFilterSubset().toString();
-            NavigableSet<IMatFilter> test = mView.filterListToString(currentFilter);
-            fil = test.pollFirst();
-            if(!currentFilter.equals("")) {
+            // NavigableSet<IMatFilter> test = mView.filterListToString(currentFilter);
+            // fil = test.pollFirst();
+            mView.saveCurrentFilterSet(); // Store filter for later reference
+
+            // Get current running filter
+            if(!mView.curFilterSubset().equals("")) {
                 Mat imgMAT = new Mat();
                 Utils.bitmapToMat(bitmapPicture, imgMAT);
                 mView.applyCurrentFilters(imgMAT);
@@ -202,13 +204,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         super.onStart();
         mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
         mView.setLongClickable(true);
-        mView.appendFilter(new MatAdaptiveThresholding());      // black background, white letters
-        mView.appendFilter(new MatBinarizationFilter());        // white background, black letters
-        mView.appendFilter(new MatNegative());                  // negative
-        mView.appendFilter(new MatBlackYellowFilter());         // black background, yellow letters
-        mView.appendFilter(new MatBlueYellowFilter());          // blue background, yellow letters
-        mView.appendFilter(new MatBlueYellowInvertedFilter());  // yellow background, blue letters
-        mView.appendFilter(new MatWhiteRedFilter());            // white background, red letters
+
 
     }
 
@@ -257,12 +253,18 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setCvCameraViewListener(mView);
+                    // Restore last filter, if available
+                    mView.appendFilter(new MatAdaptiveThresholding());      // black background, white letters
+                    mView.appendFilter(new MatBinarizationFilter());        // white background, black letters
+                    mView.appendFilter(new MatNegative());                  // negative
+                    mView.appendFilter(new MatBlackYellowFilter());         // black background, yellow letters
+                    mView.appendFilter(new MatBlueYellowFilter());          // blue background, yellow letters
+                    mView.appendFilter(new MatBlueYellowInvertedFilter());  // yellow background, blue letters
+                    mView.appendFilter(new MatWhiteRedFilter());            // white background, red letters
+                    mView.restoreCurrentFilterSet();
+                    // Re-enable view
                     mView.enableView();
-                    Log.i(TAG, "currentFilter: " + currentFilter);
-                    if(fil != null) {
-                        Log.i(TAG, "fil: " + fil.toString());
-                        mView.applyCurrentFilters(fil.getMat());
-                    }
+
                 }
             }
         }

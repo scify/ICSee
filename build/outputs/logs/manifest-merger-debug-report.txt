@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:2:1-57:12
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:2:1-53:12
 	xmlns:android
 		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:2:11-69
 	package
@@ -36,73 +36,61 @@ uses-feature#android.hardware.camera.autofocus
 ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:17:5-70
 	android:name
 		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:17:19-67
-android:uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:19:5-89
-	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:19:30-86
-android:uses-permission#android.permission.READ_PHONE_STATE
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:20:5-83
-	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:20:30-80
-android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:21:5-88
-	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:21:30-85
 application
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:23:5-55:19
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:19:5-51:19
 	android:label
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:26:9-41
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:22:9-41
 	android:allowBackup
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:24:9-35
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:20:9-35
 	android:icon
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:25:9-48
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:21:9-48
 	android:theme
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:28:9-73
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:24:9-73
 	android:logo
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:27:9-44
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:23:9-44
 activity#gr.scify.icsee.SettingsActivity
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:29:9-31:72
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:25:9-27:72
 	android:label
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:31:13-60
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:27:13-60
 	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:30:13-45
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:26:13-45
 activity#gr.scify.icsee.ImgViewerActivity
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:32:9-34:74
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:28:9-30:74
 	android:label
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:34:13-62
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:30:13-62
 	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:33:13-46
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:29:13-46
 activity#gr.scify.icsee.ICSeeRealtimeActivity
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:35:9-38:62
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:31:9-34:62
+	android:screenOrientation
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:34:13-50
+	android:label
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:33:13-56
+	android:name
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:32:13-50
+activity#gr.scify.icsee.ICSeeStartActivity
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:35:9-44:20
 	android:screenOrientation
 		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:38:13-50
 	android:label
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:37:13-56
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:37:13-34
 	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:36:13-50
-activity#gr.scify.icsee.ICSeeStartActivity
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:39:9-48:20
-	android:screenOrientation
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:42:13-50
-	android:label
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:41:13-34
-	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:40:13-47
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:36:13-47
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:43:13-47:29
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:39:13-43:29
 action#android.intent.action.MAIN
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:44:17-69
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:40:17-69
 	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:44:25-66
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:40:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:46:17-77
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:42:17-77
 	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:46:27-74
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:42:27-74
 activity#gr.scify.icsee.camera.ImageView
-ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:49:9-54:20
+ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:45:9-50:20
 	android:screenOrientation
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:52:13-50
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:48:13-50
 	android:label
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:51:13-62
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:47:13-62
 	android:name
-		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:50:13-45
+		ADDED from /home/pisaris/projects/ICSee/ICSee-v2/AndroidManifest.xml:46:13-45

@@ -23,6 +23,7 @@ import gr.scify.icsee.R;
  */
 public class ModifiedLoaderCallback extends BaseLoaderCallback {
     public int processStatus=Integer.MIN_VALUE; // Not yet initialized
+    protected String TAG = ModifiedLoaderCallback.class.getCanonicalName();
     ProgressBar mPrograssBar;
     Context mContext;
     public boolean hasManagerConnected = false;
@@ -58,8 +59,8 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
         String lang = Locale.getDefault().getLanguage();
         TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = tm.getSimCountryIso();
-        Log.i("lang", "lang: " + lang);
-        Log.i("lang", "country: " + countryCode);
+        Log.i(TAG, "lang: " + lang);
+        Log.i(TAG, "country: " + countryCode);
         if(mplayer != null) {
             if(mplayer.isPlaying()){
                 mplayer.stop();
