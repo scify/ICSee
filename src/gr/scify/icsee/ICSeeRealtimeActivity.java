@@ -346,7 +346,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         sliderText.setText("No theme applicable");
                         /*Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
                         		Toast.LENGTH_SHORT).show();*/
-                        SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S6);
+                        SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S1);
                     }
                 } else if (prediction.name.contains("left")) {
                     sTheme = mView.previousFilterSubset();
@@ -363,7 +363,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         sliderText.setText("No theme applicable");
                         	/*Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
                         			Toast.LENGTH_SHORT).show();*/
-                        SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S6);
+                        SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S1);
                     }
                 }
             }

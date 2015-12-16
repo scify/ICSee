@@ -16,13 +16,13 @@ import gr.scify.icsee.R;
 public class SoundPlayer {
     // Static sound variables (STEP 1)
     public static final int S1 = R.raw.alienxxxbeep;
-    public static final int S2 = R.raw.greencouchbeeps;
+    public static final int S2 = R.raw.next;
     public static final int S3 = R.raw.keykrushermicrowavebeep;
     public static final int S4 = R.raw.kodackbeepbeep;
     public static final int S5 = R.raw.emptybellbeep;
     public static final int S6 = R.raw.pan14tonebeep;
     public static final int S7 = R.raw.camerashutterclick;
-    public static final int S8 = R.raw.exit;
+    public static final int S8 = R.raw.exit2;
     public static final int Stutorial = R.raw.tutorial;
 
 
