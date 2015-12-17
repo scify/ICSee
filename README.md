@@ -123,6 +123,14 @@ limitations under the License.
 
 Sponsors
 --------
+<table>
+<tr>
+<td>
 <a href="http://www.scify.gr/site/en/"><img src="http://www.scify.gr/site/images/scify/scify_logo_108.png"></a>
+</td>
+<td>
 <a href="http://www.latsis-foundation.org/" title="Ίδρυμα Λάτση" rel="home"><img src="http://www.latsis-foundation.org/img/iePngs/logoEll.png" alt="Ίδρυμα Λάτση" title="Ίδρυμα Λάτση"></a>
+<td>
+</tr>
+</table>
 =======
