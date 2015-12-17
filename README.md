@@ -130,7 +130,7 @@ Sponsors
 </td>
 <td>
 <a href="http://www.latsis-foundation.org/" title="Ίδρυμα Λάτση" rel="home"><img src="http://www.latsis-foundation.org/img/iePngs/logoEll.png" alt="Ίδρυμα Λάτση" title="Ίδρυμα Λάτση"></a>
-<td>
+</td>
 </tr>
 </table>
 =======
