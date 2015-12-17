@@ -48,37 +48,45 @@ Download the Developer Guidelines from <a href="http://icstudy.projects.developm
     <th>Τεκμηρίωση</th>
   </tr>
   <tr>
-    <td>Α</td>
-    <td>Έκδοση 1.0 της εφαρμογής ICSee, με επιπλέον τρία φίλτρα επεξεργασίας εικόνας</td>
-    <td>Το ICSee υπάρχει διαθέσιμο για δωρεάν κατέβασμα στο Google Play σε αυτόν τον σύνδεσμο: https://goo.gl/WnNyzn</td>
+    <td>1</td>
+    <td>ICSee Android Application: Εφαρμογή έτοιμη για χρήση σε smartphones / tablets με
+        λειτουργικό σύστημα Android. Στα χαρακτηριστικά θα περιλαμβάνονται, πέραν των ήδη
+        ανεπτυγμένων χαρακτηριστικών:</td>
+    <td><ul><li>Λήψη στιγμιοτύπου υψηλής ανάλυσης για καλύτερη προβολή</li>
+                <li>Δυνατότητα προσαρμογής της μεγέθυνσης της εικόνας από το χρήστη.</li><li>Δημιουργία εκπαιδευτικής διαδικασίας (tutorial) για να μπορεί ο χρήστης να μάθει να
+                το χρησιμοποιεί εύκολα.</li></ul></td>
+                <td>Το ICSee υπάρχει διαθέσιμο για δωρεάν κατέβασμα στο Google Play σε αυτόν τον σύνδεσμο: https://goo.gl/WnNyzn</td>
   </tr>
   <tr>
-    <td>Β</td>
-    <td colspan="2">Υλικό για διασφάλιση της δυνατότητας διάχυσης του ICSee</td>
+    <td>2</td>
+    <td colspan="1">Ο κώδικας της εφαρμογής διαθέσιμος με πολύ ανοικτές άδειες χρήσης σε δημόσιο
+
+                    αποθετήριο, προκειμένου όλοι να μπορούν να την εξελίξουν / εξειδικεύσουν.</td>
+                    <td>Ο κώδικας της εφαρμογής είναι διαθέσιμος σε αυτόν τον σύνδεσμο: https://github.com/scify/ICSee</td>
   </tr>
   <tr>
-    <td>Β1</td>
-    <td>Προσφορά του κώδικα της εφαρμογής ως ανοικτού κώδικα.</td>
-    <td>Το έργο βρισκεται στο GitHub σε αυτόν τον σύνδεσμο:
-        https://github.com/ellak-monades-aristeias/ICSee-v1</td>
+    <td>3</td>
+    <td>Διασφάλιση ότι η εφαρμογή θα λειτουργεί σε κάποιες δημοφιλείς συσκευές οι οποίες έχουν
+
+        τα επιθυμητά χαρακτηριστικά της ομάδας-στόχου (π.χ. οθόνη τουλάχιστον Χ ιντσών) ή
+
+        απαιτήσεων της εφαρμογής ώστε να λειτουργεί ικανοποιητικά (π.χ. κάμερα Υ Μpixels)</td>
   </tr>
   <tr>
-    <td>Β2</td>
-    <td>Υποστηρικτικό υλικό (τεκμηρίωση, εγχειρίδιο κ.λπ.)</td>
-    <td>Η τεκμηρίωση είναι στο GitHub και το εγχειρίδιο είναι ενσωματωμένο ηχητικά στην εφαρμογή, προσαρμοσμένο στις ανάγκες του κοινού-στόχου.</td>
+    <td>4</td>
+    <td>Σύντομο report με τα αποτελέσματα των tests με τελικούς χρήστες και με συνεισφορά
+
+        επιστήμονα ειδικού σε προβλήματα όρασης.</td>
+    <td></td>
   </tr>
   <tr>
-    <td>Γ</td>
-    <td colspan="2">Προώθηση του ICSee</td>
+    <td>5</td>
+    <td colspan="1">Υποστηρικτικό υλικό.</td>
+    <td></td>
   </tr>
   <tr>
-    <td>Γ1</td>
-    <td>Δημιουργία προωθητικού υλικού (βίντεο).</td>
-    <td>Μπορείτε να δείτε το βίντεο στο Youtube (https://youtu.be/Wb4_S6ngTjM)</td>
-  </tr>
-  <tr>
-    <td>Γ2</td>
-    <td>Προώθηση του ICSee, της συνεργασίας με την ΕΛ/ΛΑΚ, και των σημαντικών εξελίξεων του project μέσω του δικτύου συνεργατών, των δράσεων και μέσων επικοινωνίας της SciFY</td>
+    <td>6</td>
+    <td>Προώθηση του κοινού project ICSee στα κανάλια επικοινωνίας της SciFY.</td>
     <td>Στο Newsletter της SciFY (http://eepurl.com/bAuv11)
         Στα Social media της SciFY
         <ul>
@@ -89,6 +97,10 @@ Download the Developer Guidelines from <a href="http://icstudy.projects.developm
         (https://twitter.com/scify_org)</li>
         </ul>
         Ειδική παρουσίαση στην ημέρα Λευκού Μπαστουνιού, όπως φαίνεται και στο προφίλ μας στο Facebook</td>
+  </tr>
+  <tr>
+  <td>7</td>
+  <td>Προώθηση σε κοινότητες και φορείς τυφλότητας.</td>
   </tr>
 </table>
 
@@ -112,4 +124,5 @@ limitations under the License.
 Sponsors
 --------
 <a href="http://www.scify.gr/site/en/"><img src="http://www.scify.gr/site/images/scify/scify_logo_108.png"></a>
+<a href="http://www.latsis-foundation.org/" title="Ίδρυμα Λάτση" rel="home"><img style="height: 90px; margin-left: 20px;"  src="http://www.latsis-foundation.org/img/iePngs/logoEll.png" alt="Ίδρυμα Λάτση" title="Ίδρυμα Λάτση"></a>
 =======
