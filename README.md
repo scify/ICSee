@@ -112,5 +112,4 @@ limitations under the License.
 Sponsors
 --------
 <a href="http://www.scify.gr/site/en/"><img src="http://www.scify.gr/site/images/scify/scify_logo_108.png"></a>
-<a href="https://ellak.gr/" title="Ελεύθερο Λογισμικό / Λογισμικό ανοιχτού κώδικα" rel="home"><img style="height: 90px; margin-left: 20px;"  src="https://ellak.gr/wp-content/uploads/2015/09/el-lak.png" alt="Ελεύθερο Λογισμικό / Λογισμικό ανοιχτού κώδικα" title="Ελεύθερο Λογισμικό / Λογισμικό ανοιχτού κώδικα"></a>
 =======
