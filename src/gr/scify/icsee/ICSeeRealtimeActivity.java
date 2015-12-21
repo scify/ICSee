@@ -144,8 +144,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             Bitmap bitmapPicture
                     = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
-            // NavigableSet<IMatFilter> test = mView.filterListToString(currentFilter);
-            // fil = test.pollFirst();
             mView.saveCurrentFilterSet(); // Store filter for later reference
 
             // Get current running filter
@@ -340,6 +338,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         sliderText.setText("Next Theme: " + sTheme);
                         /*Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
                         	Toast.LENGTH_SHORT).show();*/
+                        mView.saveCurrentFilterSet(); // Store filter for later reference
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S2);
                     } else {
                         mView.initFilterSubsets();
@@ -357,6 +356,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         sliderText.setText("Previous Theme: " + sTheme);
                         /*Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
                         	Toast.LENGTH_SHORT).show();*/
+                        mView.saveCurrentFilterSet(); // Store filter for later reference
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S3);
                     } else {
                         mView.initFilterSubsets();
