@@ -226,6 +226,7 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	                    /* Finally we are ready to start the preview */
 	                    Log.d(TAG, "startPreview");
 	                    mCamera.startPreview();
+						focusCamera();
 	                }
 	                else
 	                    result = false;

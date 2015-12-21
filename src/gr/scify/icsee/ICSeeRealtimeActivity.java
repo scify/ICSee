@@ -81,7 +81,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
             @Override
             public void onClick(View arg0) {
                 // Play start focus sound
-                SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S1);
+                SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S9);
                 mView.focusCamera();
             }
         });
@@ -94,8 +94,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 } else {
                     mView.resumeCamera();
                 }*/
-
-                focusCamera();
+                //perform auto focus and take picture
+                focusAndTakePhoto();
 
                 return true;
             }
@@ -106,7 +106,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         this.addContentView(gestureOverlayView, layoutParamsControl);
     }
 
-    public void focusCamera() {
+    public void focusAndTakePhoto() {
 
         mView.mCamera.autoFocus(new Camera.AutoFocusCallback() {
 
@@ -202,8 +202,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         super.onStart();
         mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
         mView.setLongClickable(true);
-
-
     }
 
     @Override
@@ -262,7 +260,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                     mView.restoreCurrentFilterSet();
                     // Re-enable view
                     mView.enableView();
-
                 }
             }
         }

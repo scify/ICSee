@@ -23,6 +23,7 @@ public class SoundPlayer {
     public static final int S6 = R.raw.pan14tonebeep;
     public static final int S7 = R.raw.camerashutterclick;
     public static final int S8 = R.raw.exit3;
+    public static final int S9 = R.raw.auto_focus;
     public static final int Stutorial = R.raw.tutorial;
 
 
@@ -44,6 +45,7 @@ public class SoundPlayer {
         spMap.put(S6, sp.load(context, S6, 1));
         spMap.put(S7, sp.load(context, S7, 1));
         spMap.put(S8, sp.load(context, S8, 1));
+        spMap.put(S9, sp.load(context, S9, 1));
         spMap.put(Stutorial, sp.load(context, Stutorial, 1));
     }
 
