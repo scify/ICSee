@@ -49,26 +49,14 @@ public class ICSeeStartActivity extends Activity {
         // Initialize sounds here so they should have loaded when the camera view starts
         SoundPlayer.initSounds(this.getApplicationContext());
 
-        /*if(!file.exists()) {
-            file = createFile("configTutorial.txt");
-            Log.i(TAG, "file: " + file.exists());
-            Log.i(TAG, "fileName: " + file.getName());
-            writeToFile(file, "Tutorial has played");
-            SoundPlayer.playSound(mContext, SoundPlayer.Stutorial);
-        } else {
-            Log.i(TAG, readFromFile(file.getPath()));
-            //TODO: play tutorial reminder
-        }*/
-
         mExitButton = (Button)findViewById(R.id.exitButton);
         mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
-        //TODO: Remove comments
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         am.setStreamVolume(
                 AudioManager.STREAM_MUSIC,
-                am.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+                am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) -3,
                 0);
         String lang = Locale.getDefault().getDisplayLanguage();
         Log.i(TAG,"lang = " + lang);
@@ -82,7 +70,7 @@ public class ICSeeStartActivity extends Activity {
             @Override
             public boolean onLongClick(View v) {
                 Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-                mVibrator.vibrate(250);
+                //mVibrator.vibrate(250);
                 mOpenCVCallBack.stopTutorial();
                 new AsyncProgressCheck(mDialog, mOpenCVCallBack, ICSeeStartActivity.this).execute();
                 return false;

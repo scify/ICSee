@@ -1,5 +1,6 @@
 package gr.scify.icsee.camera;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,19 +11,22 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import gr.scify.icsee.ICSeeTutorial;
 import gr.scify.icsee.R;
 import gr.scify.icsee.TouchImageView;
 
 public class ImageView extends Activity {
     protected String TAG = ImageView.class.getCanonicalName();
     TouchImageView img;
+    Context mContext;
+    private static ICSeeTutorial icSeeTutorial;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "ImageView created");
+        //Log.i(TAG, "ImageView created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_edit2);
         img = new TouchImageView(this);
-        Log.i(TAG, "ImageView created");
+        //Log.i(TAG, "ImageView created");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String dir = extras.getString("dir");
@@ -30,9 +34,9 @@ public class ImageView extends Activity {
             try {
                 File f=new File(dir, "profile.png");
                 if(f.exists()) {
-                    Log.i(TAG, "file exists");
+                    //Log.i(TAG, "file exists");
                 } else {
-                    Log.i(TAG, "file does not exist");
+                    //Log.i(TAG, "file does not exist");
                 }
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 img.setImageBitmap(b);
@@ -44,5 +48,20 @@ public class ImageView extends Activity {
                 e.printStackTrace();
             }
         }
+        mContext = this;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //icSeeTutorial.initMediaPlayer();
+        Log.i(TAG, "playSound");
+        icSeeTutorial.playSound(mContext, 4);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        icSeeTutorial.stopSound();
     }
 }

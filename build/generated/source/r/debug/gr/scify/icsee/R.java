@@ -103,7 +103,12 @@ containing a value of this type.
         public static final int next=0x7f05000c;
         public static final int pan14tonebeep=0x7f05000d;
         public static final int tutorial=0x7f05000e;
-        public static final int tutorial_en=0x7f05000f;
+        public static final int tutorial1=0x7f05000f;
+        public static final int tutorial2=0x7f050010;
+        public static final int tutorial3=0x7f050011;
+        public static final int tutorial4=0x7f050012;
+        public static final int tutorial5=0x7f050013;
+        public static final int tutorial_en=0x7f050014;
     }
     public static final class string {
         public static final int action_settings=0x7f090000;

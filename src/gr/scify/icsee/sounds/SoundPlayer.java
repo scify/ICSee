@@ -30,6 +30,7 @@ public class SoundPlayer {
     private static SoundPool sp;                    // SoundPool to play the sounds
     private static HashMap<Integer, Integer> spMap; // Keeps the ID of each sound
     private static float volume = 1f;
+    private static int streamId = 0;
 
     public static void initSounds(Context context) {
         // Init soundpool
@@ -53,12 +54,8 @@ public class SoundPlayer {
         if (sp == null || spMap == null) {
             initSounds(context);
         }
-        if(soundID == SoundPlayer.Stutorial) {
-
-
-        } else {
+        else {
             sp.play(spMap.get(soundID), volume, volume, 1, 0, 1f);
         }
-
     }
 }

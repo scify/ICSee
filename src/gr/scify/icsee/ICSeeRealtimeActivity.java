@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -59,7 +60,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     private static Context mContext;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
     private static String currentFilter = "";
-
+    private static ICSeeTutorial icSeeTutorial;
+    final Handler mHandlerTutorial = new Handler();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +98,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 }*/
                 //perform auto focus and take picture
                 focusAndTakePhoto();
-
                 return true;
             }
 
@@ -104,7 +105,16 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         this.addContentView(gestureOverlayView, layoutParamsControl);
+
+        //icSeeTutorial.initMediaPlayer();
     }
+
+    Runnable mPlayTutorial1 = new Runnable() {
+        public void run() {
+            //Log.i(TAG, "starting tutorial");
+            icSeeTutorial.playSound(mContext, 1);
+        }
+    };
 
     public void focusAndTakePhoto() {
 
@@ -153,7 +163,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 mView.applyCurrentFilters(imgMAT);
                 Utils.matToBitmap(imgMAT, bitmapPicture);
             } else {
-                Log.i(TAG, "no filter");
+                //Log.i(TAG, "no filter");
             }
             startImageEdit(bitmapPicture);
         }};
@@ -162,8 +172,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         Intent intent = new Intent(mContext, ImageView.class);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        Log.i(TAG, "height: " + bitmapPicture.getHeight());
-        Log.i(TAG, "width: " + bitmapPicture.getWidth());
+        //Log.i(TAG, "height: " + bitmapPicture.getHeight());
+        //Log.i(TAG, "width: " + bitmapPicture.getWidth());
         String dir = saveToInternalStorage(bitmapPicture);
         intent.putExtra("dir", dir);
         startActivity(intent);
@@ -176,7 +186,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         if(directory.exists()) {
-            Log.i(TAG, "Woohoo");
+            //Log.i(TAG, "Woohoo");
         }
         File mypath=new File(directory,"profile.png");
 
@@ -210,6 +220,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         super.onPause();
         /*if (mView != null)
             mView.disableView();*/
+
+        icSeeTutorial.stopSound();
     }
 
     @Override
@@ -225,6 +237,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         super.onResume();
         if (mView != null){
+            Log.i(TAG, "mview not null");
             mView.enableView();
         }
 
@@ -249,17 +262,23 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setCvCameraViewListener(mView);
+                    Log.i(TAG, "filters: " + mView.lFilters.toString());
+                    //if(mView.lFilters.size() == 0) {
+                        mView.appendFilter(new MatAdaptiveThresholding());      // black background, white letters
+                        mView.appendFilter(new MatBinarizationFilter());        // white background, black letters
+                        mView.appendFilter(new MatNegative());                  // negative
+                        mView.appendFilter(new MatBlackYellowFilter());         // black background, yellow letters
+                        mView.appendFilter(new MatBlueYellowFilter());          // blue background, yellow letters
+                        mView.appendFilter(new MatBlueYellowInvertedFilter());  // yellow background, blue letters
+                        mView.appendFilter(new MatWhiteRedFilter());            // white background, red letters
+                    //}
                     // Restore last filter, if available
-                    mView.appendFilter(new MatAdaptiveThresholding());      // black background, white letters
-                    mView.appendFilter(new MatBinarizationFilter());        // white background, black letters
-                    mView.appendFilter(new MatNegative());                  // negative
-                    mView.appendFilter(new MatBlackYellowFilter());         // black background, yellow letters
-                    mView.appendFilter(new MatBlueYellowFilter());          // blue background, yellow letters
-                    mView.appendFilter(new MatBlueYellowInvertedFilter());  // yellow background, blue letters
-                    mView.appendFilter(new MatWhiteRedFilter());            // white background, red letters
                     mView.restoreCurrentFilterSet();
                     // Re-enable view
                     mView.enableView();
+                    //mView.focusCamera();
+                    //icSeeTutorial.initMediaPlayer();
+                    mHandlerTutorial.postDelayed(mPlayTutorial1, 3000);
                 }
             }
         }
@@ -316,7 +335,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         }
         return uRes;
     }
-
+    private static boolean movementTutorial = false;
     @Override
     public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
         ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
@@ -337,12 +356,22 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         	Toast.LENGTH_SHORT).show();*/
                         mView.saveCurrentFilterSet(); // Store filter for later reference
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S2);
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if(!movementTutorial) {
+                            movementTutorial = true;
+                            icSeeTutorial.playSound(this.getApplicationContext(), 2);
+                        }
                     } else {
                         mView.initFilterSubsets();
                         sliderText.setText("No theme applicable");
                         /*Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
                         		Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S1);
+                        icSeeTutorial.playSound(this.getApplicationContext(), 5);
                     }
                 } else if (prediction.name.contains("left")) {
                     sTheme = mView.previousFilterSubset();
@@ -355,12 +384,22 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         	Toast.LENGTH_SHORT).show();*/
                         mView.saveCurrentFilterSet(); // Store filter for later reference
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S3);
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if(!movementTutorial) {
+                            movementTutorial = true;
+                            icSeeTutorial.playSound(this.getApplicationContext(), 2);
+                        }
                     } else {
                         mView.initFilterSubsets();
                         sliderText.setText("No theme applicable");
                         	/*Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
                         			Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S1);
+                        icSeeTutorial.playSound(this.getApplicationContext(), 5);
                     }
                 }
             }

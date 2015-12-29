@@ -37,6 +37,7 @@ public class TouchImageView extends ImageView {
     int oldMeasuredWidth, oldMeasuredHeight;
     ScaleGestureDetector mScaleDetector;
     Context mContext;
+
     public TouchImageView(Context context) {
         super(context);
         sharedConstructing(context);
@@ -46,6 +47,12 @@ public class TouchImageView extends ImageView {
         super(context, attrs);
         mContext = context;
         sharedConstructing(context);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     final Handler mHandler = new Handler();
@@ -87,7 +94,7 @@ public class TouchImageView extends ImageView {
                             float deltaX = curr.x - last.x;
                             float deltaY = curr.y - last.y;
                             Log.i(TAG, "deltaX: " + String.valueOf(deltaX) + " deltaY: " + String.valueOf(deltaY));
-                            if((int)deltaX !=0 || (int) deltaY!=0) {
+                            if ((int) deltaX != 0 || (int) deltaY != 0) {
                                 Log.i(TAG, "remove");
                                 mHandler.removeCallbacks(mLongPressed);
                             }
@@ -115,7 +122,11 @@ public class TouchImageView extends ImageView {
                 return false; // indicate event was handled
             }
         });
+
+
     }
+
+
 
     public void setMaxZoom(float x) {
         maxScale = x;

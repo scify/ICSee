@@ -35,7 +35,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 
     protected double CurrentZoom = 1.0;
 
-	protected LinkedList<IMatFilter> lFilters;
+	public LinkedList<IMatFilter> lFilters;
 	public NavigableSet<IMatFilter> nsCurFilters;
 	protected ListIterator<IMatFilter> liCurFilter;
 	protected LinkedList<NavigableSet<IMatFilter>> lPreviousSettings;
@@ -297,16 +297,22 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         if (sFilterName == null)
             return; // We have not saved anything, so get back home
         Log.i(TAG, "current filter (restore): " + sFilter);
+
 		String sCandidateFilterName = "";
 		int iPrvFilterSetSize = -1;
 		// While we have not set the saved filter as current
         Log.i(TAG, "nsCurFilters.size(): " + nsCurFilters.size());
 		while (!sCandidateFilterName.equals(sFilterName) &&
-                // and we have not returned to less filter (i.e. restarted searching)
-				(iPrvFilterSetSize <= nsCurFilters.size())) {
-            Log.i(TAG, "sCandidateFilterName: " + sCandidateFilterName);
+			// and we have not returned to less filter (i.e. restarted searching)
+			(iPrvFilterSetSize <= nsCurFilters.size())) {
+
 			// Get next filter
+            //TODO: Start iterating through filters from the beggining of the list.
+            //Previous state: we were adding filters twice, so the sCandidate was the second in series.
+            //Now we add only one time, so the sCandidate should start from the beggining
 			nextFilterSubset();
+			Log.i(TAG, "sCandidateFilterName: " + sCandidateFilterName);
+			Log.i(TAG, "sFilter: " + sFilter);
 			// Update current filter name
 			sCandidateFilterName = curFilterSubset();
             // Update last count of filter set size
