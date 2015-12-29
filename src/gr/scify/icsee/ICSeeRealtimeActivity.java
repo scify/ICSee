@@ -57,7 +57,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     private GestureLibrary gestureLib;
     protected int MAX_ZOOM = 5;
     public RealtimeFilterView mView = null;
-    private static Context mContext;
+    public static Context mContext;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
     private static String currentFilter = "";
     private static ICSeeTutorial icSeeTutorial;
@@ -90,12 +90,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         inflate.setOnLongClickListener(new OnLongClickListener() {
             public boolean onLongClick(View arg0) {
-                // Resume or pause the camera
-                /*if (mView.camerastate() == false) {
-                    mView.pauseCamera();
-                } else {
-                    mView.resumeCamera();
-                }*/
                 //perform auto focus and take picture
                 focusAndTakePhoto();
                 return true;
@@ -105,7 +99,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         this.addContentView(gestureOverlayView, layoutParamsControl);
-
         //icSeeTutorial.initMediaPlayer();
     }
 
@@ -335,11 +328,13 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         }
         return uRes;
     }
+
     private static boolean movementTutorial = false;
     @Override
     public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
         ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
         String sTheme;
+        Log.i(TAG, "predictions: "+predictions.toString());
         TextView sliderText = (TextView) findViewById(R.id.verticalSeekbarText);
         for (Prediction prediction : predictions) {
             if (prediction.score > 1.0) {
@@ -400,6 +395,14 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         			Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S1);
                         icSeeTutorial.playSound(this.getApplicationContext(), 5);
+                    }
+                } else if (prediction.name.contains("omicron")) {
+                    Log.i(TAG, "Zed mwrh poutanaaaaa!!!");
+                    //if tutorial state is off
+                    if(icSeeTutorial.getTutorialState(mContext) == 0) {
+                        icSeeTutorial.tutorialOn();
+                    } else {
+                        icSeeTutorial.tutorialOff();
                     }
                 }
             }
