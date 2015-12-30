@@ -169,6 +169,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         //Log.i(TAG, "width: " + bitmapPicture.getWidth());
         String dir = saveToInternalStorage(bitmapPicture);
         intent.putExtra("dir", dir);
+        Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        mVibrator.vibrate(250);
         startActivity(intent);
     }
 
@@ -230,7 +232,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         super.onResume();
         if (mView != null){
-            Log.i(TAG, "mview not null");
             mView.enableView();
         }
 
