@@ -256,7 +256,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setCvCameraViewListener(mView);
                     Log.i(TAG, "filters: " + mView.lFilters.toString());
-                    //if(mView.lFilters.size() == 0) {
+                    if(mView.lFilters.size() == 0) {
                         mView.appendFilter(new MatAdaptiveThresholding());      // black background, white letters
                         mView.appendFilter(new MatBinarizationFilter());        // white background, black letters
                         mView.appendFilter(new MatNegative());                  // negative
@@ -264,7 +264,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         mView.appendFilter(new MatBlueYellowFilter());          // blue background, yellow letters
                         mView.appendFilter(new MatBlueYellowInvertedFilter());  // yellow background, blue letters
                         mView.appendFilter(new MatWhiteRedFilter());            // white background, red letters
-                    //}
+                    }
                     // Restore last filter, if available
                     mView.restoreCurrentFilterSet();
                     // Re-enable view
@@ -357,7 +357,9 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                             e.printStackTrace();
                         }
                         if(!movementTutorial) {
-                            movementTutorial = true;
+                            if(icSeeTutorial.getTutorialState(mContext) == 1) {
+                                movementTutorial = true;
+                            }
                             icSeeTutorial.playSound(this.getApplicationContext(), 2);
                         }
                     } else {
@@ -385,7 +387,9 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                             e.printStackTrace();
                         }
                         if(!movementTutorial) {
-                            movementTutorial = true;
+                            if(icSeeTutorial.getTutorialState(mContext) == 1) {
+                                movementTutorial = true;
+                            }
                             icSeeTutorial.playSound(this.getApplicationContext(), 2);
                         }
                     } else {
@@ -401,8 +405,12 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                     //if tutorial state is off
                     if(icSeeTutorial.getTutorialState(mContext) == 0) {
                         icSeeTutorial.tutorialOn();
+                        movementTutorial = false;
+                        icSeeTutorial.getTutorialState(mContext);
                     } else {
                         icSeeTutorial.tutorialOff();
+                        icSeeTutorial.stopSound();
+                        icSeeTutorial.getTutorialState(mContext);
                     }
                 }
             }

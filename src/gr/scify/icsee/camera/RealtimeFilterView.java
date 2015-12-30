@@ -75,8 +75,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     }
     
     public void getPhoto(ShutterCallback sc, PictureCallback pcRaw, PictureCallback pcJpg, int qualitySteps) {
-		//mCamera.setPreviewDisplay(null);
-        //Log.i(TAG, "current: " + this.curFilterSubset().toString());
         try {
             //mCamera = Camera.open();
 			int zoom = 0;
@@ -233,8 +231,8 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 
     // Activates next combination of filter
     public String nextFilterSubset() {
-		Log.d("fil", "nsCurFilters: " + nsCurFilters);
-		Log.d("fil", "lFilters: " + lFilters);
+		//Log.d("fil", "nsCurFilters: " + nsCurFilters);
+		//Log.d("fil", "lFilters: " + lFilters);
     	synchronized (nsCurFilters) {
     		// If no filters added, ignore.
     		if (lFilters.size() == 0)
@@ -302,21 +300,19 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 		int iPrvFilterSetSize = -1;
 		// While we have not set the saved filter as current
         Log.i(TAG, "nsCurFilters.size(): " + nsCurFilters.size());
-		while (!sCandidateFilterName.equals(sFilterName) &&
-			// and we have not returned to less filter (i.e. restarted searching)
-			(iPrvFilterSetSize <= nsCurFilters.size())) {
-
-			// Get next filter
-            //TODO: Start iterating through filters from the beggining of the list.
-            //Previous state: we were adding filters twice, so the sCandidate was the second in series.
-            //Now we add only one time, so the sCandidate should start from the beggining
-			nextFilterSubset();
+        // while we have not returned to less filter (i.e. restarted searching)
+		while (iPrvFilterSetSize <= nsCurFilters.size()) {
 			Log.i(TAG, "sCandidateFilterName: " + sCandidateFilterName);
 			Log.i(TAG, "sFilter: " + sFilter);
 			// Update current filter name
 			sCandidateFilterName = curFilterSubset();
             // Update last count of filter set size
             iPrvFilterSetSize = nsCurFilters.size();
+            // Get next filter or exit
+            if(!sCandidateFilterName.equals(sFilterName))
+			    nextFilterSubset();
+            else
+                return;
 		}
 
 		// If we reached this point and still the name is not equal

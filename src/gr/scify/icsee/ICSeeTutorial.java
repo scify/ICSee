@@ -76,11 +76,6 @@ public class ICSeeTutorial {
         Log.i(TAG, "soundId: " + soundID);
         //Log.i(TAG, "state (sound): " + tutorialState);
         if(getTutorialState(ICSeeRealtimeActivity.mContext) == 1) {
-        /*if (mediaPlayer != null) {
-            mediaPlayer.reset();
-            mediaPlayer.release();
-            mediaPlayer = new MediaPlayer();
-        }*/
             switch (soundID) {
                 case 1:
                     if (mediaPlayer.isPlaying()) {
