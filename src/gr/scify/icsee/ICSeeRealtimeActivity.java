@@ -165,8 +165,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         Intent intent = new Intent(mContext, ImageView.class);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        //Log.i(TAG, "height: " + bitmapPicture.getHeight());
-        //Log.i(TAG, "width: " + bitmapPicture.getWidth());
+        Log.i(TAG, "height: " + bitmapPicture.getHeight());
+        Log.i(TAG, "width: " + bitmapPicture.getWidth());
         String dir = saveToInternalStorage(bitmapPicture);
         intent.putExtra("dir", dir);
         Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);

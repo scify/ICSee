@@ -90,7 +90,13 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
                 //Log.i(TAG, "height: " + height + " width: " + width);
             }
             int pos = (supportedSizes.size() / 2 + 1);
-            parameters.setPictureSize(supportedSizes.get(pos).width, supportedSizes.get(pos).height);
+			//for devices with only a few resolutions, we want the best resolution
+			if(supportedSizes.size() >= 5) {
+				parameters.setPictureSize(supportedSizes.get(pos).width, supportedSizes.get(pos).height);
+			} else {
+				parameters.setPictureSize(supportedSizes.get(0).width, supportedSizes.get(0).height);
+			}
+
 			if (parameters.isZoomSupported()) {
 				if (zoom >=0 && zoom < maxZoom) {
 					parameters.setZoom(zoom);
