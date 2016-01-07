@@ -67,7 +67,7 @@ import gr.scify.icsee.sounds.SoundPlayer;
 						SoundPlayer.playSound(getContext(), SoundPlayer.S4);
                     }
                     if(!isFirstTime)
-                        mHandlerTutorial.postDelayed(mPlayTakePictureReminder, 1500);
+                        mHandlerTutorial.postDelayed(mPlayTakePictureReminder, 1000);
 				}
 			});
 		}
