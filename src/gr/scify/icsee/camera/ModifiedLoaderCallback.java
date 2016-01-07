@@ -58,6 +58,7 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
                 TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
                 countryCode = tm.getSimCountryIso();
                 ICSeeTutorial.setLanguage(lang, countryCode);
+                //ICSeeTutorial.setLanguage("en", "EN");
                 Log.i(TAG, "lang: " + lang);
                 Log.i(TAG, "country: " + countryCode);
                 if(ICSeeTutorial.getTutorialState(mContext) == 0) {
