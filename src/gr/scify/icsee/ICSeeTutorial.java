@@ -13,6 +13,8 @@ public class ICSeeTutorial {
     protected static String TAG = ICSeeTutorial.class.getCanonicalName();
     private static MediaPlayer mediaPlayer = new MediaPlayer();
     private static int tutorialState;
+    private static String lang;
+    private static String countryCode;
 
     public static void tutorialOn() {
         mEditor.putInt(KEY_TUTORIAL, 1);
@@ -24,6 +26,11 @@ public class ICSeeTutorial {
         mEditor.apply();
     }
 
+    public static void setLanguage(String language, String country) {
+        lang = language;
+        countryCode = country;
+    }
+
     public static int getTutorialState(Context context) {
         mSharedPreferences = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
@@ -32,6 +39,8 @@ public class ICSeeTutorial {
         Log.i(TAG, "state: " + tutorialState);
         return tutorialState;
     }
+
+
 
     public static void stopSound() {
             mediaPlayer.stop();
@@ -42,36 +51,102 @@ public class ICSeeTutorial {
         mediaPlayer = new MediaPlayer();
     }
 
-    public static void playSound(Context context, int soundID) {
-        Log.i(TAG, "soundId: " + soundID);
-        //Log.i(TAG, "state (sound): " + tutorialState);
-        if(getTutorialState(ICSeeRealtimeActivity.mContext) == 1) {
-            int sound = 0;
-            switch (soundID) {
-                case 1:
-                    sound = R.raw.tutorial1;
-                    break;
-                case 2:
-                    sound = R.raw.tutorial2;
-                    break;
-                case 3:
-                    sound = R.raw.tutorial3;
-                    break;
-                case 4:
-                    sound = R.raw.tutorial4;
-                    break;
-                case 5:
-                    sound = R.raw.tutorial5;
-                    break;
-                default:
-                    break;
-            }
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
-            mediaPlayer = MediaPlayer.create(context, sound);
-            mediaPlayer.start();
+    public static void playTutorialReminder(Context context) {
+        int soundId = 0;
+        Log.i(TAG, "lang: " + lang + " code: " + countryCode);
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_tutorial_reminder;
+        } else{
+            soundId = R.raw.en_tutorial_reminder;
         }
+        startPLayer(context, soundId);
+    }
 
+    public static void playTutorialOn(Context context) {
+        int soundId = 0;
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_tutorial_on;
+        } else {
+            soundId = R.raw.en_tutorial_on;
+        }
+        startPLayer(context, soundId);
+    }
+
+    public static void playTutorialOff(Context context) {
+        int soundId = 0;
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_tutorial_off;
+        } else {
+            soundId = R.raw.en_tutorial_off;
+        }
+        startPLayer(context, soundId);
+    }
+
+    public static void playAdjustZoom(Context context) {
+        int soundId = 0;
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_adjust_zoom;
+        } else {
+            soundId = R.raw.en_adjust_zoom;
+        }
+        startPLayer(context, soundId);
+    }
+
+    public static void playChangedFilter(Context context) {
+        int soundId = 0;
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_changed_filter;
+        } else {
+            soundId = R.raw.en_changed_filter;
+        }
+        startPLayer(context, soundId);
+    }
+
+    public static void playDragFingerTutorial(Context context) {
+        int soundId = 0;
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_drag_finger_tutorial;
+        } else {
+            soundId = R.raw.en_drag_finger;
+        }
+        startPLayer(context, soundId);
+    }
+
+    public static void playNoFiltersLeft(Context context) {
+        int soundId = 0;
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_no_filters_left;
+        } else {
+            soundId = R.raw.en_no_filters_left;
+        }
+        startPLayer(context, soundId);
+    }
+
+    public static void playNoFiltersRight(Context context) {
+        int soundId = 0;
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_no_filters_right;
+        } else {
+            soundId = R.raw.en_no_filters_right;
+        }
+        startPLayer(context, soundId);
+    }
+
+    public static void playAutoFocus(Context context) {
+        int soundId = 0;
+        if(lang.equals("el") || countryCode.equals("gr")) {
+            soundId = R.raw.gr_auto_focus;
+        } else {
+            soundId = R.raw.en_auto_focus;
+        }
+        startPLayer(context, soundId);
+    }
+
+    public static void startPLayer(Context context, int soundId) {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
+        mediaPlayer = MediaPlayer.create(context, soundId);
+        mediaPlayer.start();
     }
 }

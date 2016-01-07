@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import gr.scify.icsee.AsyncProgressCheck;
 import gr.scify.icsee.ICSeeStartActivity;
+import gr.scify.icsee.ICSeeTutorial;
 import gr.scify.icsee.R;
 
 /**
@@ -31,6 +32,8 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
     public ProgressDialog mDialog;
     public ModifiedLoaderCallback mThis;
     public ICSeeStartActivity startActivity;
+    String lang;
+    String countryCode;
 
 
     public ModifiedLoaderCallback(Context AppContext, ProgressBar progressBar, MediaPlayer mp, ProgressDialog dialog, ICSeeStartActivity start) {
@@ -51,43 +54,51 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
             if(processStatus == LoaderCallbackInterface.SUCCESS) {
                 mPrograssBar.setVisibility(View.INVISIBLE);
                 hasManagerConnected = true;
-                playTutorial(mContext);
+                lang = Locale.getDefault().getLanguage();
+                TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
+                countryCode = tm.getSimCountryIso();
+                ICSeeTutorial.setLanguage(lang, countryCode);
+                Log.i(TAG, "lang: " + lang);
+                Log.i(TAG, "country: " + countryCode);
+                if(ICSeeTutorial.getTutorialState(mContext) == 0) {
+                    new AsyncProgressCheck(mDialog, ICSeeStartActivity.mOpenCVCallBack, startActivity).execute();
+                } else {
+                    playTutorial(mContext);
+                }
             }
         }
 
     private void playTutorial(Context context) {
-        String lang = Locale.getDefault().getLanguage();
-        TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
-        String countryCode = tm.getSimCountryIso();
-        Log.i(TAG, "lang: " + lang);
-        Log.i(TAG, "country: " + countryCode);
+
+        int tutorialId = 0;
         if(mplayer != null) {
             if(mplayer.isPlaying()){
                 mplayer.stop();
             } else {
 
                 if(lang.equals("el") || countryCode.equals("gr")) {
-                    mplayer = MediaPlayer.create(context, R.raw.tutorial);
+                    tutorialId = R.raw.gr_welcome;
                 } else {
-                    mplayer = MediaPlayer.create(context, R.raw.tutorial_en);
+                    tutorialId = R.raw.en_welcome;
                 }
-                mplayer.start();
             }
         } else {
             if(lang.equals("el") || countryCode.equals("gr")) {
-                mplayer = MediaPlayer.create(context, R.raw.tutorial);
+                tutorialId = R.raw.gr_welcome;
             } else {
-                mplayer = MediaPlayer.create(context, R.raw.tutorial_en);
+                tutorialId = R.raw.en_welcome;
             }
-            mplayer.start();
+
         }
-        mplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mplayer = MediaPlayer.create(context, tutorialId);
+        mplayer.start();
+        /*mplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 mPrograssBar.setVisibility(View.VISIBLE);
                 new AsyncProgressCheck(mDialog, ICSeeStartActivity.mOpenCVCallBack, startActivity).execute();
             }
-        });
+        });*/
 
     }
 

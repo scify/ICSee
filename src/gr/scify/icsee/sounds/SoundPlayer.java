@@ -24,7 +24,7 @@ public class SoundPlayer {
     public static final int S7 = R.raw.camerashutterclick;
     public static final int S8 = R.raw.exit3;
     public static final int S9 = R.raw.auto_focus;
-    public static final int Stutorial = R.raw.tutorial;
+    public static final int Stutorial = R.raw.gr_welcome;
 
 
     private static SoundPool sp;                    // SoundPool to play the sounds

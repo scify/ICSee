@@ -56,7 +56,8 @@ public class ImageView extends Activity {
         super.onResume();
         //icSeeTutorial.initMediaPlayer();
         Log.i(TAG, "playSound");
-        icSeeTutorial.playSound(mContext, 4);
+        //icSeeTutorial.playSound(mContext, 4);
+        ICSeeTutorial.playAdjustZoom(mContext);
     }
 
     @Override

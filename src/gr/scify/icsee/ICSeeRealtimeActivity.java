@@ -102,10 +102,10 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         //icSeeTutorial.initMediaPlayer();
     }
 
-    Runnable mPlayTutorial1 = new Runnable() {
+    Runnable mPlayTutorialReminder = new Runnable() {
         public void run() {
             //Log.i(TAG, "starting tutorial");
-            icSeeTutorial.playSound(mContext, 1);
+            icSeeTutorial.playTutorialReminder(mContext);
         }
     };
 
@@ -272,7 +272,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                     mView.enableView();
                     //mView.focusCamera();
                     //icSeeTutorial.initMediaPlayer();
-                    mHandlerTutorial.postDelayed(mPlayTutorial1, 3000);
+                    mHandlerTutorial.postDelayed(mPlayTutorialReminder, 3000);
                 }
             }
         }
@@ -331,6 +331,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     }
 
     private static boolean movementTutorial = false;
+    private static int movementCounter = 0;
+
     @Override
     public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
         ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
@@ -347,6 +349,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                     mView.process(1);
 
                     if (sTheme != null) {
+                        movementCounter++;
                         sliderText.setText("Next Theme: " + sTheme);
                         /*Toast.makeText(ICSeeRealtimeActivity.this, "Next Theme: " + sTheme,
                         	Toast.LENGTH_SHORT).show();*/
@@ -361,7 +364,11 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                             if(icSeeTutorial.getTutorialState(mContext) == 1) {
                                 movementTutorial = true;
                             }
-                            icSeeTutorial.playSound(this.getApplicationContext(), 2);
+                            //icSeeTutorial.playSound(this.getApplicationContext(), 2);
+                            ICSeeTutorial.playChangedFilter(mContext);
+                        } else if(movementCounter == 4) {
+                            ICSeeTutorial.playAutoFocus(mContext);
+                            movementCounter = 0;
                         }
                     } else {
                         mView.initFilterSubsets();
@@ -369,7 +376,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         /*Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
                         		Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S1);
-                        icSeeTutorial.playSound(this.getApplicationContext(), 5);
+                        //icSeeTutorial.playSound(this.getApplicationContext(), 5);
+                        ICSeeTutorial.playNoFiltersLeft(mContext);
                     }
                 } else if (prediction.name.contains("left")) {
                     sTheme = mView.previousFilterSubset();
@@ -377,6 +385,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                     mView.process(1);
 
                     if (sTheme != null) {
+                        movementCounter++;
                         sliderText.setText("Previous Theme: " + sTheme);
                         /*Toast.makeText(ICSeeRealtimeActivity.this, "Previous Theme: " + sTheme,
                         	Toast.LENGTH_SHORT).show();*/
@@ -391,7 +400,11 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                             if(icSeeTutorial.getTutorialState(mContext) == 1) {
                                 movementTutorial = true;
                             }
-                            icSeeTutorial.playSound(this.getApplicationContext(), 2);
+                            //icSeeTutorial.playSound(this.getApplicationContext(), 2);
+                            ICSeeTutorial.playChangedFilter(mContext);
+                        } else if(movementCounter == 4) {
+                            ICSeeTutorial.playAutoFocus(mContext);
+                            movementCounter = 0;
                         }
                     } else {
                         mView.initFilterSubsets();
@@ -399,18 +412,20 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         	/*Toast.makeText(ICSeeRealtimeActivity.this, "No theme applicable",
                         			Toast.LENGTH_SHORT).show();*/
                         SoundPlayer.playSound(this.getApplicationContext(), SoundPlayer.S1);
-                        icSeeTutorial.playSound(this.getApplicationContext(), 5);
+                        //icSeeTutorial.playSound(this.getApplicationContext(), 5);
+                        ICSeeTutorial.playNoFiltersRight(mContext);
                     }
                 } else if (prediction.name.contains("omicron")) {
-                    Log.i(TAG, "Zed mwrh poutanaaaaa!!!");
                     //if tutorial state is off
                     if(icSeeTutorial.getTutorialState(mContext) == 0) {
                         icSeeTutorial.tutorialOn();
+                        ICSeeTutorial.playTutorialOn(mContext);
                         movementTutorial = false;
                         icSeeTutorial.getTutorialState(mContext);
                     } else {
                         icSeeTutorial.tutorialOff();
                         icSeeTutorial.stopSound();
+                        ICSeeTutorial.playTutorialOff(mContext);
                         icSeeTutorial.getTutorialState(mContext);
                     }
                 }
