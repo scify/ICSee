@@ -414,7 +414,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         //icSeeTutorial.playSound(this.getApplicationContext(), 5);
                         ICSeeTutorial.playNoFiltersRight(mContext);
                     }
-                } else if (prediction.name.contains("omicron")) {
+                } else if (prediction.name.contains("omicron") || prediction.name.contains("omicron1") || prediction.name.contains("omicron2") || prediction.name.contains("omicron3") || prediction.name.contains("omicron4")) {
                     //if tutorial state is off
                     if(icSeeTutorial.getTutorialState(mContext) == 0) {
                         icSeeTutorial.tutorialOn();
