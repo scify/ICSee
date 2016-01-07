@@ -9,6 +9,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PreviewCallback;
 import android.os.Build;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.List;
 
+import gr.scify.icsee.ICSeeRealtimeActivity;
+import gr.scify.icsee.ICSeeTutorial;
 import gr.scify.icsee.sounds.SoundPlayer;
 
 /**
@@ -46,10 +49,11 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	    public Camera mCamera;
 	    protected Parameters pParams;
 	    protected int iMinZoom, iMaxZoom;
+        final Handler mHandlerTutorial = new Handler();
 
 	    private SurfaceTexture mSurfaceTexture;
 	    
-	    public void focusCamera() {
+	    public void focusCamera(final boolean isFirstTime) {
 
 			mCamera.autoFocus(new Camera.AutoFocusCallback() {
 				
@@ -62,9 +66,17 @@ import gr.scify.icsee.sounds.SoundPlayer;
 					} else {
 						SoundPlayer.playSound(getContext(), SoundPlayer.S4);
                     }
+                    if(!isFirstTime)
+                        mHandlerTutorial.postDelayed(mPlayTakePictureReminder, 1500);
 				}
 			});
 		}
+
+        Runnable mPlayTakePictureReminder = new Runnable() {
+            public void run() {
+                ICSeeTutorial.playTakePictureReminder(ICSeeRealtimeActivity.mContext);
+            }
+        };
 	    
 	    public void FlashMode(){
 	    	Camera.Parameters params = mCamera.getParameters();
@@ -226,7 +238,7 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	                    /* Finally we are ready to start the preview */
 	                    Log.d(TAG, "startPreview");
 	                    mCamera.startPreview();
-						focusCamera();
+						focusCamera(true);
 	                }
 	                else
 	                    result = false;

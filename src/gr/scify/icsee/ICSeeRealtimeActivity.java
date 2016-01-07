@@ -84,7 +84,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
             public void onClick(View arg0) {
                 // Play start focus sound
                 SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S9);
-                mView.focusCamera();
+                mView.focusCamera(false);
             }
         });
 
@@ -104,7 +104,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
     Runnable mPlayTutorialReminder = new Runnable() {
         public void run() {
-            //Log.i(TAG, "starting tutorial");
             icSeeTutorial.playTutorialReminder(mContext);
         }
     };
