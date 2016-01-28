@@ -81,7 +81,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 			Camera.Parameters parameters = mCamera.getParameters();
 			int maxZoom = parameters.getMaxZoom();
 			//Log.i(TAG, "currentZoom: " + parameters.getZoom());
-			Log.i(TAG, "maxZoom: " + maxZoom);
+			//Log.i(TAG, "maxZoom: " + maxZoom);
 			Camera.Parameters params = mCamera.getParameters();
 			List<Camera.Size> supportedSizes = params.getSupportedPictureSizes();
             for(int i=0; i< supportedSizes.size() ;i++) {
@@ -196,8 +196,8 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     // Activates previous combination of filters
     public String previousFilterSubset() {
     	synchronized (nsCurFilters) {
-			Log.d("fil", "lFilters: " + lFilters);
-			Log.d("fil", "lPreviousSettings: " + lPreviousSettings);
+			//Log.d("fil", "lFilters: " + lFilters);
+			//Log.d("fil", "lPreviousSettings: " + lPreviousSettings);
 			// If no filters added, ignore.
 			if (lFilters.size() == 0)
 				return null;
@@ -289,7 +289,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 		// Get string representation
 		sFilter  = curFilterSubset();
 		// TODO: Save to a setting
-		Log.i(TAG, "current filter: " + sFilter);
+		//Log.i(TAG, "current filter: " + sFilter);
         mEditor.putString(KEY_FILTER, sFilter);
         mEditor.apply();
 	}
@@ -301,15 +301,17 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         if (sFilterName == null)
             return; // We have not saved anything, so get back home
         Log.i(TAG, "current filter (restore): " + sFilter);
-
+		if(sFilter == null) {
+			return;
+		}
 		String sCandidateFilterName = "";
 		int iPrvFilterSetSize = -1;
 		// While we have not set the saved filter as current
-        Log.i(TAG, "nsCurFilters.size(): " + nsCurFilters.size());
+        //Log.i(TAG, "nsCurFilters.size(): " + nsCurFilters.size());
         // while we have not returned to less filter (i.e. restarted searching)
 		while (iPrvFilterSetSize <= nsCurFilters.size()) {
-			Log.i(TAG, "sCandidateFilterName: " + sCandidateFilterName);
-			Log.i(TAG, "sFilter: " + sFilter);
+			//Log.i(TAG, "sCandidateFilterName: " + sCandidateFilterName);
+			//Log.i(TAG, "sFilter: " + sFilter);
 			// Update current filter name
 			sCandidateFilterName = curFilterSubset();
             // Update last count of filter set size
@@ -351,10 +353,14 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
             synchronized (nsCurFilters) {
 	            for (IMatFilter bfCur : nsCurFilters) {
 	            	bfCur.setMat(mToUse);
+					try {
+						bfCur.applyfilter();
+						mToUse = bfCur.getMat();
+					} catch (Exception e) {
+						Log.e(TAG, "Failed to add filter:" + bfCur.toString());
+						return mToUse;
+					}
 
-	            	// Get filter
-	            	bfCur.applyfilter();
-	            	mToUse = bfCur.getMat();
 	            }
             }
 		}
@@ -363,29 +369,39 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     }
     
     public Mat onCameraFrame(Mat inputFrame) {
+
     	if (bPaused)
     		if (processNextNFrames == 0)
     			return null;
 			else
 				// Decrease if over zero
 				processNextNFrames -= (processNextNFrames > 0) ? 1 : 0;
-    	
-    	// Copy to process
+
+
+		// Copy to process
     	inputFrame.copyTo(mRgba);
+		// TODO: Check why copy fails
+		// If the image matrix is empty
+		if (mRgba.empty()) {
+			// Ignore
+			return null;
+		}
+
     	// Init mScaled Rgba
-    	if (mScaledRgba == null)
-    		// Using the full possible size of the frame
-    		mScaledRgba = new Mat(new Size(this.getWidth(), this.getHeight()), mRgba.type());
+    	if (mScaledRgba == null) {
+			// Using the full possible size of the frame
+			mScaledRgba = new Mat(new Size(this.getWidth(), this.getHeight()), mRgba.type());
+		}
     	
     	if (bProcessing)
     		return mRgba;
     	
         bProcessing = true;
-        
-        // For every filter
-        applyCurrentFilters(mRgba);
-        // Apply resize as needed
-        Imgproc.resize(mRgba, mScaledRgba, mScaledRgba.size(), 0, 0, Imgproc.INTER_LINEAR);
+
+		// Apply all filters
+		applyCurrentFilters(mRgba);
+		// Apply resize as needed
+		Imgproc.resize(mRgba, mScaledRgba, mScaledRgba.size(), 0, 0, Imgproc.INTER_LINEAR);
 
         bProcessing = false;
         

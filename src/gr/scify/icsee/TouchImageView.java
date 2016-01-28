@@ -93,9 +93,9 @@ public class TouchImageView extends ImageView {
                             Log.i(TAG, "drag");
                             float deltaX = curr.x - last.x;
                             float deltaY = curr.y - last.y;
-                            Log.i(TAG, "deltaX: " + String.valueOf(deltaX) + " deltaY: " + String.valueOf(deltaY));
-                            if ((int) deltaX != 0 || (int) deltaY != 0) {
-                                Log.i(TAG, "remove");
+                            Log.i(TAG, "deltaX: " + String.valueOf((int)deltaX) + " deltaY: " + String.valueOf((int)deltaY));
+                            if ((int) deltaX > 0 || (int) deltaY > 0) {
+                                //Log.i(TAG, "remove");
                                 mHandler.removeCallbacks(mLongPressed);
                             }
                             float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);

@@ -152,11 +152,16 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
             if(!mView.curFilterSubset().equals("")) {
                 Mat imgMAT = new Mat();
                 Utils.bitmapToMat(bitmapPicture, imgMAT);
+                // If the image is empty
+                if (imgMAT.empty())
+                    return; // Ignore
+                // Apply filters
                 mView.applyCurrentFilters(imgMAT);
                 Utils.matToBitmap(imgMAT, bitmapPicture);
             } else {
                 //Log.i(TAG, "no filter");
             }
+
             startImageEdit(bitmapPicture);
         }};
 
@@ -255,7 +260,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setCvCameraViewListener(mView);
-                    Log.i(TAG, "filters: " + mView.lFilters.toString());
+
                     if(mView.lFilters.size() == 0) {
                         mView.appendFilter(new MatAdaptiveThresholding());      // black background, white letters
                         mView.appendFilter(new MatBinarizationFilter());        // white background, black letters
@@ -265,6 +270,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                         mView.appendFilter(new MatBlueYellowInvertedFilter());  // yellow background, blue letters
                         mView.appendFilter(new MatWhiteRedFilter());            // white background, red letters
                     }
+                    Log.i(TAG, "filters: " + mView.lFilters.toString());
                     // Restore last filter, if available
                     mView.restoreCurrentFilterSet();
                     // Re-enable view
@@ -336,7 +342,7 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
         ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
         String sTheme;
-        Log.i(TAG, "predictions: "+predictions.toString());
+        //Log.i(TAG, "predictions: "+predictions.toString());
         TextView sliderText = (TextView) findViewById(R.id.verticalSeekbarText);
         for (Prediction prediction : predictions) {
             if (prediction.score > 1.0) {

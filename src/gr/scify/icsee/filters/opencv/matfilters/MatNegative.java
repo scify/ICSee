@@ -12,8 +12,10 @@ public class MatNegative extends MatEdgeDetectionCannyFilter {
 	    Imgproc.cvtColor(mRGBA, mIntermediateMat, Imgproc.COLOR_BGRA2GRAY, 1);
 		
 		// Subtract from 255 matrix the mRGBA
-		Core.bitwise_not(mIntermediateMat, mRGBA);
+		Core.bitwise_not(mIntermediateMat, mIntermediateMat);
 
+		// Convert back to RGBA
+		Imgproc.cvtColor(mIntermediateMat, mRGBA, Imgproc.COLOR_GRAY2BGRA, 4);
 		return this;
 	}
 	

@@ -36,7 +36,7 @@ public class ICSeeTutorial {
         mEditor = mSharedPreferences.edit();
         //second parameter is default value
         tutorialState = mSharedPreferences.getInt(KEY_TUTORIAL, 1);
-        Log.i(TAG, "state: " + tutorialState);
+        //Log.i(TAG, "state: " + tutorialState);
         return tutorialState;
     }
 
@@ -44,7 +44,7 @@ public class ICSeeTutorial {
 
     public static void stopSound() {
             mediaPlayer.stop();
-            Log.i(TAG, "Media player stopped");
+            //Log.i(TAG, "Media player stopped");
     }
 
     public static void initMediaPlayer() {
@@ -54,7 +54,7 @@ public class ICSeeTutorial {
     public static void playTutorialReminder(Context context) {
         if(getTutorialState(ICSeeRealtimeActivity.mContext) == 0) {
             int soundId = 0;
-            Log.i(TAG, "lang: " + lang + " code: " + countryCode);
+            //Log.i(TAG, "lang: " + lang + " code: " + countryCode);
             if (lang.equals("el") || countryCode.equals("gr")) {
                 soundId = R.raw.gr_tutorial_reminder;
             } else {
