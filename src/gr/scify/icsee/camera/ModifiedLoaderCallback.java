@@ -58,7 +58,6 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
                 TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
                 countryCode = tm.getSimCountryIso();
                 ICSeeTutorial.setLanguage(lang, countryCode);
-                //ICSeeTutorial.setLanguage("en", "EN");
                 Log.i(TAG, "lang: " + lang);
                 Log.i(TAG, "country: " + countryCode);
                 if(ICSeeTutorial.getTutorialState(mContext) == 0) {
@@ -93,13 +92,6 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
         }
         mplayer = MediaPlayer.create(context, tutorialId);
         mplayer.start();
-        /*mplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mPrograssBar.setVisibility(View.VISIBLE);
-                new AsyncProgressCheck(mDialog, ICSeeStartActivity.mOpenCVCallBack, startActivity).execute();
-            }
-        });*/
 
     }
 

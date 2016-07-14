@@ -38,6 +38,28 @@ Download the User Guidelines from <a href="http://icstudy.projects.development1.
 
 Download the Developer Guidelines from <a href="http://icstudy.projects.development1.scify.org/www/files/ICSee_developer_guidelines.pdf">here.</a>
 
+Altering/ adding more languages
+-------------------------------
+A this version of the app, English and Greek sounds are supported. This is how the selection works:<br>
+When the app starts, the current language code is produced, based on the Locale, or the SIM operator's country code. (If we are on a tablet, there may be no SIM card).
+```java
+lang = Locale.getDefault().getLanguage();
+TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
+countryCode = tm.getSimCountryIso();
+```
+Each time we try to load a sound, we check for the lang or countryCode variable. If we are in a Greek environment we load the Greek sound. Otherwise, we default back to the English one.
+Given that, in order to add sound files in French, you should modify the code for each function that loads a sound as follows:
+```java
+if(lang.equals("fr") || countryCode.equals("fr")) {
+    soundId = R.raw.NAME_OF_FRENCH_FILE_HERE;
+}
+else if (lang.equals("el") || countryCode.equals("gr")) {
+    soundId = R.raw.gr_take_picure;
+} else {
+    soundId = R.raw.en_take_picture;
+}
+```                
+
 Πίνακας παραδοτέων
 ------------------
 
