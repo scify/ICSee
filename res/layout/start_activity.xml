@@ -9,10 +9,12 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="85dp"
-        android:src="@drawable/icsee_logo2" />
+        android:src="@drawable/icsee_logo2"
+        android:contentDescription="@string/application_logo" />
 
     <TextView
         android:id="@+id/textView1"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -40,7 +42,7 @@
         android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="Error massage"
+        android:text="@string/error_massage"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:visibility="invisible" />
 
@@ -50,7 +52,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/imageView1"
         android:layout_marginTop="16dp" />
+    <TextView
+        android:gravity="center|bottom"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/privacy_policy_link"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/privacy_policy_link"/>
 
 </RelativeLayout>

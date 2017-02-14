@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -77,6 +78,8 @@ public class ICSeeStartActivity extends Activity {
             }
         });
 
+        TextView t2 = (TextView) findViewById(R.id.privacy_policy_link);
+        t2.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
 

@@ -10,5 +10,8 @@
     <string name="processed_image">Processed Image</string>
     <string name="title_activity_image_edit">ImageEdit</string>
     <string name="app_description">A realtime camera app with filters for visually impaired people</string>
+    <string name="privacy_policy_link"><a href="http://www.scify.gr/site/el/impact-areas/165-icsee/438-icsee-privacy-policy">Privacy policy</a></string>
+    <string name="error_massage">Error massage</string>
+    <string name="application_logo">Application logo</string>
 
 </resources>
