@@ -3,7 +3,7 @@
     <string name="app_name">ICSee</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">ICSee</string>
-    <string name="progress_label">Progress of current task...</string>
+    <string name="progress_label">Progress of current task…</string>
     <string name="welcome_label">Welcome to the ICSee world!</string>
     <string name="title_activity_img_viewer">Image Viewer</string>
     <string name="action_settings">Settings</string>
