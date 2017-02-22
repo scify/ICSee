@@ -19,6 +19,11 @@ android {
     compileSdkVersion 20
     buildToolsVersion "21.0.0"
 
+    defaultConfig {
+        versionCode 10
+        versionName "2.0"
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="gr.scify.icsee"
-    android:versionCode="10"
-    android:versionName="2.0">
+    package="gr.scify.icsee">
 
     <uses-sdk
         android:minSdkVersion="14"
