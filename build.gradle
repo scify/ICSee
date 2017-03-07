@@ -20,7 +20,7 @@ android {
     buildToolsVersion "21.0.0"
 
     defaultConfig {
-        versionCode 10
+        versionCode 11
         versionName "2.0"
     }
 
