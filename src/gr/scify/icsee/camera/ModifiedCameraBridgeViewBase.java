@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -17,7 +15,8 @@ import org.opencv.android.FpsMeter;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.Videoio;
 
 import java.util.List;
 
@@ -48,7 +47,7 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
     protected int mFrameHeight;
     protected int mMaxHeight;
     protected int mMaxWidth;
-    protected int mPreviewFormat = Highgui.CV_CAP_ANDROID_COLOR_FRAME_RGBA;
+    //protected int mPreviewFormat = Imgcodecs.IMREAD_COLOR;
     protected int mCameraIndex = -1;
     protected boolean mEnabled;
     protected FpsMeter mFpsMeter = null;
@@ -186,10 +185,10 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
         mMaxHeight = maxHeight;
     }
 
-    public void SetCaptureFormat(int format)
-    {
-        mPreviewFormat = format;
-    }
+//    public void SetCaptureFormat(int format)
+//    {
+//        mPreviewFormat = format;
+//    }
 
     /**
      * Called when mSyncObject lock is held

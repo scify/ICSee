@@ -7,3 +7,8 @@ build/
 local.properties
 .gradle/
 ICSee-v2-release.apk
+gen/
+bin/
+.settings
+projectFilesBackup
+.classpath

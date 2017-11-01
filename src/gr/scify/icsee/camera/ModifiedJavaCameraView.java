@@ -12,11 +12,10 @@ import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.Toast;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.List;
@@ -340,16 +339,16 @@ import gr.scify.icsee.sounds.SoundPlayer;
 	                }
 
 	                if (!mStopThread) {
-	                    switch (mPreviewFormat) {
-	                        case Highgui.CV_CAP_ANDROID_COLOR_FRAME_RGBA:
-	                            Imgproc.cvtColor(mBaseMat, mFrameChain[mChainIdx], Imgproc.COLOR_YUV2RGBA_NV21, 4);
-	                        break;
-	                        case Highgui.CV_CAP_ANDROID_GREY_FRAME:
-	                            mFrameChain[mChainIdx] = mBaseMat.submat(0, mFrameHeight, 0, mFrameWidth);
-	                        break;
-	                        default:
-	                            Log.e(TAG, "Invalid frame format! Only RGBA and Gray Scale are supported!");
-	                    };
+//	                    switch (mPreviewFormat) {
+//	                        case Imgcodecs.IMREAD_COLOR:
+							Imgproc.cvtColor(mBaseMat, mFrameChain[mChainIdx], Imgproc.COLOR_YUV2RGBA_NV21, 4);
+//	                        break;
+//	                        case Imgcodecs.IMREAD_GRAYSCALE:
+//	                            mFrameChain[mChainIdx] = mBaseMat.submat(0, mFrameHeight, 0, mFrameWidth);
+//	                        break;
+//	                        default:
+//	                            Log.e(TAG, "Invalid frame format! Only RGBA and Gray Scale are supported!");
+//	                    };
 	                    if (!mFrameChain[mChainIdx].empty())
 	                        deliverAndDrawFrame(mFrameChain[mChainIdx]);
 	                    mChainIdx = 1 - mChainIdx;
