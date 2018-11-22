@@ -73,7 +73,13 @@ File->New->Import Module
 4. Select the `OpenCV-android-sdk/sdk/java` directory. If selected correctly, you will 
 see that the "Module Name" field gets updated.
 
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-2.png)
+
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-3.png)
+
 5. In the next screen (ADT Import Preferences), make sure that you uncheck all options.
+
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-4.png)
 
 6. Then, you will need to make some changes in the `build.gradle` file of your project and the build.gradle
 file of the imported OPenCV module.
@@ -98,27 +104,43 @@ the properties described above. Then paste them into the `openCVLibrary344/build
 8. For the changes to take effect, select **Sync now**.
 
 9. Then, make sure that the Project View preference for your project is set to **Android**.
-Right click on Android, go to open module settings and select dependencies.
-Go to the Dependencies tab, then press + , module dependencies and select the imported OpenCV library.
 
-10. Then, Go to New ->Folder -> JNI folder (Android View)
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-5.png)
+
+10. Right click on Android, go to open module settings and select dependencies.
+    Go to the Dependencies tab, then press + , module dependencies and select the imported OpenCV library.
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-7.png)
+    
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-8.png)
+
+11. Then, Go to New ->Folder -> JNI folder (Android View)
 
     Select Change folder location
     
     and set `src/main/jniLibs/`.
 
-11. Go to the `/path/to/OpenCV-android-sdk/sdk/native/libs` folder which you downloaded 
+12. Go to the `/path/to/OpenCV-android-sdk/sdk/native/libs` folder which you downloaded 
 then copy the folders inside,paste that to Project view `app/src/main/jniLibs` location.
 
-12. Then, (in android file view mode), right click on the app directory and select "Link c++ project with gradle"
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-11.png)
 
-13. Select "ndk-build"
+13. Then, (in android file view mode), right click on the app directory and select "Link c++ project with gradle"
+    
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-10.png)
+    
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-12.png)
+    
+14. Select "ndk-build"
 and select `/path/to/OpenCV-android-sdk/sdk/native/jni/OpenCV.mk` file from the downloaded Sdk path.
 
-14. In order for this step to execute correctly, you need to have NDK integrated into Android Studio.
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-13.png)
+    
+    ![Installation screenshot](https://raw.githubusercontent.com/SciFY/ICSee/opencv_integrated/documentation_screens/ICSee-14.png)
+
+15. In order for this step to execute correctly, you need to have NDK integrated into Android Studio.
 (it can be installed from the SDK manager).
 
-To verify that OPenCV is loaded correctly, you can Log the following to your Activity class:
+To verify that OpenCV is loaded correctly, you can Log the following to your Activity class:
 
 ```
 Log.d("verify",String.valueOf(OpenCVLoader.initDebug()));
