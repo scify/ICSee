@@ -1,12 +1,15 @@
 package gr.scify.icsee;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -44,6 +47,9 @@ public class ICSeeStartActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        OpenCVLoader.initDebug();
+        if(needRequestRuntimePermissions())
+            requestPermissions();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_activity);
         mContext = this;
@@ -62,11 +68,13 @@ public class ICSeeStartActivity extends Activity {
                 0);
         String lang = Locale.getDefault().getDisplayLanguage();
         Log.i(TAG,"lang = " + lang);
-
+        Log.d(TAG, "verify: " + String.valueOf(OpenCVLoader.initDebug()));
         mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mp, mDialog, ICSeeStartActivity.this);
 
-        Log.i(TAG, "mOpenCVCallBack.hasManagerConnected: " + mOpenCVCallBack.hasManagerConnected);
 
+
+        Log.i(TAG, "mOpenCVCallBack.hasManagerConnected: " + mOpenCVCallBack.hasManagerConnected);
+        Log.d(TAG, "verify: " + String.valueOf(OpenCVLoader.initDebug()));
 
         mExitButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -86,6 +94,13 @@ public class ICSeeStartActivity extends Activity {
 
     }
 
+    private boolean needRequestRuntimePermissions() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
+
+    protected void requestPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.VIBRATE}, 1);
+    }
 
     private void unmuteAudio(AudioManager audio) {
         audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -105,7 +120,12 @@ public class ICSeeStartActivity extends Activity {
         super.onResume();
 
         Log.i(TAG, "Trying to load OpenCV library");
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mOpenCVCallBack);
+        //OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mOpenCVCallBack);
+        if (!OpenCVLoader.initDebug()) {
+            Log.d("ERROR", "Unable to load OpenCV");
+        } else {
+            mOpenCVCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
         Log.i(TAG, "mOpenCVCallBack.mplayer: " + mp);
 
     }

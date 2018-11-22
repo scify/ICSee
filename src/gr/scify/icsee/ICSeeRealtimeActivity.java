@@ -1,5 +1,6 @@
 package gr.scify.icsee;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,15 +35,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NavigableSet;
 
 import gr.scify.icsee.camera.ImageView;
 import gr.scify.icsee.camera.RealtimeFilterView;
-import gr.scify.icsee.filters.IMatFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatAdaptiveThresholding;
 import gr.scify.icsee.filters.opencv.matfilters.MatBinarizationFilter;
 import gr.scify.icsee.filters.opencv.matfilters.MatBlackYellowFilter;
@@ -101,6 +99,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         this.addContentView(gestureOverlayView, layoutParamsControl);
         //icSeeTutorial.initMediaPlayer();
     }
+
+
 
     Runnable mPlayTutorialReminder = new Runnable() {
         public void run() {

@@ -58,7 +58,72 @@ else if (lang.equals("el") || countryCode.equals("gr")) {
 } else {
     soundId = R.raw.en_take_picture;
 }
-```                
+```
+
+## Installing OpenCV as an included module
+
+1. First download the OpenCV Android SDK from [https://opencv.org/releases.html](https://opencv.org/releases.html)                
+
+2. Unzip the SDK to a directory of your choice. **(The OpenCV-android-sdk directory 
+path name must not contain any spaces).**
+
+3. Open Android Studio and go to:
+File->New->Import Module
+
+4. Select the `OpenCV-android-sdk/sdk/java` directory. If selected correctly, you will 
+see that the "Module Name" field gets updated.
+
+5. In the next screen (ADT Import Preferences), make sure that you uncheck all options.
+
+6. Then, you will need to make some changes in the `build.gradle` file of your project and the build.gradle
+file of the imported OPenCV module.
+
+    These changes will make sure that the project and the module have the same values for the
+    sdk version and the build tools version.
+    
+    ```
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+    
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+    }
+    ```
+    settings.
+
+7. So, open the `build.gradle` file of your project, and copy 
+the properties described above. Then paste them into the `openCVLibrary344/build.gradle` file (overwrite if already set).
+
+8. For the changes to take effect, select **Sync now**.
+
+9. Then, make sure that the Project View preference for your project is set to **Android**.
+Right click on Android, go to open module settings and select dependencies.
+Go to the Dependencies tab, then press + , module dependencies and select the imported OpenCV library.
+
+10. Then, Go to New ->Folder -> JNI folder (Android View)
+
+    Select Change folder location
+    
+    and set `src/main/jniLibs/`.
+
+11. Go to the `/path/to/OpenCV-android-sdk/sdk/native/libs` folder which you downloaded 
+then copy the folders inside,paste that to Project view `app/src/main/jniLibs` location.
+
+12. Then, (in android file view mode), right click on the app directory and select "Link c++ project with gradle"
+
+13. Select "ndk-build"
+and select `/path/to/OpenCV-android-sdk/sdk/native/jni/OpenCV.mk` file from the downloaded Sdk path.
+
+14. In order for this step to execute correctly, you need to have NDK integrated into Android Studio.
+(it can be installed from the SDK manager).
+
+To verify that OPenCV is loaded correctly, you can Log the following to your Activity class:
+
+```
+Log.d("verify",String.valueOf(OpenCVLoader.initDebug()));
+```
+
 
 Πίνακας παραδοτέων
 ------------------

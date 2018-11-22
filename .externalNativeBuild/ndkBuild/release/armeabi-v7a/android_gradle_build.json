@@ -1,0 +1,10 @@
+{
+  "buildFiles": [
+    "/home/pisaris/projects/opencv-3.4.4-android-sdk/OpenCV-android-sdk/sdk/native/jni/OpenCV.mk"
+  ],
+  "cleanCommands": [],
+  "libraries": {},
+  "toolchains": {},
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}
