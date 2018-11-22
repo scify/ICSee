@@ -127,8 +127,11 @@ Log.d("verify",String.valueOf(OpenCVLoader.initDebug()));
 More info about the process can be found here:
 
 [Link 1](https://stackoverflow.com/a/40746665/4679732)
+
 [Link 2](https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html)
+
 [Link 3](https://medium.com/@rdeep/android-opencv-integration-without-opencv-manager-c259ef14e73b)
+
 
 --------------------------
 
