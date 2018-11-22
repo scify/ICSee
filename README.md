@@ -3,9 +3,14 @@ ICSee
 
 Abstract
 --------
-It is an application for small portable devices (smart phones, tablets) that will help people with severe visual  impairments see more clearly.
-How? The user simply directs the camera of his/her smartphone or tablet to the point he/she wants and… that was it! The application processes the image on the screen according to the user’s needs (conversion to negative or greyscale, increase the contrast, etc.) and provides in real time an image that is is easier for the user to see!
+ICSee is an application for portable handheld devices (smart phones, tablets) that helps people with severe visual  impairments see more clearly.
+
+How? 
+
+The user simply directs the camera of his/her smart phone or tablet to the point he/she wants and… that was it! The application processes the image on the screen according to the user’s needs (conversion to negative or greyscale, increase the contrast, etc.) and provides in real time an image that is is easier for the user to see!
+
 Who is it for?
+
 It is intended to be used by people with severe visual impairments.
 The Application provides an audio tutorial when starting. Depending on the phone's language, the audio will be in Greek or in English.
 
@@ -16,11 +21,10 @@ We can support filtering on a camera-streamed image (real-time), applying a wide
 
 Compilation - Requirements
 -----------
-The minimum SDK version is 14 (Android 4.0). The targeted SDK version is 19 (Android 4.4)
-A device with a camera is required. For the auto-focus feature, the camera should support auto-focus.
-This is a Gradle-based project. The required Open-CV library is included in the Android project.
-It is required to have the <a href="http://docs.opencv.org/2.4.11/platforms/android/service/doc/index.html">OpenCV Manager</a> installed on the device. You can find it <a href="https://play.google.com/store/apps/details?id=org.opencv.engine&hl=en">here</a>
-(The ICSee app will prompt you to the appropriate Play Store page if you haven't installed OpenCV Manager already.)
+A, Android device (or configured Android emulator) with a camera is required. 
+For the auto-focus feature, the camera should support auto-focus.
+
+The required Open-CV library is included in the Android project as a module.
 
 Deployment
 ----------
@@ -175,6 +179,9 @@ limitations under the License.
 
 Sponsors
 --------
+
+The [version 2](https://github.com/scify/ICSee/tree/v2.0) of the application was created by sponsorship by:
+
 <table>
 <tr>
 <td>
