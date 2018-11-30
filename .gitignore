@@ -13,3 +13,4 @@ bin/
 projectFilesBackup
 .classpath
 .externalNativeBuild/
+release
