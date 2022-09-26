@@ -19,7 +19,7 @@ dependencies {
 android {
     compileSdkVersion 32
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 32
         versionCode 13
         versionName "4.0.1"

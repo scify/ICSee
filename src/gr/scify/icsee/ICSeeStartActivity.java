@@ -92,10 +92,10 @@ public class ICSeeStartActivity extends Activity {
             return false;
         });
 
-        TextView t2 = findViewById(R.id.privacy_policy_link);
-        t2.setText(Html.fromHtml(
-                "<a href=\"https://www.scify.gr/site/el/impact-areas/165-icsee/438-icsee-privacy-policy\">Privacy policy</a>"));
-        t2.setMovementMethod(LinkMovementMethod.getInstance());
+//        TextView t2 = findViewById(R.id.privacy_policy_link);
+//        t2.setText(Html.fromHtml(
+//                "<a href=\"https://www.scify.gr/site/el/impact-areas/165-icsee/438-icsee-privacy-policy\">Privacy policy</a>"));
+//        t2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     protected void onPause() {

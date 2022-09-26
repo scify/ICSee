@@ -6,6 +6,7 @@
     <queries>
         <package android:name="gr.scify.icsee" />
     </queries>
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -45,18 +46,22 @@
             </intent-filter>
             <intent-filter android:label="@string/filter_view_http_icsee">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="gr.scify.icsee" />
-                <data android:scheme="app" android:host="gr.scify.icsee" />
+
+                <data
+                    android:host="gr.scify.icsee"
+                    android:scheme="https" />
+                <data
+                    android:host="gr.scify.icsee"
+                    android:scheme="app" />
             </intent-filter>
         </activity>
         <activity
             android:name=".camera.ImageView"
             android:label="@string/title_activity_image_edit"
-            android:screenOrientation="landscape">
-
-        </activity>
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

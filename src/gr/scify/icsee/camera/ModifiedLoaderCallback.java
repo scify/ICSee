@@ -52,7 +52,7 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
 
             super.onManagerConnected(status);
             if(processStatus == LoaderCallbackInterface.SUCCESS) {
-                mPrograssBar.setVisibility(View.INVISIBLE);
+                mPrograssBar.setVisibility(View.GONE);
                 hasManagerConnected = true;
                 lang = Locale.getDefault().getLanguage();
                 TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
