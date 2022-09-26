@@ -12,5 +12,5 @@
     <string name="app_description">A realtime camera app with filters for visually impaired people</string>
     <string name="error_massage">Error massage</string>
     <string name="application_logo">Application logo</string>
-
+    <string name="filter_view_http_icsee">icsee_filter</string>
 </resources>
