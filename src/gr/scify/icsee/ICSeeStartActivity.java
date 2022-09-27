@@ -11,19 +11,17 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import gr.scify.icsee.camera.ModifiedLoaderCallback;
-import gr.scify.icsee.sounds.SoundPlayer;
+
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
-import java.util.Locale;
+import gr.scify.icsee.camera.ModifiedLoaderCallback;
+import gr.scify.icsee.sounds.SoundPlayer;
 
 public class ICSeeStartActivity extends Activity {
     protected Context mContext;

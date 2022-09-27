@@ -22,6 +22,10 @@
         android:logo="@drawable/icsee_logo"
         android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         <activity
+            android:name=".ICSeeSettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_icsee_settings" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings" />
@@ -61,7 +65,7 @@
         <activity
             android:name=".camera.ImageView"
             android:label="@string/title_activity_image_edit"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
