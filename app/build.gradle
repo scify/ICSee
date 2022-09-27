@@ -1,0 +1,38 @@
+plugins {
+    id 'com.android.application'
+}
+
+dependencies {
+    implementation 'com.quickbirdstudios:opencv:3.4.15'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'com.google.android.material:material:1.6.1'
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+}
+
+android {
+    namespace 'gr.scify.icsee'
+    compileSdkVersion 32
+    defaultConfig {
+        applicationId "gr.scify.icsee"
+        minSdkVersion 16
+        targetSdkVersion 32
+        versionCode 13
+        versionName "4.0.1"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+}
