@@ -5,9 +5,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -17,37 +16,33 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.preference.PreferenceManager;
+
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
-import gr.scify.icsee.sounds.SoundPlayer;
 
 public class ICSeeStartActivity extends Activity {
     protected Context mContext;
     public static ModifiedLoaderCallback mOpenCVCallBack;
     public static ProgressDialog mDialog;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
-    Button mExitButton;
-    ProgressBar mProgressBar;
-    static MediaPlayer mp = new MediaPlayer();
+    protected ProgressBar mProgressBar;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocaleManager.setAppLocale(getBaseContext());
         setContentView(R.layout.start_activity);
         mContext = this;
         this.checkForIncomingData();
         this.checkForRuntimeCameraPermission();
-
-        // Initialize sounds here, so they should have loaded when the camera view starts
-        SoundPlayer.initSounds(this.getApplicationContext());
-        this.initAudioManager();
         this.initScreenComponents();
+
         initOpenCV();
     }
-
 
     private void checkForIncomingData() {
         // Get intent, action and MIME type
@@ -69,40 +64,36 @@ public class ICSeeStartActivity extends Activity {
         }
     }
 
-    protected void initAudioManager() {
-        AudioManager am =
-                (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
-        am.setStreamVolume(
-                AudioManager.STREAM_MUSIC,
-                am.getStreamMaxVolume(AudioManager.STREAM_MUSIC) - 3,
-                0);
-    }
-
     private void initScreenComponents() {
-        mExitButton = findViewById(R.id.exitButton);
+        Button mExitButton = findViewById(R.id.exitButton);
         mProgressBar = findViewById(R.id.progressBar);
         mExitButton.setOnLongClickListener(v -> {
             Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
             mVibrator.vibrate(250);
-            mOpenCVCallBack.stopTutorial();
+            ICSeeTutorial.stopSound();
             new AsyncProgressCheck(mDialog, mOpenCVCallBack, ICSeeStartActivity.this).execute();
             return false;
         });
+        Button settingsBtn = findViewById(R.id.settings_btn);
 
-//        TextView t2 = findViewById(R.id.privacy_policy_link);
-//        t2.setText(Html.fromHtml(
-//                "<a href=\"https://www.scify.gr/site/el/impact-areas/165-icsee/438-icsee-privacy-policy\">Privacy policy</a>"));
-//        t2.setMovementMethod(LinkMovementMethod.getInstance());
+        settingsBtn.setOnClickListener(v -> {
+            // opening a new intent to open settings activity.
+            Intent i = new Intent(getApplicationContext(), ICSeeSettingsActivity.class);
+            startActivity(i);
+        });
+    }
+
+    private void checkSHAPESModeAndTokenAndContinue() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     }
 
     protected void onPause() {
         super.onPause();
-        mOpenCVCallBack.stopTutorial();
+        ICSeeTutorial.stopSound();
     }
 
     protected void initOpenCV() {
-        mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mp, mDialog, ICSeeStartActivity.this);
+        mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mDialog, ICSeeStartActivity.this);
         Log.i(TAG, "mOpenCVCallBack.hasManagerConnected: " + mOpenCVCallBack.hasManagerConnected);
         Log.i(TAG, "Trying to load OpenCV library");
         if (!OpenCVLoader.initDebug()) {
@@ -117,25 +108,23 @@ public class ICSeeStartActivity extends Activity {
 
     public void showErrorMessage(String sMsg, boolean bShouldClose) {
         // Hide progress bar
-        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
+        ProgressBar pb = findViewById(R.id.progressBar);
         pb.setVisibility(View.INVISIBLE);
 
         // Set errorMessage text
-        TextView tvMsg = (TextView) findViewById(R.id.errorMessage);
+        TextView tvMsg = findViewById(R.id.errorMessage);
         tvMsg.setText(sMsg);
 
         // Show errorMessage text
         tvMsg.setVisibility(View.VISIBLE);
 
         // Show button
-        Button bExitBtn = (Button) findViewById(R.id.exitButton);
+        Button bExitBtn = findViewById(R.id.exitButton);
         bExitBtn.setVisibility(View.VISIBLE);
 
         // If bShouldClose
         if (bShouldClose) {
-            bExitBtn.setOnClickListener(v -> {
-                finish();
-            });
+            bExitBtn.setOnClickListener(v -> finish());
         }
     }
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_settings">Ρυθμίσεις</string>
+    <string name="progress_label">Πρόοδος..</string>
+    <string name="welcome_label">Καλως ήλθατε στον κόσμο του ICSee!</string>
+    <string name="action_settings">Ρυθμίσεις</string>
+    <string name="app_description">Μια εφαρμογή με φίλτρα επεξεργασίας εικόνας για άτομα με προβλήματα όρασης</string>
+    <string name="error_massage">Μήνυμα λάθους</string>
+    <string name="application_logo">Εικονίδιο εφαρμογής</string>
+    <string name="settings_about_btn">Ρυθμίσεις / Σχετικά</string>
+
+    <!-- Preferences -->
+    <string name="shapes_mode">SHAPES mode</string>
+    <string name="pref_title">Ρυθμίσεις</string>
+    <string name="interface_language">Γλώσσα</string>
+    <string name="interface_language_summary">Γλώσσα φωνητικών οδηγιών</string>
+    <string name="preferences_updated">Οι ρυθμίσεις ανανεώθηκαν</string>
+    <string name="preferences_updated_body">Οι ρυθμίσεις της εφαρμογής ανανεώθηκαν. Πατήστε OK για επανεκκίνηση.</string>
+</resources>

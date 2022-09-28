@@ -20,11 +20,11 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:logo="@drawable/icsee_logo"
-        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".ICSeeSettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_icsee_settings" />
+            android:label="@string/menu_settings" />
         <activity
             android:name=".ImgViewerActivity"
             android:exported="false"
@@ -44,7 +44,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:label="@string/filter_view_http_icsee">
+            <intent-filter android:label="filter_view_http_icsee">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
