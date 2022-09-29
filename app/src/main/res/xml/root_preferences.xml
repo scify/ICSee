@@ -8,13 +8,13 @@
 
         <SwitchPreferenceCompat
             android:id="@+id/shapes_mode"
-            app:key="shapes_mode"
+            android:key="@string/prefs_shapes_mode_key"
             app:title="@string/shapes_mode" />
 
         <ListPreference
             android:entries="@array/interface_language_names"
             android:entryValues="@array/interface_language_values"
-            android:key="interface_language"
+            android:key="@string/prefs_interface_language_key"
             app:useSimpleSummaryProvider="true"
             android:defaultValue="en"
             android:summary="@string/interface_language_summary"

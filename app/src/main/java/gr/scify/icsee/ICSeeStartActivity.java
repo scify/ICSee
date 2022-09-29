@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -16,10 +17,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.preference.PreferenceManager;
-
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+
+import java.util.Set;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
 
@@ -37,23 +38,10 @@ public class ICSeeStartActivity extends Activity {
         LocaleManager.setAppLocale(getBaseContext());
         setContentView(R.layout.start_activity);
         mContext = this;
-        this.checkForIncomingData();
         this.checkForRuntimeCameraPermission();
         this.initScreenComponents();
-
-        initOpenCV();
-    }
-
-    private void checkForIncomingData() {
-        // Get intent, action and MIME type
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-        Log.i(TAG, "ABOUT TO READ INCOMING DATA");
-        Log.i(TAG, "action = " + action);
-        Log.i(TAG, "type = " + type);
-        String data = intent.getDataString();
-        Log.i(TAG, "data = " + data);
+        this.checkSHAPESModeAndTokenAndContinue();
+        //initOpenCV();
     }
 
     private void checkForRuntimeCameraPermission() {
@@ -84,7 +72,36 @@ public class ICSeeStartActivity extends Activity {
     }
 
     private void checkSHAPESModeAndTokenAndContinue() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if (shouldShowLoginPage()) {
+            // TODO login page
+        } else {
+            initOpenCV();
+        }
+    }
+
+    protected boolean shouldShowLoginPage() {
+        // check for auth token passed by external intent
+        String token = getTokenFromExternalIntent();
+        if (token != null && !token.isEmpty())
+            return false;
+        // check for shapes mode
+        SharedPreferences preferences = getBaseContext().getSharedPreferences(ICSeeSettingsActivity.PREFS_FILE, Context.MODE_PRIVATE);
+        return preferences.getBoolean(getString(R.string.prefs_shapes_mode_key), false);
+    }
+
+    private String getTokenFromExternalIntent() {
+        String toReturn = null;
+        Intent intent = getIntent();
+        if (intent != null) {
+            String data = intent.getDataString();
+            if (data != null && !data.isEmpty()) {
+                Uri uri = Uri.parse(data);
+                Set<String> args = uri.getQueryParameterNames();
+                if (args.contains("token"))
+                    toReturn = uri.getQueryParameter("token");
+            }
+        }
+        return toReturn;
     }
 
     protected void onPause() {

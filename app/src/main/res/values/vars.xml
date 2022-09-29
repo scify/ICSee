@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="prefs_interface_language_key" translatable="false">interface_language</string>
+    <string name="prefs_shapes_mode_key" translatable="false">shapes_mode</string>
 </resources>
