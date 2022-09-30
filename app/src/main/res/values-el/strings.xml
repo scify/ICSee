@@ -16,4 +16,21 @@
     <string name="interface_language_summary">Γλώσσα φωνητικών οδηγιών</string>
     <string name="preferences_updated">Οι ρυθμίσεις ανανεώθηκαν</string>
     <string name="preferences_updated_body">Οι ρυθμίσεις της εφαρμογής ανανεώθηκαν. Πατήστε OK για επανεκκίνηση.</string>
+    <string name="title_activity_login">Είσοδος</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Κωδικός</string>
+    <string name="action_sign_in">Σύνδεση ή Εγγραφή</string>
+    <string name="action_sign_in_short">Σύνδεση</string>
+    <string name="welcome">Καλώς ήλθατε!</string>
+    <string name="invalid_username">Λάθος email</string>
+    <string name="invalid_password_num_chars">Ο κωδικός πρέπει να είναι τουλάχιστον 8 χαρακτήρες</string>
+    <string name="invalid_password_uppercase">Ο κωδικός πρέπει να περιλαμβάνει τουλάχιστον ένα κεφαλαίο γράμμα</string>
+    <string name="invalid_password_special_chars">Ο κωδικός πρέπει να περιλαμβάνει τουλάχιστον ένα από τα ακόλουθα: !@#$%+=</string>
+    <string name="login_failed">Η σύνδεση απέτυχε</string>
+    <string name="login_failed_wrong_credentials">Η σύνδεση απέτυχε. Λάθος στοιχεία εισόδου.</string>
+    <string name="forgot_your_password_click_here">Ξεχάσατε τον κωδικό; Πατήστε εδώ.</string>
+    <string name="about_shapes_text">This project has received funding from the European Union\'s Horizon 2020 research and innovation programme under grant agreement No. 857159.</string>
+    <string name="about_shapes_auth_text">Αυτή η λειτουργικότητα αναφέρεται στους χρήστες του <a href="https://shapes2020.eu/">Ευρωπαϊκού έργου SHAPES.</a></string>
+    <string name="shapes_mode_preference_summary">Αυτή η επιλογή αναφέρεται μόνο στους χρήστες του έργου SHAPES. Μην την ενεργοποιήσετε αν δεν γνωρίζετε ακριβώς τι κάνετε!</string>
+    <string name="app_version">Έκδοση εφαρμογής</string>
 </resources>

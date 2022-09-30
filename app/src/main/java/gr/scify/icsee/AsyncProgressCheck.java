@@ -49,9 +49,6 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
                     Log.i(TAG, "OpenCV loaded successfully");
                     // Prepare new intent
                     Intent strt = new Intent(mContext,ICSeeRealtimeActivity.class);
-                    // First stop showing the "wait" dialog
-                    //mDialog.dismiss();
-                    // Make sure that the first activity is dismissed
                     strt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mContext.startActivity(strt);
                     mContext.finish();

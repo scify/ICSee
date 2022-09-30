@@ -17,20 +17,36 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
+import java.nio.charset.Charset;
 import java.util.Set;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
+import gr.scify.icsee.controllers.AnalyticsController;
+import gr.scify.icsee.data.LoginRepository;
+import gr.scify.icsee.data.StringVolleyCallback;
+import gr.scify.icsee.login.LoginActivity;
 
-public class ICSeeStartActivity extends Activity {
+public class ICSeeStartActivity extends AppCompatActivity {
     protected Context mContext;
     public static ModifiedLoaderCallback mOpenCVCallBack;
     public static ProgressDialog mDialog;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
     protected ProgressBar mProgressBar;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
+    public static RequestQueue queue;
+    ActivityResultLauncher<Intent> someActivityResultLauncher;
+    protected AnalyticsController analyticsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +54,20 @@ public class ICSeeStartActivity extends Activity {
         LocaleManager.setAppLocale(getBaseContext());
         setContentView(R.layout.start_activity);
         mContext = this;
+        analyticsController = AnalyticsController.getInstance();
+        queue = Volley.newRequestQueue(this);
         this.checkForRuntimeCameraPermission();
         this.initScreenComponents();
+        someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Bundle bundle = new Bundle();
+                        analyticsController.sendEvent(getBaseContext(), "app_started", AnalyticsController.getCurrentLocale(getBaseContext()).getLanguage(), bundle);
+                        initOpenCV();
+                    }
+                });
         this.checkSHAPESModeAndTokenAndContinue();
-        //initOpenCV();
     }
 
     private void checkForRuntimeCameraPermission() {
@@ -72,21 +98,53 @@ public class ICSeeStartActivity extends Activity {
     }
 
     private void checkSHAPESModeAndTokenAndContinue() {
-        if (shouldShowLoginPage()) {
-            // TODO login page
+        LoginRepository loginRepository = LoginRepository.getInstance();
+        // check for auth token passed by external intent
+        String token = getTokenFromExternalIntent();
+        if (token != null && !token.isEmpty()) {
+            loginRepository.storeToken(getBaseContext(), token);
+            continueToApp();
         } else {
-            initOpenCV();
+            // check for shapes mode
+            SharedPreferences preferences = getBaseContext().getSharedPreferences(ICSeeSettingsActivity.PREFS_FILE, Context.MODE_PRIVATE);
+            boolean shapesMode = preferences.getBoolean(getString(R.string.prefs_shapes_mode_key), false);
+            if (shapesMode) {
+                String storedToken = loginRepository.getStoredAuthToken(getApplicationContext());
+                //String storedToken = "123";
+                if (storedToken != null) {
+                    loginRepository.checkToken(storedToken, new StringVolleyCallback() {
+                        @Override
+                        public void onSuccess(String response) {
+                            continueToApp();
+                        }
+
+                        @Override
+                        public void onError(VolleyError error) {
+                            String body = new String(error.networkResponse.data, Charset.forName("UTF-8"));
+                            Log.d(TAG, body);
+                            loginRepository.deleteStoredUser(getBaseContext());
+                            goToLoginPage();
+                        }
+                    });
+                } else {
+                    goToLoginPage();
+                }
+            } else {
+                continueToApp();
+            }
+
         }
     }
 
-    protected boolean shouldShowLoginPage() {
-        // check for auth token passed by external intent
-        String token = getTokenFromExternalIntent();
-        if (token != null && !token.isEmpty())
-            return false;
-        // check for shapes mode
-        SharedPreferences preferences = getBaseContext().getSharedPreferences(ICSeeSettingsActivity.PREFS_FILE, Context.MODE_PRIVATE);
-        return preferences.getBoolean(getString(R.string.prefs_shapes_mode_key), false);
+    private void goToLoginPage() {
+        mProgressBar.setVisibility(View.GONE);
+        Intent intent = new Intent(this, LoginActivity.class);
+        someActivityResultLauncher.launch(intent);
+    }
+
+    private void continueToApp() {
+        Log.d(TAG, "TOKEN: " + LoginRepository.getInstance().getStoredAuthToken(getBaseContext()));
+        initOpenCV();
     }
 
     private String getTokenFromExternalIntent() {

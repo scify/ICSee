@@ -3,10 +3,12 @@ package gr.scify.icsee;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
@@ -38,6 +40,13 @@ public class ICSeeSettingsActivity extends AppCompatActivity {
             PreferenceManager manager = getPreferenceManager();
             manager.setSharedPreferencesName(PREFS_FILE);
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            Preference pref1 = findPreference("app_version");
+            try {
+                assert pref1 != null;
+                pref1.setSummary(getAppVersion());
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -66,5 +75,8 @@ public class ICSeeSettingsActivity extends AppCompatActivity {
             alert.show();
         }
 
+        public String getAppVersion() throws PackageManager.NameNotFoundException {
+            return BuildConfig.VERSION_NAME + "_" + BuildConfig.VERSION_CODE;
+        }
     }
 }

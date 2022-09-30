@@ -8,6 +8,7 @@
 
         <SwitchPreferenceCompat
             android:id="@+id/shapes_mode"
+            android:summary="@string/shapes_mode_preference_summary"
             android:key="@string/prefs_shapes_mode_key"
             app:title="@string/shapes_mode" />
 
@@ -19,6 +20,10 @@
             android:defaultValue="en"
             android:summary="@string/interface_language_summary"
             android:title="@string/interface_language" />
-
+        <PreferenceScreen
+            android:title="@string/app_version"
+            android:key="app_version"
+            android:summary="1.0">
+        </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>

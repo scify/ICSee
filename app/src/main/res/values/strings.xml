@@ -13,7 +13,7 @@
     <string name="error_massage">Error massage</string>
     <string name="application_logo">Application logo</string>
     <string name="settings_about_btn">Settings / About</string>
-
+    <string name="content_description" translatable="false">Image</string>
     <!-- Preferences -->
     <string name="shapes_mode">SHAPES mode</string>
     <string name="pref_title">Preferences</string>
@@ -21,4 +21,21 @@
     <string name="interface_language_summary">Language for audio instructions</string>
     <string name="preferences_updated">Preferences updated</string>
     <string name="preferences_updated_body">Application preferences were updated. Click OK to restart.</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">Welcome!</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password_num_chars">Password must be at least 8 characters</string>
+    <string name="invalid_password_uppercase">Password must contain at least one uppercase letter.</string>
+    <string name="invalid_password_special_chars">Password must contain at least on of the following: !@#$%+=</string>
+    <string name="login_failed">Login failed</string>
+    <string name="login_failed_wrong_credentials">Login failed. Wrong credentials.</string>
+    <string name="forgot_your_password_click_here"><a>Forgot password? Click here.</a></string>
+    <string name="about_shapes_text">This project has received funding from the European Union\'s Horizon 2020 research and innovation programme under grant agreement No. 857159.</string>
+    <string name="about_shapes_auth_text">This functionality / authentication method is for the users of the <a href="https://shapes2020.eu/">SHAPES Project.</a></string>
+    <string name="shapes_mode_preference_summary">This refers only to users of the SHAPES project. Please do not activate it if you don\'t know what you are doing!</string>
+    <string name="app_version">App version</string>
 </resources>
