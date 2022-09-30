@@ -7,7 +7,7 @@ It is an application for small portable devices (smart phones, tablets) that wil
 How? The user simply directs the camera of his/her smartphone or tablet to the point he/she wants and… that was it! The application processes the image on the screen according to the user’s needs (conversion to negative or greyscale, increase the contrast, etc.) and provides in real time an image that is is easier for the user to see!
 Who is it for?
 It is intended to be used by people with severe visual impairments.
-The Application provides an audio tutorial when starting. Depending on the phone's language, the audio will be in Greek or in English.
+The Application provides an audio tutorial when starting.
 
 Implementation
 --------------
@@ -62,4 +62,3 @@ Sponsors
 </td>
 </tr>
 </table>
-=======
