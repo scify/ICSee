@@ -16,11 +16,9 @@ We can support filtering on a camera-streamed image (real-time), applying a wide
 
 Compilation - Requirements
 -----------
-The minimum SDK version is 14 (Android 4.0). The targeted SDK version is 19 (Android 4.4)
+The minimum SDK version is 16 (Android 4.1).
 A device with a camera is required. For the auto-focus feature, the camera should support auto-focus.
-This is a Gradle-based project. The required Open-CV library is included in the Android project.
-It is required to have the <a href="http://docs.opencv.org/2.4.11/platforms/android/service/doc/index.html">OpenCV Manager</a> installed on the device. You can find it <a href="https://play.google.com/store/apps/details?id=org.opencv.engine&hl=en">here</a>
-(The ICSee app will prompt you to the appropriate Play Store page if you haven't installed OpenCV Manager already.)
+This is a Gradle-based project. The required Open-CV library is included in the Android project (see `app/build.gradle` file).
 
 Deployment
 ----------
@@ -32,104 +30,10 @@ Main Technologies
 
 [1]: http://www.scify.gr/site/en/projects/in-progress/icsee
 
-User/developer guidelines
--------------------------
-Download the User Guidelines from <a href="http://icstudy.projects.development1.scify.org/www/files/ICSeeAudioInstructionsGREN.pdf">here.</a>
-
-Download the Developer Guidelines from <a href="http://icstudy.projects.development1.scify.org/www/files/ICSee_developer_guidelines.pdf">here.</a>
-
-Altering/ adding more languages
--------------------------------
-A this version of the app, English and Greek sounds are supported. This is how the selection works:<br>
-When the app starts, the current language code is produced, based on the Locale, or the SIM operator's country code. (If we are on a tablet, there may be no SIM card).
-```java
-lang = Locale.getDefault().getLanguage();
-TelephonyManager tm = (TelephonyManager)startActivity.getSystemService(Context.TELEPHONY_SERVICE);
-countryCode = tm.getSimCountryIso();
-```
-Each time we try to load a sound, we check for the lang or countryCode variable. If we are in a Greek environment we load the Greek sound. Otherwise, we default back to the English one.
-Given that, in order to add sound files in French, you should modify the code for each function that loads a sound as follows:
-```java
-if(lang.equals("fr") || countryCode.equals("fr")) {
-    soundId = R.raw.NAME_OF_FRENCH_FILE_HERE;
-}
-else if (lang.equals("el") || countryCode.equals("gr")) {
-    soundId = R.raw.gr_take_picure;
-} else {
-    soundId = R.raw.en_take_picture;
-}
-```                
-
-Πίνακας παραδοτέων
-------------------
-
-<table>
-  <tr>
-    <th width="50px">Α/ Α</th>
-    <th>Περιγραφή δράσης</th>
-    <th>Τεκμηρίωση</th>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>ICSee Android Application: Εφαρμογή έτοιμη για χρήση σε smartphones / tablets με
-        λειτουργικό σύστημα Android. Στα χαρακτηριστικά θα περιλαμβάνονται, πέραν των ήδη
-        ανεπτυγμένων χαρακτηριστικών:</td>
-    <td><ul><li>Λήψη στιγμιοτύπου υψηλής ανάλυσης για καλύτερη προβολή</li>
-                <li>Δυνατότητα προσαρμογής της μεγέθυνσης της εικόνας από το χρήστη.</li><li>Δημιουργία εκπαιδευτικής διαδικασίας (tutorial) για να μπορεί ο χρήστης να μάθει να
-                το χρησιμοποιεί εύκολα.</li></ul></td>
-                <td>Το ICSee υπάρχει διαθέσιμο για δωρεάν κατέβασμα στο Google Play σε αυτόν τον σύνδεσμο: https://goo.gl/WnNyzn</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td colspan="1">Ο κώδικας της εφαρμογής διαθέσιμος με πολύ ανοικτές άδειες χρήσης σε δημόσιο
-
-                    αποθετήριο, προκειμένου όλοι να μπορούν να την εξελίξουν / εξειδικεύσουν.</td>
-                    <td>Ο κώδικας της εφαρμογής είναι διαθέσιμος σε αυτόν τον σύνδεσμο: https://github.com/scify/ICSee</td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>Διασφάλιση ότι η εφαρμογή θα λειτουργεί σε κάποιες δημοφιλείς συσκευές οι οποίες έχουν
-
-        τα επιθυμητά χαρακτηριστικά της ομάδας-στόχου (π.χ. οθόνη τουλάχιστον Χ ιντσών) ή
-
-        απαιτήσεων της εφαρμογής ώστε να λειτουργεί ικανοποιητικά (π.χ. κάμερα Υ Μpixels)</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>Σύντομο report με τα αποτελέσματα των tests με τελικούς χρήστες και με συνεισφορά
-
-        επιστήμονα ειδικού σε προβλήματα όρασης.</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td colspan="1">Υποστηρικτικό υλικό.</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>Προώθηση του κοινού project ICSee στα κανάλια επικοινωνίας της SciFY.</td>
-    <td>Στο Newsletter της SciFY (http://eepurl.com/bAuv11)
-        Στα Social media της SciFY
-        <ul>
-        <li>Google+ (https://goo.gl/cLQQVR)</li>
-        <li>Facebook
-        (https://www.facebook.com/SciFY.org)</li>
-        <li>Twitter
-        (https://twitter.com/scify_org)</li>
-        </ul>
-        Ειδική παρουσίαση στην ημέρα Λευκού Μπαστουνιού, όπως φαίνεται και στο προφίλ μας στο Facebook</td>
-  </tr>
-  <tr>
-  <td>7</td>
-  <td>Προώθηση σε κοινότητες και φορείς τυφλότητας.</td>
-  </tr>
-</table>
-
 LICENSE
 -----------------
 
-Copyright 2015
+Copyright 2022
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -148,10 +52,13 @@ Sponsors
 <table>
 <tr>
 <td>
-<a href="http://www.scify.gr/site/en/"><img src="http://www.scify.gr/site/images/scify/scify_logo_108.png"></a>
+<a href="http://www.scify.gr/site/en/" title="SciFY website" rel="home" target="_blank"><img src="http://www.scify.gr/site/images/scify/scify_logo_108.png" alt="SciFY logo" title="SciFY logo"></a>
 </td>
 <td>
-<a href="http://www.latsis-foundation.org/" title="Ίδρυμα Λάτση" rel="home"><img src="http://www.latsis-foundation.org/img/iePngs/logoEll.png" alt="Ίδρυμα Λάτση" title="Ίδρυμα Λάτση"></a>
+<a href="http://www.latsis-foundation.org/" title="Ίδρυμα Λάτση" rel="home" target="_blank"><img src="http://www.latsis-foundation.org/img/iePngs/logoEll.png" alt="Ίδρυμα Λάτση logo" title="Ίδρυμα Λάτση logo"></a>
+</td>
+<td>
+<a href="https://shapes2020.eu/" title="SHAPES EU Project" rel="home" target="_blank"><img src="https://shapes2020.eu/wp-content/uploads/2020/03/SHAPES_Logo_Scaled_190-removebg-preview.png" alt="SHAPES EU project logo" title="SHAPES EU project logo"></a>
 </td>
 </tr>
 </table>
