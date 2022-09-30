@@ -24,7 +24,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
 
     <EditText
@@ -63,7 +63,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
         android:contentDescription="@string/content_description"
-        android:src="@drawable/shapes_logo"
+        android:src="@drawable/shapes_logo_bg_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
