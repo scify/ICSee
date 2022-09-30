@@ -55,7 +55,7 @@ Sponsors
 <a href="http://www.scify.gr/site/en/" title="SciFY website" rel="home" target="_blank"><img src="http://www.scify.gr/site/images/scify/scify_logo_108.png" alt="SciFY logo" title="SciFY logo"></a>
 </td>
 <td>
-<a href="http://www.latsis-foundation.org/" title="Ίδρυμα Λάτση" rel="home" target="_blank"><img src="http://www.latsis-foundation.org/img/iePngs/logoEll.png" alt="Ίδρυμα Λάτση logo" title="Ίδρυμα Λάτση logo"></a>
+<a href="http://www.latsis-foundation.org/" title="Ίδρυμα Λάτση" rel="home" target="_blank"><img src="https://www.neolaia.gr/wp-content/uploads/2019/05/idryma_latsi-1.jpg" alt="Ίδρυμα Λάτση logo" title="Ίδρυμα Λάτση logo"></a>
 </td>
 <td>
 <a href="https://shapes2020.eu/" title="SHAPES EU Project" rel="home" target="_blank"><img src="https://shapes2020.eu/wp-content/uploads/2020/03/SHAPES_Logo_Scaled_190-removebg-preview.png" alt="SHAPES EU project logo" title="SHAPES EU project logo"></a>
