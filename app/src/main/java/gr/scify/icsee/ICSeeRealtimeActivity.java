@@ -238,10 +238,8 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
                 }
             }
         }
-
         Thread tCheckForSurface = new Thread(new mRunnable());
         tCheckForSurface.start();
-
     }
 
 

@@ -34,7 +34,12 @@
         <activity
             android:name=".ICSeeSettingsActivity"
             android:exported="false"
-            android:label="@string/menu_settings" />
+            android:label="@string/menu_settings">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="gr.scify.icsee.ICSeeStartActivity" />
+        </activity>
         <activity
             android:name=".ImgViewerActivity"
             android:exported="false"

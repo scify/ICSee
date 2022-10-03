@@ -45,7 +45,7 @@ public class ICSeeStartActivity extends AppCompatActivity {
     protected ProgressBar mProgressBar;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
     public static RequestQueue queue;
-    ActivityResultLauncher<Intent> someActivityResultLauncher;
+    ActivityResultLauncher<Intent> activityResultLauncher;
     protected AnalyticsController analyticsController;
 
     @Override
@@ -58,7 +58,7 @@ public class ICSeeStartActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         this.checkForRuntimeCameraPermission();
         this.initScreenComponents();
-        someActivityResultLauncher = registerForActivityResult(
+        activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
@@ -67,7 +67,13 @@ public class ICSeeStartActivity extends AppCompatActivity {
                         initOpenCV();
                     }
                 });
-        this.checkSHAPESModeAndTokenAndContinue();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        this.initOpenCV();
+        this.checkSHAPESModeAndTokenAndShowLoginPage();
     }
 
     private void checkForRuntimeCameraPermission() {
@@ -97,54 +103,44 @@ public class ICSeeStartActivity extends AppCompatActivity {
         });
     }
 
-    private void checkSHAPESModeAndTokenAndContinue() {
+    private void checkSHAPESModeAndTokenAndShowLoginPage() {
         LoginRepository loginRepository = LoginRepository.getInstance();
         // check for auth token passed by external intent
         String token = getTokenFromExternalIntent();
         if (token != null && !token.isEmpty()) {
             loginRepository.storeToken(getBaseContext(), token);
-            continueToApp();
-        } else {
-            // check for shapes mode
-            SharedPreferences preferences = getBaseContext().getSharedPreferences(ICSeeSettingsActivity.PREFS_FILE, Context.MODE_PRIVATE);
-            boolean shapesMode = preferences.getBoolean(getString(R.string.prefs_shapes_mode_key), false);
-            if (shapesMode) {
-                String storedToken = loginRepository.getStoredAuthToken(getApplicationContext());
-                //String storedToken = "123";
-                if (storedToken != null) {
-                    loginRepository.checkToken(storedToken, new StringVolleyCallback() {
-                        @Override
-                        public void onSuccess(String response) {
-                            continueToApp();
-                        }
+            return;
+        }
+        // check for shapes mode
+        SharedPreferences preferences = getBaseContext().getSharedPreferences(ICSeeSettingsActivity.PREFS_FILE, Context.MODE_PRIVATE);
+        boolean shapesMode = preferences.getBoolean(getString(R.string.prefs_shapes_mode_key), false);
+        if (shapesMode) {
+            String storedToken = loginRepository.getStoredAuthToken(getApplicationContext());
+            if (storedToken != null) {
+                loginRepository.checkToken(storedToken, new StringVolleyCallback() {
 
-                        @Override
-                        public void onError(VolleyError error) {
-                            String body = new String(error.networkResponse.data, Charset.forName("UTF-8"));
-                            Log.d(TAG, body);
-                            loginRepository.deleteStoredUser(getBaseContext());
-                            goToLoginPage();
-                        }
-                    });
-                } else {
-                    goToLoginPage();
-                }
+                    @Override
+                    public void onSuccess(String response) {
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        String body = new String(error.networkResponse.data, Charset.forName("UTF-8"));
+                        Log.d(TAG, body);
+                        loginRepository.deleteStoredUser(getBaseContext());
+                        goToLoginPage();
+                    }
+                });
             } else {
-                continueToApp();
+                goToLoginPage();
             }
-
         }
     }
 
     private void goToLoginPage() {
         mProgressBar.setVisibility(View.GONE);
         Intent intent = new Intent(this, LoginActivity.class);
-        someActivityResultLauncher.launch(intent);
-    }
-
-    private void continueToApp() {
-        Log.d(TAG, "TOKEN: " + LoginRepository.getInstance().getStoredAuthToken(getBaseContext()));
-        initOpenCV();
+        activityResultLauncher.launch(intent);
     }
 
     private String getTokenFromExternalIntent() {
