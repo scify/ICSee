@@ -58,9 +58,9 @@ public class ICSeeSettingsActivity extends AppCompatActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            sharedPreferences.getBoolean(getString(R.string.prefs_shapes_mode_key), false);
-            if (key.equals(getString(R.string.prefs_interface_language_key)))
-                LocaleManager.updateLocale(requireActivity().getApplicationContext(), sharedPreferences.getString(getString(R.string.prefs_interface_language_key), null));
+            sharedPreferences.getBoolean(requireActivity().getString(R.string.prefs_shapes_mode_key), false);
+            if (key.equals(requireActivity().getString(R.string.prefs_interface_language_key)))
+                LocaleManager.updateLocale(requireActivity().getApplicationContext(), sharedPreferences.getString(requireActivity().getString(R.string.prefs_interface_language_key), null));
             showAlertAndRestart();
         }
 
