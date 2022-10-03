@@ -76,7 +76,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
             }
             if (mCamera != null) {
                 mCamera.takePicture(sc, pcRaw, pcJpg);
-            } else throw new Exception("Cound not find camera... Null returned");
+            } else throw new Exception("Could not find camera... Null returned");
         } catch (Exception e) {
             Log.e(TAG, "Camera is not available!! (in use or does not exist): " + e.getLocalizedMessage() + " ," + e.getCause());
         }
@@ -208,7 +208,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
             return; // We have not saved anything, so get back home
         ICSeeRealtimeActivity.logFilter(sFilterName);
         Log.i(TAG, "current filter (restore): " + sFilter);
-        if (sFilter == null) {
+        if (sFilter != null) {
             return;
         }
         String sCandidateFilterName = "";

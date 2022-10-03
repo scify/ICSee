@@ -198,7 +198,7 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
     // Bitmap must be constructed before surface
     private void onEnterStartedState() {
         /* Connect camera. The division with 2 is to improve the performance */
-        if (!connectCamera(getWidth() / 2, getHeight() / 2)) {
+        if (!connectCamera(getWidth(), getHeight())) {
             AlertDialog ad = new AlertDialog.Builder(getContext()).create();
             ad.setCancelable(false); // This blocks the 'BACK' button
             ad.setMessage("It seems that you device does not support camera (or it is locked). Application will be closed.");
