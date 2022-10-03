@@ -15,7 +15,6 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -31,8 +30,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
 
     private Mat mRgba = new Mat();
     private Mat mScaledRgba; // Use
-
-    protected double CurrentZoom = 1.0;
 
     public LinkedList<IMatFilter> lFilters;
     public NavigableSet<IMatFilter> nsCurFilters;
@@ -63,11 +60,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
             int maxZoom = parameters.getMaxZoom();
             Camera.Parameters params = mCamera.getParameters();
             List<Camera.Size> supportedSizes = params.getSupportedPictureSizes();
-            for (int i = 0; i < supportedSizes.size(); i++) {
-                int height = supportedSizes.get(i).height;
-                int width = supportedSizes.get(i).width;
-                //Log.i(TAG, "height: " + height + " width: " + width);
-            }
             int pos = (supportedSizes.size() / 2 + 1);
             //for devices with only a few resolutions, we want the best resolution
             if (supportedSizes.size() >= 5) {
@@ -80,7 +72,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
                 if (zoom < maxZoom) {
                     parameters.setZoom(zoom);
                     mCamera.setParameters(parameters);
-
                 }
             }
             if (mCamera != null) {
@@ -122,43 +113,15 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
      * @return
      */
     protected String filterListToString(NavigableSet<IMatFilter> lCurFilters) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (IMatFilter bfCur : lCurFilters)
             sb.append(bfCur.toString()).append(",");
         return sb.toString();
     }
 
-    public NavigableSet<IMatFilter> filterListToString(String sFilterNames) {
-        // Init filter string representation to filter.
-        HashMap<String, IMatFilter> mFiltersByName = new HashMap<String, IMatFilter>();
-        // For all registered filters
-        for (IMatFilter bfCur : lFilters) {
-            // Add their entry to the map
-            mFiltersByName.put(bfCur.toString(), bfCur);
-        }
-
-        TreeSet<IMatFilter> nsRes = new TreeSet<IMatFilter>(new Comparator<IMatFilter>() {
-            @Override
-            public int compare(IMatFilter lhs, IMatFilter rhs) {
-                return lFilters.indexOf(lhs) - lFilters.indexOf(rhs);
-            }
-        });
-
-        // For each filtername in the filter string
-        for (String sFilterName : sFilterNames.split("[,]")) {
-            // If it exists in our current allowed filter set
-            if (mFiltersByName.containsKey(sFilterName))
-                nsRes.add(mFiltersByName.get(sFilterName));
-        }
-
-        return nsRes;
-    }
-
     // Activates previous combination of filters
     public String previousFilterSubset() {
         synchronized (nsCurFilters) {
-            //Log.d("fil", "lFilters: " + lFilters);
-            //Log.d("fil", "lPreviousSettings: " + lPreviousSettings);
             // If no filters added, ignore.
             if (lFilters.size() == 0)
                 return null;
@@ -177,23 +140,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     }
 
     public String curFilterSubset() {
-        return filterListToString(nsCurFilters);
-    }
-
-    /**
-     * This method selects the next sub filter, but without generating
-     * permutations of filters. Only the basic, appended list.
-     *
-     * @return
-     */
-    public String nextSingleFilter() {
-        if (!liCurFilter.hasNext()) {
-            // We reset the filter iterator
-            liCurFilter = lFilters.listIterator();
-        }
-        IMatFilter ibNext = liCurFilter.next();
-        nsCurFilters.clear();
-        nsCurFilters.add(ibNext);
         return filterListToString(nsCurFilters);
     }
 
@@ -283,11 +229,9 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         }
 
         // If we reached this point and still the name is not equal
-        if (!sCandidateFilterName.equals(sFilterName)) {
-            // we did not find the filter
-            Log.i(TAG, "we did not find the filter");
-            nextFilterSubset(); // Reset to first filter
-        }
+        // we did not find the filter
+        Log.i(TAG, "we did not find the filter");
+        nextFilterSubset(); // Reset to first filter
     }
 
 
@@ -306,7 +250,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         mScaledRgba = null;
     }
 
-    public Mat applyCurrentFilters(Mat mToUse) {
+    public void applyCurrentFilters(Mat mToUse) {
         // For every filter
         synchronized (mToUse) {
             synchronized (nsCurFilters) {
@@ -317,14 +261,13 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
                         mToUse = bfCur.getMat();
                     } catch (Exception e) {
                         Log.e(TAG, "Failed to add filter:" + bfCur.toString());
-                        return mToUse;
+                        return;
                     }
 
                 }
             }
         }
 
-        return mToUse;
     }
 
     public Mat onCameraFrame(Mat inputFrame) {
