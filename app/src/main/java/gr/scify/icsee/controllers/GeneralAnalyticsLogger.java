@@ -29,16 +29,16 @@ public class GeneralAnalyticsLogger implements IAnalyticsLogger {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, "https://memoristudio.scify.org/api/analytics/store/icsee", jsonObject,
-//                response -> {
-//                    Log.d("ANALYTICS.RESPONSE", String.valueOf(response));
-//                },
-//                error -> {
-//                    // error
-//                    error.printStackTrace();
-//                    Log.d("ERROR.RESPONSE", String.valueOf(error.getMessage()));
-//                }
-//        );
-//        ICSeeStartActivity.queue.add(postRequest);
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, "https://memoristudio.scify.org/api/analytics/store/icsee", jsonObject,
+                response -> {
+                    Log.d("ANALYTICS.RESPONSE", String.valueOf(response));
+                },
+                error -> {
+                    // error
+                    error.printStackTrace();
+                    Log.d("ERROR.RESPONSE", String.valueOf(error.getMessage()));
+                }
+        );
+        ICSeeStartActivity.queue.add(postRequest);
     }
 }
