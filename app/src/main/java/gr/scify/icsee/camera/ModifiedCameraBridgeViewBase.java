@@ -15,13 +15,8 @@ import org.opencv.android.FpsMeter;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.videoio.Videoio;
 
 import java.util.List;
-
-
-
 
 /**
  * This is a basic class, implementing the interaction with Camera and OpenCV library.
@@ -40,32 +35,22 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
     private int mState = STOPPED;
     private CvCameraViewListener mListener;
     private boolean mSurfaceExist;
-    private Object mSyncObject = new Object();
+    private final Object mSyncObject = new Object();
 
     protected Bitmap mCacheBitmap; // Moved to protected to allow resizing
     protected int mFrameWidth;
     protected int mFrameHeight;
     protected int mMaxHeight;
     protected int mMaxWidth;
-    //protected int mPreviewFormat = Imgcodecs.IMREAD_COLOR;
-    protected int mCameraIndex = -1;
+    protected int mCameraIndex;
     protected boolean mEnabled;
     protected FpsMeter mFpsMeter = null;
-
-    public ModifiedCameraBridgeViewBase(Context context, int cameraId) {
-        super(context);
-        mCameraIndex = cameraId;
-    }
 
     public ModifiedCameraBridgeViewBase(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         int count = attrs.getAttributeCount();
-        Log.d(TAG, "Attr count: " + Integer.valueOf(count));
-
-       // TypedArray styledAttrs = getContext().obtainStyledAttributes(attrs, R.styleable.CameraBridgeViewBase);
-       //if (styledAttrs.getBoolean(R.styleable.CameraBridgeViewBase_show_fps, false))
-       //     enableFpsMeter();
+        Log.d(TAG, "Attr count: " + count);
 
         mCameraIndex = gr.scify.icsee.camera.Utils.findFrontFacingCamera();
         getHolder().addCallback(this);
@@ -80,38 +65,34 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
          * @param width -  the width of the frames that will be delivered
          * @param height - the height of the frames that will be delivered
          */
-        public void onCameraViewStarted(int width, int height);
+        void onCameraViewStarted(int width, int height);
 
         /**
          * This method is invoked when camera preview has been stopped for some reason.
          * No frames will be delivered via onCameraFrame() callback after this method is called.
          */
-        public void onCameraViewStopped();
+        void onCameraViewStopped();
 
         /**
          * This method is invoked when delivery of the frame needs to be done.
          * The returned values - is a modified frame which needs to be displayed on the screen.
          * TODO: pass the parameters specifying the format of the frame (BPP, YUV or RGB and etc)
          */
-        public Mat onCameraFrame(Mat inputFrame);
+        Mat onCameraFrame(Mat inputFrame);
 
     }
 
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
         Log.d(TAG, "call surfaceChanged event");
         synchronized(mSyncObject) {
-            if (!mSurfaceExist) {
-                mSurfaceExist = true;
-                checkCurrentState();
-            } else {
-                /** Surface changed. We need to stop camera and restart with new parameters */
+            if (mSurfaceExist) {
                 /* Pretend that old surface has been destroyed */
                 mSurfaceExist = false;
                 checkCurrentState();
                 /* Now use new surface. Say we have it now */
-                mSurfaceExist = true;
-                checkCurrentState();
             }
+            mSurfaceExist = true;
+            checkCurrentState();
         }
     }
 
@@ -149,20 +130,6 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
     }
 
     /**
-     * This method enables label with fps value on the screen
-     */
-    public void enableFpsMeter() {
-        if (mFpsMeter == null) {
-            mFpsMeter = new FpsMeter();
-            mFpsMeter.setResolution(mFrameWidth, mFrameHeight);
-        }
-    }
-
-    public void disableFpsMeter() {
-            mFpsMeter = null;
-    }
-
-    /**
      *
      * @param listener
      */
@@ -170,25 +137,6 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
     public void setCvCameraViewListener(CvCameraViewListener listener) {
         mListener = listener;
     }
-
-    /**
-     * This method sets the maximum size that camera frame is allowed to be. When selecting
-     * size - the biggest size which less or equal the size set will be selected.
-     * As an example - we set setMaxFrameSize(200,200) and we have 176x152 and 320x240 sizes. The
-     * preview frame will be selected with 176x152 size.
-     * This method is useful when need to restrict the size of preview frame for some reason (for example for video recording)
-     * @param maxWidth - the maximum width allowed for camera frame.
-     * @param maxHeight - the maximum height allowed for camera frame
-     */
-    public void setMaxFrameSize(int maxWidth, int maxHeight) {
-        mMaxWidth = maxWidth;
-        mMaxHeight = maxHeight;
-    }
-
-//    public void SetCaptureFormat(int format)
-//    {
-//        mPreviewFormat = format;
-//    }
 
     /**
      * Called when mSyncObject lock is held
@@ -249,16 +197,14 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
     // NOTE: The order of bitmap constructor and camera connection is important for android 4.1.x
     // Bitmap must be constructed before surface
     private void onEnterStartedState() {
-        /* Connect camera */
-        if (!connectCamera(getWidth(), getHeight())) {
+        /* Connect camera. The division with 2 is to improve the performance */
+        if (!connectCamera(getWidth() / 2, getHeight() / 2)) {
             AlertDialog ad = new AlertDialog.Builder(getContext()).create();
             ad.setCancelable(false); // This blocks the 'BACK' button
             ad.setMessage("It seems that you device does not support camera (or it is locked). Application will be closed.");
-            ad.setButton(DialogInterface.BUTTON_NEUTRAL,  "OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    ((Activity) getContext()).finish();
-                }
+            ad.setButton(DialogInterface.BUTTON_NEUTRAL,  "OK", (dialog, which) -> {
+                dialog.dismiss();
+                ((Activity) getContext()).finish();
             });
             ad.show();
 
@@ -335,8 +281,8 @@ public abstract class ModifiedCameraBridgeViewBase extends SurfaceView implement
     }
 
     public interface ListItemAccessor {
-        public int getWidth(Object obj);
-        public int getHeight(Object obj);
+        int getWidth(Object obj);
+        int getHeight(Object obj);
     };
 
     /**

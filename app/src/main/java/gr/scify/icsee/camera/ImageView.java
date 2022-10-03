@@ -19,32 +19,23 @@ public class ImageView extends Activity {
     protected String TAG = ImageView.class.getCanonicalName();
     TouchImageView img;
     Context mContext;
-    private static ICSeeTutorial icSeeTutorial;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Log.i(TAG, "ImageView created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_edit2);
         img = new TouchImageView(this);
-        //Log.i(TAG, "ImageView created");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String dir = extras.getString("dir");
             Log.i(TAG, dir);
             try {
-                File f=new File(dir, "profile.png");
-                if(f.exists()) {
-                    //Log.i(TAG, "file exists");
-                } else {
-                    //Log.i(TAG, "file does not exist");
-                }
+                File f = new File(dir, "profile.png");
                 Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
                 img.setImageBitmap(b);
                 img.setMaxZoom(4f);
                 setContentView(img);
-            }
-            catch (FileNotFoundException e)
-            {
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -54,15 +45,13 @@ public class ImageView extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        //icSeeTutorial.initMediaPlayer();
         Log.i(TAG, "playSound");
-        //icSeeTutorial.playSound(mContext, 4);
         ICSeeTutorial.playAdjustZoom(mContext);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        icSeeTutorial.stopSound();
+        ICSeeTutorial.stopSound();
     }
 }
