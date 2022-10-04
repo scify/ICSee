@@ -35,6 +35,10 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
         startActivity = start;
     }
 
+    public void setProgressBar(ProgressBar mProgressBar) {
+        this.mProgressBar = mProgressBar;
+    }
+
     @Override
     public void onManagerConnected(int status) {
         processStatus = status;

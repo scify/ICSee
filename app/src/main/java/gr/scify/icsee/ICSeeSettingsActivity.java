@@ -96,7 +96,7 @@ public class ICSeeSettingsActivity extends AppCompatActivity {
             alert.setMessage(R.string.preferences_updated_body);
             alert.setPositiveButton("OK", (dialog, which) -> {
                 dialog.dismiss();
-                startActivity(new Intent(activity.getApplicationContext(), ICSeeStartActivity.class)
+                startActivity(new Intent(activity.getBaseContext(), ICSeeStartActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 );

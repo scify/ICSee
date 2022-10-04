@@ -164,7 +164,9 @@ public class ICSeeStartActivity extends AppCompatActivity {
     }
 
     protected void initOpenCV() {
-        mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mDialog, ICSeeStartActivity.this);
+        if (mOpenCVCallBack == null)
+            mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mDialog, ICSeeStartActivity.this);
+        mOpenCVCallBack.setProgressBar(mProgressBar);
         Log.i(TAG, "mOpenCVCallBack.hasManagerConnected: " + mOpenCVCallBack.hasManagerConnected);
         Log.i(TAG, "Trying to load OpenCV library");
         if (!OpenCVLoader.initDebug()) {
