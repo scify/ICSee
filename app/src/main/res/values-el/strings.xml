@@ -28,7 +28,7 @@
     <string name="invalid_password_special_chars">Ο κωδικός πρέπει να περιλαμβάνει τουλάχιστον ένα από τα ακόλουθα: !@#$%+=</string>
     <string name="login_failed">Η σύνδεση απέτυχε</string>
     <string name="login_failed_wrong_credentials">Η σύνδεση απέτυχε. Λάθος στοιχεία εισόδου.</string>
-    <string name="forgot_your_password_click_here">Ξεχάσατε τον κωδικό; Πατήστε εδώ.</string>
+    <string name="forgot_your_password_click_here">Ξεχάσατε τον κωδικό σας;</string>
     <string name="about_shapes_text">This project has received funding from the European Union\'s Horizon 2020 research and innovation programme under grant agreement No. 857159.</string>
     <string name="about_shapes_auth_text">Αυτή η λειτουργικότητα αναφέρεται στους χρήστες του <a href="https://shapes2020.eu/">Ευρωπαϊκού έργου SHAPES.</a></string>
     <string name="shapes_mode_preference_summary">Αυτή η επιλογή αναφέρεται μόνο στους χρήστες του έργου SHAPES. Μην την ενεργοποιήσετε αν δεν γνωρίζετε ακριβώς τι κάνετε!</string>

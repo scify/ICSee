@@ -1,6 +1,8 @@
 package gr.scify.icsee;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -49,6 +51,15 @@ public class ICSeeSettingsActivity extends AppCompatActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+        Activity activity;
+
+        @Override
+        public void onAttach(@NonNull Context context) {
+            super.onAttach(context);
+            activity = context instanceof Activity ? (Activity) context : null;
+        }
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             PreferenceManager manager = getPreferenceManager();
@@ -72,10 +83,11 @@ public class ICSeeSettingsActivity extends AppCompatActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            sharedPreferences.getBoolean(requireActivity().getString(R.string.prefs_shapes_mode_key), false);
-            if (key.equals(requireActivity().getString(R.string.prefs_interface_language_key)))
-                LocaleManager.updateLocale(requireActivity().getApplicationContext(), sharedPreferences.getString(requireActivity().getString(R.string.prefs_interface_language_key), null));
-            showAlertAndRestart();
+            sharedPreferences.getBoolean(activity.getString(R.string.prefs_shapes_mode_key), false);
+            if (key.equals(activity.getString(R.string.prefs_interface_language_key)) && isAdded()) {
+                LocaleManager.updateLocale(activity.getApplicationContext(), sharedPreferences.getString(requireActivity().getString(R.string.prefs_interface_language_key), null));
+                showAlertAndRestart();
+            }
         }
 
         public void showAlertAndRestart() {
@@ -84,7 +96,7 @@ public class ICSeeSettingsActivity extends AppCompatActivity {
             alert.setMessage(R.string.preferences_updated_body);
             alert.setPositiveButton("OK", (dialog, which) -> {
                 dialog.dismiss();
-                startActivity(new Intent(requireActivity().getBaseContext(), ICSeeStartActivity.class)
+                startActivity(new Intent(activity.getApplicationContext(), ICSeeStartActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 );

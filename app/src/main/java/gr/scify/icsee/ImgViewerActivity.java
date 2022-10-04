@@ -19,6 +19,7 @@ public class ImgViewerActivity extends Activity implements SimpleGestureListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		LocaleManager.setAppLocale(getBaseContext());
 		setContentView(R.layout.activity_img_viewer);
 		Intent iCaller = getIntent();
 		byte[] baBmp = iCaller.getByteArrayExtra(IMG_ITEM);

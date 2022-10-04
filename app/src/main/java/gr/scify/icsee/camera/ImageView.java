@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import gr.scify.icsee.ICSeeTutorial;
+import gr.scify.icsee.LocaleManager;
 import gr.scify.icsee.R;
 import gr.scify.icsee.TouchImageView;
 
@@ -23,6 +24,7 @@ public class ImageView extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocaleManager.setAppLocale(getBaseContext());
         setContentView(R.layout.activity_image_edit2);
         img = new TouchImageView(this);
         Bundle extras = getIntent().getExtras();

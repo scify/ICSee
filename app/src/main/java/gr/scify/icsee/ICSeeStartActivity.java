@@ -63,7 +63,7 @@ public class ICSeeStartActivity extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Bundle bundle = new Bundle();
-                        analyticsController.sendEvent(getBaseContext(), "app_started", AnalyticsController.getCurrentLocale(getBaseContext()).getLanguage(), bundle);
+                        analyticsController.sendEvent(getApplicationContext(), "app_started", AnalyticsController.getCurrentLocale(getApplicationContext()).getLanguage(), bundle);
                         initOpenCV();
                     }
                 });
@@ -98,7 +98,7 @@ public class ICSeeStartActivity extends AppCompatActivity {
 
         settingsBtn.setOnClickListener(v -> {
             // opening a new intent to open settings activity.
-            Intent i = new Intent(getApplicationContext(), ICSeeSettingsActivity.class);
+            Intent i = new Intent(getBaseContext(), ICSeeSettingsActivity.class);
             startActivity(i);
         });
     }
@@ -108,11 +108,11 @@ public class ICSeeStartActivity extends AppCompatActivity {
         // check for auth token passed by external intent
         String token = getTokenFromExternalIntent();
         if (token != null && !token.isEmpty()) {
-            loginRepository.storeToken(getBaseContext(), token);
+            loginRepository.storeToken(getApplicationContext(), token);
             return;
         }
         // check for shapes mode
-        SharedPreferences preferences = getBaseContext().getSharedPreferences(ICSeeSettingsActivity.PREFS_FILE, Context.MODE_PRIVATE);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(ICSeeSettingsActivity.PREFS_FILE, Context.MODE_PRIVATE);
         boolean shapesMode = preferences.getBoolean(getString(R.string.prefs_shapes_mode_key), false);
         if (shapesMode) {
             String storedToken = loginRepository.getStoredAuthToken(getApplicationContext());
@@ -127,7 +127,7 @@ public class ICSeeStartActivity extends AppCompatActivity {
                     public void onError(VolleyError error) {
                         String body = new String(error.networkResponse.data, Charset.forName("UTF-8"));
                         Log.d(TAG, body);
-                        loginRepository.deleteStoredUser(getBaseContext());
+                        loginRepository.deleteStoredUser(getApplicationContext());
                         goToLoginPage();
                     }
                 });
