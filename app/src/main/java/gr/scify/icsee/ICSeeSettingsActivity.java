@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -16,9 +19,12 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class ICSeeSettingsActivity extends LocalizedActivity {
+    static final String SHOULD_RESTART_APP_KEY = "should_restart_app";
+    boolean shouldRestartApp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,12 @@ public class ICSeeSettingsActivity extends LocalizedActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean(SHOULD_RESTART_APP_KEY, shouldRestartApp);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -86,15 +98,23 @@ public class ICSeeSettingsActivity extends LocalizedActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equals(activity.getString(R.string.prefs_interface_language_key)) && isAdded()) {
-                LocaleManager.updateLocale(getContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(key, ""));
-                showAlertAndRestart();
+                String lang = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(key, "");
+                LocaleManager.updateLocale(getContext(), lang);
+                showAlertAndRestart(lang);
             }
         }
 
-        public void showAlertAndRestart() {
+        public void showAlertAndRestart(String lang) {
+            Configuration conf = getResources().getConfiguration();
+            conf.locale = new Locale(lang);
+            DisplayMetrics metrics = new DisplayMetrics();
+            requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            Resources resources = new Resources(requireActivity().getAssets(), metrics, conf);
+            String title = resources.getString(R.string.preferences_updated);
+            String message = resources.getString(R.string.preferences_updated_body);
             AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-            alert.setTitle(R.string.preferences_updated);
-            alert.setMessage(R.string.preferences_updated_body);
+            alert.setTitle(title);
+            alert.setMessage(message);
             alert.setPositiveButton("OK", (dialog, which) -> {
                 dialog.dismiss();
                 startActivity(new Intent(activity.getApplicationContext(), ICSeeStartActivity.class)
