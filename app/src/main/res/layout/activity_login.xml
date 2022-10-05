@@ -94,6 +94,7 @@
         android:layout_marginTop="10dp"
         android:focusable="true"
         android:onClick="onForgotPasswordClick"
+        android:paddingStart="0dp"
         android:text="@string/forgot_your_password_click_here"
         android:textAllCaps="false"
         android:textColor="@android:color/holo_blue_light"
