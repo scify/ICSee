@@ -58,7 +58,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
         super.onCreate(savedInstanceState);
         mContext = this;
         analyticsController = AnalyticsController.getInstance();
-        LocaleManager.setAppLocale(getBaseContext());
         // Allow long clicks
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         GestureOverlayView gestureOverlayView = new GestureOverlayView(this);

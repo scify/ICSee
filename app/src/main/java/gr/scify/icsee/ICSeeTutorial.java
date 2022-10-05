@@ -1,10 +1,10 @@
 package gr.scify.icsee;
 
-import static gr.scify.icsee.ICSeeSettingsActivity.PREFS_FILE;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+
+import androidx.preference.PreferenceManager;
 
 public class ICSeeTutorial {
 
@@ -24,7 +24,7 @@ public class ICSeeTutorial {
     }
 
     public static int getTutorialState(Context context) {
-        SharedPreferences mSharedPreferences = context.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         mEditor = mSharedPreferences.edit();
         return mSharedPreferences.getInt(KEY_TUTORIAL, 1);
     }
