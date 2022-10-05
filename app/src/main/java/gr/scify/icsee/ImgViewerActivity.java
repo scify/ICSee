@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import gr.scify.icsee.events.SimpleGestureFilter;
 import gr.scify.icsee.events.SimpleGestureFilter.SimpleGestureListener;
 
-public class ImgViewerActivity extends Activity implements SimpleGestureListener {
+public class ImgViewerActivity extends LocalizedActivity implements SimpleGestureListener {
 	public final static String IMG_ITEM = "photo";
 	
 	protected ImageView ivCur;
@@ -19,7 +19,6 @@ public class ImgViewerActivity extends Activity implements SimpleGestureListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LocaleManager.setAppLocale(getBaseContext());
 		setContentView(R.layout.activity_img_viewer);
 		Intent iCaller = getIntent();
 		byte[] baBmp = iCaller.getByteArrayExtra(IMG_ITEM);

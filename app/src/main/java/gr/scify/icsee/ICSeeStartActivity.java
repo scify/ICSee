@@ -19,11 +19,9 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
@@ -37,25 +35,22 @@ import gr.scify.icsee.data.LoginRepository;
 import gr.scify.icsee.data.StringVolleyCallback;
 import gr.scify.icsee.login.LoginActivity;
 
-public class ICSeeStartActivity extends AppCompatActivity {
+public class ICSeeStartActivity extends LocalizedActivity {
     protected Context mContext;
     public static ModifiedLoaderCallback mOpenCVCallBack;
     public static ProgressDialog mDialog;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
     protected ProgressBar mProgressBar;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
-    public static RequestQueue queue;
     ActivityResultLauncher<Intent> activityResultLauncher;
     protected AnalyticsController analyticsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocaleManager.setAppLocale(getBaseContext());
         setContentView(R.layout.start_activity);
         mContext = this;
         analyticsController = AnalyticsController.getInstance();
-        queue = Volley.newRequestQueue(this);
         this.checkForRuntimeCameraPermission();
         this.initScreenComponents();
         activityResultLauncher = registerForActivityResult(
@@ -98,7 +93,7 @@ public class ICSeeStartActivity extends AppCompatActivity {
 
         settingsBtn.setOnClickListener(v -> {
             // opening a new intent to open settings activity.
-            Intent i = new Intent(getBaseContext(), ICSeeSettingsActivity.class);
+            Intent i = new Intent(getApplicationContext(), ICSeeSettingsActivity.class);
             startActivity(i);
         });
     }
@@ -112,7 +107,7 @@ public class ICSeeStartActivity extends AppCompatActivity {
             return;
         }
         // check for shapes mode
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences(ICSeeSettingsActivity.PREFS_FILE, Context.MODE_PRIVATE);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean shapesMode = preferences.getBoolean(getString(R.string.prefs_shapes_mode_key), false);
         if (shapesMode) {
             String storedToken = loginRepository.getStoredAuthToken(getApplicationContext());
@@ -169,7 +164,7 @@ public class ICSeeStartActivity extends AppCompatActivity {
         mOpenCVCallBack.setProgressBar(mProgressBar);
         Log.i(TAG, "mOpenCVCallBack.hasManagerConnected: " + mOpenCVCallBack.hasManagerConnected);
         Log.i(TAG, "Trying to load OpenCV library");
-        if (!OpenCVLoader.initDebug()) {
+        if (!OpenCVLoader.initDebug(true)) {
             Log.e("OpenCV", "Unable to load OpenCV!");
             // here we try to open the OpenCVManager app
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_4_0, this, mOpenCVCallBack);

@@ -16,16 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import gr.scify.icsee.ICSeeSettingsActivity;
-import gr.scify.icsee.LocaleManager;
+import gr.scify.icsee.LocalizedActivity;
 import gr.scify.icsee.R;
 import gr.scify.icsee.data.LoginRepository;
 import gr.scify.icsee.databinding.ActivityLoginBinding;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends LocalizedActivity {
 
     private LoginViewModel loginViewModel;
     protected TextView errorMessage;
@@ -33,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocaleManager.setAppLocale(getBaseContext());
         gr.scify.icsee.databinding.ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -133,6 +131,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onSettingsBtnClick(View view) {
-        startActivity(new Intent(getBaseContext(), ICSeeSettingsActivity.class));
+        startActivity(new Intent(getApplicationContext(), ICSeeSettingsActivity.class));
     }
 }

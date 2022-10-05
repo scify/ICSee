@@ -21,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
-import gr.scify.icsee.ICSeeStartActivity;
+import gr.scify.icsee.ICSeeApplication;
 import gr.scify.icsee.R;
 import gr.scify.icsee.data.model.LoggedInUser;
 
@@ -107,7 +107,7 @@ public class LoginRepository {
                 }};
             }
         };
-        ICSeeStartActivity.queue.add(postRequest);
+        ICSeeApplication.queue.add(postRequest);
 
     }
 
@@ -207,6 +207,6 @@ public class LoginRepository {
                 return super.parseNetworkResponse(response);
             }
         };
-        ICSeeStartActivity.queue.add(postRequest);
+        ICSeeApplication.queue.add(postRequest);
     }
 }
