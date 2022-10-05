@@ -19,8 +19,8 @@ android {
         applicationId "gr.scify.icsee"
         minSdkVersion 16
         targetSdkVersion 32
-        versionCode 23
-        versionName "5.0.0-rc.10"
+        versionCode 24
+        versionName "5.0.0-rc.11"
     }
 
     buildTypes {
