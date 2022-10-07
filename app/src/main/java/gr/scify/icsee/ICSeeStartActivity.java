@@ -59,7 +59,6 @@ public class ICSeeStartActivity extends LocalizedActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Bundle bundle = new Bundle();
                         analyticsController.sendEvent(getApplicationContext(), "app_started", AnalyticsController.getCurrentLocale(getApplicationContext()).getLanguage(), bundle);
-                        initOpenCV();
                     }
                 });
         this.initOpenCV();
