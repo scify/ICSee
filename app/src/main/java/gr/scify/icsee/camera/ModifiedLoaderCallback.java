@@ -54,4 +54,8 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
             }
         }
     }
+
+    public void setContext(Context context) {
+        this.mContext = context;
+    }
 }

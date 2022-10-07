@@ -31,6 +31,8 @@
 package gr.scify.icsee;
 
 import android.app.Application;
+import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -40,6 +42,7 @@ public class ICSeeApplication extends Application {
 
     private static ICSeeApplication mContext;
     public static RequestQueue queue;
+    public static String TAG = "ICSeeApplication";
 
     @Override
     public void onCreate() {

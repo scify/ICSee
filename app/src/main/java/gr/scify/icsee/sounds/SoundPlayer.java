@@ -3,7 +3,9 @@ package gr.scify.icsee.sounds;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
+
 import java.util.HashMap;
+
 import gr.scify.icsee.R;
 
 /**
@@ -13,16 +15,16 @@ import gr.scify.icsee.R;
  */
 public class SoundPlayer {
     // Static sound variables (STEP 1)
-    public static final int S1 = R.raw.alienxxxbeep;
-    public static final int S2 = R.raw.next;
-    public static final int S3 = R.raw.keykrushermicrowavebeep;
-    public static final int S4 = R.raw.kodackbeepbeep;
-    public static final int S5 = R.raw.emptybellbeep;
-    public static final int S6 = R.raw.pan14tonebeep;
-    public static final int S7 = R.raw.camerashutterclick;
-    public static final int S8 = R.raw.exit3;
-    public static final int S9 = R.raw.auto_focus;
-    public static final int Stutorial = R.raw.welcome;
+    public static int S1 = R.raw.alienxxxbeep;
+    public static int S2 = R.raw.next;
+    public static int S3 = R.raw.keykrushermicrowavebeep;
+    public static int S4 = R.raw.kodackbeepbeep;
+    public static int S5 = R.raw.emptybellbeep;
+    public static int S6 = R.raw.pan14tonebeep;
+    public static int S7 = R.raw.camerashutterclick;
+    public static int S8 = R.raw.exit3;
+    public static int S9 = R.raw.auto_focus;
+    public static int Stutorial = R.raw.welcome;
 
 
     private static SoundPool sp;                    // SoundPool to play the sounds
@@ -31,7 +33,16 @@ public class SoundPlayer {
     public static void initSounds(Context context) {
         // Init soundpool
         sp = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-
+        S1 = R.raw.alienxxxbeep;
+        S2 = R.raw.next;
+        S3 = R.raw.keykrushermicrowavebeep;
+        S4 = R.raw.kodackbeepbeep;
+        S5 = R.raw.emptybellbeep;
+        S6 = R.raw.pan14tonebeep;
+        S7 = R.raw.camerashutterclick;
+        S8 = R.raw.exit3;
+        S9 = R.raw.auto_focus;
+        Stutorial = R.raw.welcome;
         // Init hashmap (STEP 2)
         spMap = new HashMap<>();
         spMap.put(S1, sp.load(context, S1, 1));
@@ -49,8 +60,7 @@ public class SoundPlayer {
     public static void playSound(Context context, int soundID) {
         if (sp == null || spMap == null) {
             initSounds(context);
-        }
-        else {
+        } else {
             float volume = 1f;
             sp.play(spMap.get(soundID), volume, volume, 1, 0, 1f);
         }

@@ -1,8 +1,6 @@
 package gr.scify.icsee;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -61,14 +59,6 @@ public class ICSeeSettingsActivity extends LocalizedActivity {
 
     public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-        Activity activity;
-
-        @Override
-        public void onAttach(@NonNull Context context) {
-            super.onAttach(context);
-            activity = context instanceof Activity ? (Activity) context : null;
-        }
-
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
@@ -97,9 +87,9 @@ public class ICSeeSettingsActivity extends LocalizedActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals(activity.getString(R.string.prefs_interface_language_key)) && isAdded()) {
-                String lang = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(key, "");
-                LocaleManager.updateLocale(getContext(), lang);
+            if (key.equals(requireActivity().getString(R.string.prefs_interface_language_key)) && isAdded()) {
+                String lang = PreferenceManager.getDefaultSharedPreferences(requireActivity()).getString(key, "");
+                LocaleManager.updateLocale(requireActivity(), lang);
                 showAlertAndRestart(lang);
             }
         }
@@ -117,7 +107,7 @@ public class ICSeeSettingsActivity extends LocalizedActivity {
             alert.setMessage(message);
             alert.setPositiveButton("OK", (dialog, which) -> {
                 dialog.dismiss();
-                startActivity(new Intent(activity.getApplicationContext(), ICSeeStartActivity.class)
+                startActivity(new Intent(requireActivity(), ICSeeStartActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 );

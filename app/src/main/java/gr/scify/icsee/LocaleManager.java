@@ -46,12 +46,14 @@ public class LocaleManager {
             locale = new Locale(localeSpec);
         }
         Locale.setDefault(locale);
-        SoundPlayer.initSounds(context);
+        Context updatedContext;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResources(context, locale);
+            updatedContext = updateResources(context, locale);
         } else {
-            return updateResourcesLegacy(context, locale);
+            updatedContext = updateResourcesLegacy(context, locale);
         }
+        SoundPlayer.initSounds(updatedContext);
+        return updatedContext;
     }
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -59,22 +61,17 @@ public class LocaleManager {
         Configuration configuration = context.getResources().getConfiguration();
         configuration.setLocale(locale);
         configuration.setLayoutDirection(locale);
-
         return context.createConfigurationContext(configuration);
     }
 
-    @SuppressWarnings("deprecation")
     private static Context updateResourcesLegacy(Context context, Locale locale) {
         Resources resources = context.getResources();
-
         Configuration configuration = resources.getConfiguration();
         configuration.locale = locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             configuration.setLayoutDirection(locale);
         }
-
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-
         return context;
     }
 }
