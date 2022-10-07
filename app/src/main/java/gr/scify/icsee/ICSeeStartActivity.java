@@ -62,12 +62,12 @@ public class ICSeeStartActivity extends LocalizedActivity {
                         initOpenCV();
                     }
                 });
+        this.initOpenCV();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        this.initOpenCV();
         this.checkSHAPESModeAndTokenAndShowLoginPage();
     }
 
@@ -159,10 +159,7 @@ public class ICSeeStartActivity extends LocalizedActivity {
     }
 
     protected void initOpenCV() {
-        if (mOpenCVCallBack == null)
-            mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mDialog, ICSeeStartActivity.this);
-        mOpenCVCallBack.setContext(mContext);
-        mOpenCVCallBack.setProgressBar(mProgressBar);
+        mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mDialog, ICSeeStartActivity.this);
         Log.i(TAG, "Trying to load OpenCV library");
         if (!OpenCVLoader.initDebug(true)) {
             Log.e("OpenCV", "Unable to load OpenCV!");

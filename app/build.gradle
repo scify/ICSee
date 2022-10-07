@@ -19,7 +19,7 @@ android {
         applicationId "gr.scify.icsee"
         minSdkVersion 16
         targetSdkVersion 32
-        versionCode 36
+        versionCode 37
         versionName "5.0.0"
     }
 
@@ -41,7 +41,6 @@ android {
     }
     bundle {
         language {
-
             enableSplit = false
         }
     }
