@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
@@ -255,7 +254,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Toast.makeText(ICSeeRealtimeActivity.this, "Back Button Pressed", Toast.LENGTH_SHORT).show();
         System.exit(0);
     }
 

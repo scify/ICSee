@@ -8,12 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LocalizedActivity extends AppCompatActivity {
 
-    private String initialLocale;
+    protected String initialLocale;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initialLocale = LocaleManager.getPersistedLocale(this);
+        initialLocale = LocaleManager.getPersistedLocale(getApplicationContext());
     }
 
     @Override
@@ -24,7 +24,8 @@ public class LocalizedActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (initialLocale != null && !initialLocale.equals(LocaleManager.getPersistedLocale(this))) {
+        String currentLocale = LocaleManager.getPersistedLocale(getApplicationContext());
+        if (initialLocale != null && !initialLocale.equals(currentLocale)) {
             recreate();
         }
     }
