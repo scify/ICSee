@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -62,6 +63,13 @@ public class ICSeeSettingsActivity extends LocalizedActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            ListPreference langPreference = findPreference(requireContext().getString(R.string.prefs_interface_language_key));
+            String lang = LocaleManager.getPersistedLocale(requireActivity().getApplicationContext());
+            int valueIndex = 0;
+            if (lang.equals("el")) {
+                valueIndex = 1;
+            }
+            Objects.requireNonNull(langPreference).setValueIndex(valueIndex);
             Preference pref1 = findPreference("app_version");
             try {
                 assert pref1 != null;

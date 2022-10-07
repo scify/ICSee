@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import com.android.volley.VolleyError;
@@ -51,8 +52,12 @@ public class ICSeeStartActivity extends LocalizedActivity {
         setContentView(R.layout.start_activity);
         mContext = this;
         analyticsController = AnalyticsController.getInstance();
-        this.checkForRuntimeCameraPermission();
         this.initScreenComponents();
+        if (cameraRuntimePermissionGranted()) {
+            initOpenCV();
+        } else {
+            this.checkForRuntimeCameraPermission();
+        }
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -61,7 +66,18 @@ public class ICSeeStartActivity extends LocalizedActivity {
                         analyticsController.sendEvent(getApplicationContext(), "app_started", AnalyticsController.getCurrentLocale(getApplicationContext()).getLanguage(), bundle);
                     }
                 });
-        this.initOpenCV();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            final int requestCode,
+            @NonNull final String[] permissions,
+            @NonNull final int[] grantResults
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (cameraRuntimePermissionGranted()) {
+            initOpenCV();
+        }
     }
 
     @Override
@@ -71,10 +87,18 @@ public class ICSeeStartActivity extends LocalizedActivity {
     }
 
     private void checkForRuntimeCameraPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (!cameraRuntimePermissionGranted()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
             }
+        }
+    }
+
+    private boolean cameraRuntimePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
         }
     }
 

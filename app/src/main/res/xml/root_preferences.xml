@@ -17,7 +17,6 @@
             android:entryValues="@array/interface_language_values"
             android:key="@string/prefs_interface_language_key"
             app:useSimpleSummaryProvider="true"
-            android:defaultValue="en"
             android:summary="@string/interface_language_summary"
             android:title="@string/interface_language" />
         <PreferenceScreen
