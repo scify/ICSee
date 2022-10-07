@@ -21,8 +21,9 @@ public class LocaleManager {
     }
 
     public static String getPersistedLocale(Context context) {
+        String defaultSystemLang = Locale.getDefault().getLanguage();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(context.getString(R.string.prefs_interface_language_key), "en");
+        return preferences.getString(context.getString(R.string.prefs_interface_language_key), defaultSystemLang);
     }
 
     /**
