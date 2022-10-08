@@ -1,6 +1,5 @@
 package gr.scify.icsee;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -41,7 +40,7 @@ import gr.scify.icsee.filters.opencv.matfilters.MatNegative;
 import gr.scify.icsee.filters.opencv.matfilters.MatWhiteRedFilter;
 import gr.scify.icsee.sounds.SoundPlayer;
 
-public class ICSeeRealtimeActivity extends Activity implements OnGesturePerformedListener {
+public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGesturePerformedListener {
     private GestureLibrary gestureLib;
     public RealtimeFilterView mView = null;
     public static Context mContext;
@@ -77,7 +76,11 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
 
         inflate.setOnLongClickListener(arg0 -> {
             //perform auto focus and take picture
-            focusAndTakePhoto();
+            try {
+                focusAndTakePhoto();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
             return true;
         });
 
@@ -92,7 +95,6 @@ public class ICSeeRealtimeActivity extends Activity implements OnGesturePerforme
     };
 
     public void focusAndTakePhoto() {
-
         mView.mCamera.autoFocus((success, camera) -> {
             currentFilter = mView.curFilterSubset();
             if (currentFilter.equals("")) {

@@ -25,6 +25,7 @@ public class ImageView extends LocalizedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         setContentView(R.layout.activity_image_edit2);
         img = new TouchImageView(this);
         Bundle extras = getIntent().getExtras();
@@ -41,13 +42,11 @@ public class ImageView extends LocalizedActivity {
                 e.printStackTrace();
             }
         }
-        mContext = this;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "playSound");
         ICSeeTutorial.playAdjustZoom(mContext);
     }
 
