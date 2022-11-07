@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_settings">Configuraciones</string>
+    <string name="progress_label">Cargando..</string>
+    <string name="welcome_label">¡Bienvenidos al mundo de ICSee!</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="app_description">Una aplicación con filtros de edición de imágenes, para personas con problemas de vista</string>
+    <string name="error_massage">Mensaje de error</string>
+    <string name="application_logo">Icono de la aplicación</string>
+    <string name="settings_about_btn">Configuraciones/acerca de</string>
+
+    <!-- Preferences -->
+    <string name="shapes_mode">modo SHAPES</string>
+    <string name="pref_title">Configuraciones</string>
+    <string name="interface_language">Idioma</string>
+    <string name="interface_language_summary">Idioma de instrucciones de voz</string>
+    <string name="preferences_updated">Los ajustes han sido actualizados.</string>
+    <string name="preferences_updated_body">Los ajustes de la aplicación han sido actualizados. Pulse ok para reiniciar</string>
+    <string name="title_activity_login">Entrar</string>
+    <string name="prompt_email">Correo electrónico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Conectarse o registrarse</string>
+    <string name="action_sign_in_short">Conectarse</string>
+    <string name="welcome">Bienvenidos</string>
+    <string name="invalid_username">Correo electrónico incorrecto</string>
+    <string name="invalid_password_num_chars">La contraseña debe tener al menos 8 caracteres</string>
+    <string name="invalid_password_uppercase">La contraseña debe tener como mínimo una letra mayúscula</string>
+    <string name="invalid_password_special_chars">La contraseña debe tener al menos uno de los siguentes caracteres: !@#$%+=</string>
+    <string name="login_failed">La conexión falló</string>
+    <string name="login_failed_wrong_credentials">La conexión falló. Datos de entrada incorrectos.</string>
+    <string name="forgot_your_password_click_here">Se ha olvidado la contraseña</string>
+    <string name="about_shapes_text">Este proyecto ha sido financiado por el programa de investigación e innovación de la Unión Europea, Horizon 2020, de acuerdo con los convenios de subvención No. 857159.</string>
+    <string name="about_shapes_auth_text">Esta funcionalidad se dirige a los usuarios del Programa de la <a href="https://shapes2020.eu/">Unión Europea SHAPES</a></string>
+    <string name="shapes_mode_preference_summary">Esta funcionalidad se dirige solo a los usuarios del proyecto SHAPES. No la activéis si no sabéis cómo usarla!</string>
+    <string name="app_version">Edición de la aplicación</string>
+</resources>
