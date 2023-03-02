@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +27,11 @@ public class ImageView extends LocalizedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setContentView(R.layout.activity_image_edit2);
+        View view = View.inflate(mContext, R.layout.activity_image_edit2, null);
+        view.setOnLongClickListener(arg0 -> {
+            finish();
+            return true;
+        });
         img = new TouchImageView(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
