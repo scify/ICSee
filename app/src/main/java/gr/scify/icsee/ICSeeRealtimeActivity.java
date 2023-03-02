@@ -43,42 +43,45 @@ import gr.scify.icsee.sounds.SoundPlayer;
 public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGesturePerformedListener {
     private GestureLibrary gestureLib;
     public RealtimeFilterView mView = null;
-    public static Context mContext;
+    protected Context mContext;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
-    private static String currentFilter = "";
     final Handler mHandlerTutorial = new Handler();
     private static boolean movementTutorial = false;
     private static int movementCounter = 0;
     protected static AnalyticsController analyticsController;
+    protected Camera.ShutterCallback myShutterCallback;
+    protected Camera.PictureCallback myPictureCallback_JPG;
+    Runnable mPlayTutorialReminder;
+    protected Intent frozenImageIntent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         analyticsController = AnalyticsController.getInstance();
-        // Allow long clicks
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         GestureOverlayView gestureOverlayView = new GestureOverlayView(this);
-        View inflate = getLayoutInflater().inflate(R.layout.custom, null);
-        gestureOverlayView.addView(inflate);
+        View view = View.inflate(mContext, R.layout.custom, null);
+        gestureOverlayView.addView(view);
         gestureOverlayView.addOnGesturePerformedListener(this);
         gestureLib = GestureLibraries.fromRawResource(this, R.raw.gestures);
+        setPictureCallbacks();
         if (!gestureLib.load()) {
             finish();
         }
         // Init Handler
         setContentView(R.layout.activity_main);
-        inflate.setOnClickListener(arg0 -> {
+        view.setOnClickListener(arg0 -> {
             // Play start focus sound
             SoundPlayer.playSound(arg0.getContext(), SoundPlayer.S9);
             mView.focusCamera(false);
         });
 
-        inflate.setOnLongClickListener(arg0 -> {
+        view.setOnLongClickListener(arg0 -> {
             //perform auto focus and take picture
             try {
-                focusAndTakePhoto();
-            } catch (RuntimeException e) {
+                handleLongClickEvent();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return true;
@@ -86,65 +89,58 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
 
         LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         this.addContentView(gestureOverlayView, layoutParamsControl);
+        mPlayTutorialReminder = () -> ICSeeTutorial.playTutorialReminder(mContext);
+        mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
+        mView.setLongClickable(true);
     }
 
-    Runnable mPlayTutorialReminder = new Runnable() {
-        public void run() {
-            ICSeeTutorial.playTutorialReminder(mContext);
-        }
-    };
+    public void handleLongClickEvent() {
+        focusAndTakePhoto();
+    }
 
     public void focusAndTakePhoto() {
-        mView.mCamera.autoFocus((success, camera) -> {
-            currentFilter = mView.curFilterSubset();
-            if (currentFilter.equals("")) {
-                mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG, 3);
-            } else {
-                mView.getPhoto(myShutterCallback, myPictureCallback_RAW, myPictureCallback_JPG, 1);
-            }
-        });
+        mView.mCamera.autoFocus((success, camera) ->
+                mView.getPhotoAndFreeze(myShutterCallback, null, myPictureCallback_JPG));
     }
 
-    Camera.ShutterCallback myShutterCallback = () -> {
-    };
-
-    Camera.PictureCallback myPictureCallback_RAW = new Camera.PictureCallback() {
-
-        @Override
-        public void onPictureTaken(byte[] arg0, Camera arg1) {
+    public void setPictureCallbacks() {
+        myShutterCallback = () -> {
+            Log.d(TAG, "Callback Shutter");
             SoundPlayer.playSound(mContext, SoundPlayer.S7);
-        }
-    };
+        };
 
-    Camera.PictureCallback myPictureCallback_JPG = (arg0, arg1) -> {
-        Bitmap bitmapPicture
-                = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
-        mView.saveCurrentFilterSet(); // Store filter for later reference
+        myPictureCallback_JPG = (arg0, arg1) -> {
+            Log.d(TAG, "Callback JPG");
 
-        // Get current running filter
-        if (!mView.curFilterSubset().equals("")) {
-            Mat imgMAT = new Mat();
-            Utils.bitmapToMat(bitmapPicture, imgMAT);
-            // If the image is empty
-            if (imgMAT.empty())
-                return; // Ignore
-            // Apply filters
-            mView.applyCurrentFilters(imgMAT);
-            Utils.matToBitmap(imgMAT, bitmapPicture);
-        }
+            Bitmap bitmapPicture
+                    = BitmapFactory.decodeByteArray(arg0, 0, arg0.length);
+            mView.saveCurrentFilterSet(); // Store filter for later reference
 
-        startImageEdit(bitmapPicture);
-    };
+            // Get current running filter
+            if (!mView.curFilterSubset().equals("")) {
+                Mat imgMAT = new Mat();
+                Utils.bitmapToMat(bitmapPicture, imgMAT);
+                // If the image is empty
+                if (imgMAT.empty())
+                    return; // Ignore
+                // Apply filters
+                mView.applyCurrentFilters(imgMAT);
+                Utils.matToBitmap(imgMAT, bitmapPicture);
+            }
 
-    private void startImageEdit(Bitmap bitmapPicture) {
-        Intent intent = new Intent(mContext, ImageView.class);
+            startImageActivity(bitmapPicture);
+        };
+    }
+
+
+    private void startImageActivity(Bitmap bitmapPicture) {
+        frozenImageIntent = new Intent(mContext, ImageView.class);
         String dir = saveToInternalStorage(bitmapPicture);
-        intent.putExtra("dir", dir);
+        frozenImageIntent.putExtra("dir", dir);
         Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         mVibrator.vibrate(250);
-        startActivity(intent);
+        startActivity(frozenImageIntent);
     }
-
 
     private String saveToInternalStorage(Bitmap bitmapImage) {
 
@@ -169,14 +165,6 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
         return directory.getAbsolutePath();
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
-        mView.setLongClickable(true);
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -193,26 +181,13 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
 
     @Override
     protected void onResume() {
-
         super.onResume();
-        if (mView != null) {
-            mView.enableView();
-        }
-
         class mRunnable implements Runnable {
             @Override
             public void run() {
-                while (mView == null) {
+                while (mView == null || mView.getVisibility() != View.VISIBLE) {
                     try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                while (mView.getVisibility() != View.VISIBLE) {
-                    try {
-                        Thread.sleep(500);
+                        this.wait(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -342,7 +317,7 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
         }
     }
 
-    public static void logFilter(String sTheme) {
+    public void logFilter(String sTheme) {
         Bundle bundle = new Bundle();
         bundle.putString("filter", sTheme);
         analyticsController.sendEvent(mContext.getApplicationContext(), "filter_changed", sTheme, bundle);
