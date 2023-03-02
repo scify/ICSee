@@ -31,8 +31,9 @@
 package gr.scify.icsee;
 
 import android.app.Application;
-import android.content.Context;
-import android.util.Log;
+import android.os.Build;
+import android.os.StrictMode;
+import android.os.strictmode.Violation;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -40,18 +41,23 @@ import com.android.volley.toolbox.Volley;
 
 public class ICSeeApplication extends Application {
 
-    private static ICSeeApplication mContext;
     public static RequestQueue queue;
-    public static String TAG = "ICSeeApplication";
+    public static String TAG = ICSeeApplication.class.getName();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = this;
-        queue = Volley.newRequestQueue(mContext);
-    }
-
-    public static ICSeeApplication getContext() {
-        return mContext;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//                            .detectActivityLeaks()
+//                            .detectAll()
+//                    .detectLeakedClosableObjects()
+//                    .penaltyListener(this.getMainExecutor(), (Violation v) -> {
+//                        v.fillInStackTrace();
+//                        v.printStackTrace();
+//                    })
+//                    .build());
+//        }
+        queue = Volley.newRequestQueue(this);
     }
 }
