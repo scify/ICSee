@@ -44,8 +44,8 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
     private GestureLibrary gestureLib;
     public RealtimeFilterView mView = null;
     protected Context mContext;
-    protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
-    final Handler mHandlerTutorial = new Handler();
+    protected String TAG = ICSeeRealtimeActivity.class.getName();
+    protected Handler mHandlerTutorial;
     private static boolean movementTutorial = false;
     private static int movementCounter = 0;
     protected static AnalyticsController analyticsController;
@@ -57,6 +57,7 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHandlerTutorial = new Handler();
         mContext = this;
         analyticsController = AnalyticsController.getInstance();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
