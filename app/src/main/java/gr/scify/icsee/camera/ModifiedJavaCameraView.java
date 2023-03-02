@@ -18,7 +18,6 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.List;
 
-import gr.scify.icsee.ICSeeRealtimeActivity;
 import gr.scify.icsee.ICSeeTutorial;
 import gr.scify.icsee.sounds.SoundPlayer;
 
@@ -45,23 +44,25 @@ public class ModifiedJavaCameraView extends ModifiedCameraBridgeViewBase impleme
     public Camera mCamera;
     protected Parameters pParams;
     protected int iMinZoom, iMaxZoom;
-    final Handler mHandlerTutorial = new Handler();
+    Handler mHandlerTutorial;
 
     public void focusCamera(final boolean isFirstTime) {
-
-        mCamera.autoFocus((success, camera) -> {
-            // Play sound depending on success or failure of focus
-            if (success) {
-                SoundPlayer.playSound(getContext(), SoundPlayer.S6);
-            } else {
-                SoundPlayer.playSound(getContext(), SoundPlayer.S4);
-            }
-            if (!isFirstTime)
-                mHandlerTutorial.postDelayed(mPlayTakePictureReminder, 1000);
-        });
+        try {
+            Runnable mPlayTakePictureReminder = () -> ICSeeTutorial.playTakePictureReminder(getContext());
+            mCamera.autoFocus((success, camera) -> {
+                // Play sound depending on success or failure of focus
+                if (success) {
+                    SoundPlayer.playSound(getContext(), SoundPlayer.S6);
+                } else {
+                    SoundPlayer.playSound(getContext(), SoundPlayer.S4);
+                }
+                if (!isFirstTime)
+                    mHandlerTutorial.postDelayed(mPlayTakePictureReminder, 1000);
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "Autofocus failed: " + e.getLocalizedMessage());
+        }
     }
-
-    Runnable mPlayTakePictureReminder = () -> ICSeeTutorial.playTakePictureReminder(ICSeeRealtimeActivity.mContext);
 
     public static class JavaCameraSizeAccessor implements ListItemAccessor {
 
