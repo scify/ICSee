@@ -35,10 +35,6 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
         startActivity = start;
     }
 
-    public void setProgressBar(ProgressBar mProgressBar) {
-        this.mProgressBar = mProgressBar;
-    }
-
     @Override
     public void onManagerConnected(int status) {
         processStatus = status;
@@ -48,7 +44,7 @@ public class ModifiedLoaderCallback extends BaseLoaderCallback {
             mProgressBar.setVisibility(View.GONE);
             hasManagerConnected = true;
             if (ICSeeTutorial.getTutorialState(mContext) == 0) {
-                new AsyncProgressCheck(mDialog, ICSeeStartActivity.mOpenCVCallBack, startActivity).execute();
+                new AsyncProgressCheck(mDialog, this, startActivity).execute();
             } else {
                 ICSeeTutorial.playWelcome(mContext);
             }
