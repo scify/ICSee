@@ -79,6 +79,7 @@ public class ModifiedJavaCameraView extends ModifiedCameraBridgeViewBase impleme
 
     public ModifiedJavaCameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mHandlerTutorial = new Handler();
         Log.d(TAG, "Java camera view ctor");
     }
 
