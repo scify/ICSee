@@ -14,7 +14,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -53,7 +52,9 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         bPaused = false;
     }
 
-    public void getPhoto(ShutterCallback sc, PictureCallback pcRaw, PictureCallback pcJpg, int qualitySteps) {
+
+
+    public void getPhotoAndFreeze(ShutterCallback sc, PictureCallback pcRaw, PictureCallback pcJpg) {
         try {
             int zoom = 0;
             Camera.Parameters parameters = mCamera.getParameters();
@@ -76,6 +77,7 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
             }
             if (mCamera != null) {
                 mCamera.takePicture(sc, pcRaw, pcJpg);
+                bPaused = true;
             } else throw new Exception("Could not find camera... Null returned");
         } catch (Exception e) {
             Log.e(TAG, "Camera is not available!! (in use or does not exist): " + e.getLocalizedMessage() + " ," + e.getCause());
@@ -89,19 +91,13 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     public void appendFilter(IMatFilter ibNext) {
         lFilters.add(ibNext);
         // Here we recompute the powerset of filters
-        // TODO: Check if we should remove
         initFilterSubsets();
     }
 
     // Creates all combinations of filters
     public void initFilterSubsets() {
         liCurFilter = lFilters.listIterator();
-        nsCurFilters = new TreeSet<IMatFilter>(new Comparator<IMatFilter>() {
-            @Override
-            public int compare(IMatFilter lhs, IMatFilter rhs) {
-                return lFilters.indexOf(lhs) - lFilters.indexOf(rhs);
-            }
-        });
+        nsCurFilters = new TreeSet<>((lhs, rhs) -> lFilters.indexOf(lhs) - lFilters.indexOf(rhs));
         // Clear previous lists
         lPreviousSettings.clear();
     }
@@ -109,8 +105,8 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
     /**
      * Creates a string representation of a list of IBitmapFilters
      *
-     * @param lCurFilters
-     * @return
+     * @param lCurFilters NavigableSet of filters
+     * @return the string representation
      */
     protected String filterListToString(NavigableSet<IMatFilter> lCurFilters) {
         StringBuilder sb = new StringBuilder();
@@ -204,14 +200,14 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         mEditor = mSharedPreferences.edit();
         //second parameter is default value
         String sFilterName = mSharedPreferences.getString(KEY_FILTER, "");
-        if (sFilterName == null)
+        if (sFilterName.equals(""))
             return; // We have not saved anything, so get back home
         ICSeeRealtimeActivity.logFilter(sFilterName);
         Log.i(TAG, "current filter (restore): " + sFilter);
         if (sFilter != null) {
             return;
         }
-        String sCandidateFilterName = "";
+        String sCandidateFilterName;
         int iPrvFilterSetSize = -1;
         // While we have not set the saved filter as current
         //Log.i(TAG, "nsCurFilters.size(): " + nsCurFilters.size());
