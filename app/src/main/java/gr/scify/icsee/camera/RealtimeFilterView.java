@@ -202,7 +202,6 @@ public class RealtimeFilterView extends ModifiedJavaCameraView implements CvCame
         String sFilterName = mSharedPreferences.getString(KEY_FILTER, "");
         if (sFilterName.equals(""))
             return; // We have not saved anything, so get back home
-        ICSeeRealtimeActivity.logFilter(sFilterName);
         Log.i(TAG, "current filter (restore): " + sFilter);
         if (sFilter != null) {
             return;
