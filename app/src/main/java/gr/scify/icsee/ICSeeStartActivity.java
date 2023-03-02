@@ -28,6 +28,7 @@ import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
@@ -38,7 +39,7 @@ import gr.scify.icsee.login.LoginActivity;
 
 public class ICSeeStartActivity extends LocalizedActivity {
     protected Context mContext;
-    public static ModifiedLoaderCallback mOpenCVCallBack;
+    public ModifiedLoaderCallback mOpenCVCallBack;
     public static ProgressDialog mDialog;
     protected String TAG = ICSeeRealtimeActivity.class.getCanonicalName();
     protected ProgressBar mProgressBar;
@@ -109,7 +110,7 @@ public class ICSeeStartActivity extends LocalizedActivity {
             Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
             mVibrator.vibrate(250);
             ICSeeTutorial.stopSound();
-            new AsyncProgressCheck(mDialog, mOpenCVCallBack, ICSeeStartActivity.this).execute();
+            new AsyncProgressCheck(mDialog, mOpenCVCallBack, this).execute();
             return false;
         });
         Button settingsBtn = findViewById(R.id.settings_btn);
@@ -143,7 +144,10 @@ public class ICSeeStartActivity extends LocalizedActivity {
 
                     @Override
                     public void onError(VolleyError error) {
-                        String body = new String(error.networkResponse.data, Charset.forName("UTF-8"));
+                        String body = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                            body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                        }
                         Log.d(TAG, body);
                         loginRepository.deleteStoredUser(getApplicationContext());
                         goToLoginPage();
@@ -187,7 +191,7 @@ public class ICSeeStartActivity extends LocalizedActivity {
         if (!OpenCVLoader.initDebug(true)) {
             Log.e("OpenCV", "Unable to load OpenCV!");
             // here we try to open the OpenCVManager app
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_4_0, this, mOpenCVCallBack);
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mOpenCVCallBack);
         } else {
             Log.d("OpenCV", "OpenCV loaded Successfully!");
             mOpenCVCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS);
