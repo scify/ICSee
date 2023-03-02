@@ -11,7 +11,7 @@ public class ICSeeTutorial {
     private static final String KEY_TUTORIAL = "key_tutorial";
     private static SharedPreferences.Editor mEditor;
     protected static String TAG = ICSeeTutorial.class.getCanonicalName();
-    private static MediaPlayer mediaPlayer;
+   // private static MediaPlayer mediaPlayer;
 
     public static void tutorialOn() {
         mEditor.putInt(KEY_TUTORIAL, 1);
@@ -30,7 +30,8 @@ public class ICSeeTutorial {
     }
 
     public static void stopSound() {
-        mediaPlayer.stop();
+//        if (mediaPlayer != null)
+//            mediaPlayer.stop();
     }
 
     public static void playTutorialReminder(Context context) {
@@ -96,12 +97,12 @@ public class ICSeeTutorial {
     }
 
     public static void startPLayer(Context context, int soundId) {
-        if (mediaPlayer == null)
-            mediaPlayer = new MediaPlayer();
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
-        mediaPlayer = MediaPlayer.create(context, soundId);
-        mediaPlayer.start();
+//        if (mediaPlayer == null)
+//            mediaPlayer = new MediaPlayer();
+//        if (mediaPlayer.isPlaying()) {
+//            mediaPlayer.stop();
+//        }
+//        mediaPlayer = MediaPlayer.create(context, soundId);
+//        mediaPlayer.start();
     }
 }
