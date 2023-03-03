@@ -33,4 +33,5 @@
     <string name="about_shapes_auth_text">Αυτή η λειτουργικότητα αναφέρεται στους χρήστες του <a href="https://shapes2020.eu/">Ευρωπαϊκού έργου SHAPES.</a></string>
     <string name="shapes_mode_preference_summary">Αυτή η επιλογή αναφέρεται μόνο στους χρήστες του έργου SHAPES. Μην την ενεργοποιήσετε αν δεν γνωρίζετε ακριβώς τι κάνετε!</string>
     <string name="app_version">Έκδοση εφαρμογής</string>
+    <string name="about_gdpr"><b>GDPR Σημείωση:</b> Σε περίπτωση που θέλετε να ζητήσετε τη διαγραφή των δεδομένων σας, επικοινωνήστε με το info[at]scify.org</string>
 </resources>

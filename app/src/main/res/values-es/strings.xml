@@ -33,4 +33,5 @@
     <string name="about_shapes_auth_text">Esta funcionalidad se dirige a los usuarios del Programa de la <a href="https://shapes2020.eu/">Unión Europea SHAPES</a></string>
     <string name="shapes_mode_preference_summary">Esta funcionalidad se dirige solo a los usuarios del proyecto SHAPES. No la activéis si no sabéis cómo usarla!</string>
     <string name="app_version">Edición de la aplicación</string>
+    <string name="about_gdpr"><b>Aviso de GDPR:</b> en caso de que desee solicitar que se eliminen sus datos, comuníquese con info[at]scify.org</string>
 </resources>
