@@ -1,10 +1,9 @@
-package gr.scify.icsee.camera;
+package gr.scify.icsee;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 
@@ -12,14 +11,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import gr.scify.icsee.ICSeeTutorial;
-import gr.scify.icsee.LocaleManager;
-import gr.scify.icsee.LocalizedActivity;
-import gr.scify.icsee.R;
-import gr.scify.icsee.TouchImageView;
-
-public class ImageView extends LocalizedActivity {
-    protected String TAG = ImageView.class.getCanonicalName();
+public class ImageViewerActivity extends LocalizedActivity {
+    protected String TAG = ImageViewerActivity.class.getCanonicalName();
     TouchImageView img;
     Context mContext;
 
@@ -27,7 +20,7 @@ public class ImageView extends LocalizedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        View view = View.inflate(mContext, R.layout.activity_image_edit2, null);
+        View view = View.inflate(mContext, R.layout.activity_image_viewer, null);
         view.setOnLongClickListener(arg0 -> {
             finish();
             return true;

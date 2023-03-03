@@ -28,7 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import gr.scify.icsee.camera.ImageView;
 import gr.scify.icsee.camera.RealtimeFilterView;
 import gr.scify.icsee.controllers.AnalyticsController;
 import gr.scify.icsee.filters.opencv.matfilters.MatAdaptiveThresholding;
@@ -91,7 +90,7 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
         LayoutParams layoutParamsControl = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         this.addContentView(gestureOverlayView, layoutParamsControl);
         mPlayTutorialReminder = () -> ICSeeTutorial.playTutorialReminder(mContext);
-        mView = (RealtimeFilterView) findViewById(R.id.pbPreview);
+        mView = findViewById(R.id.pbPreview);
         mView.setLongClickable(true);
     }
 
@@ -135,7 +134,7 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
 
 
     private void startImageActivity(Bitmap bitmapPicture) {
-        frozenImageIntent = new Intent(mContext, ImageView.class);
+        frozenImageIntent = new Intent(mContext, ImageViewerActivity.class);
         String dir = saveToInternalStorage(bitmapPicture);
         frozenImageIntent.putExtra("dir", dir);
         Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -182,6 +181,7 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "Realtime activity resumed");
         super.onResume();
         class mRunnable implements Runnable {
             @Override
@@ -209,6 +209,7 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
                     Log.i(TAG, "filters: " + mView.lFilters.toString());
                     // Restore last filter, if available
                     mView.restoreCurrentFilterSet();
+                    mView.resumeCamera();
                     // Re-enable view
                     mView.enableView();
                     mHandlerTutorial.postDelayed(mPlayTutorialReminder, 3000);
@@ -217,16 +218,6 @@ public class ICSeeRealtimeActivity extends LocalizedActivity implements OnGestur
         }
         Thread tCheckForSurface = new Thread(new mRunnable());
         tCheckForSurface.start();
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(TAG, "onActivityResult called");
-        super.onActivityResult(requestCode, resultCode, data);
-        mView.enableView();
-        mView.resumeCamera();
-        finish();
     }
 
     @Override

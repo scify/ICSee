@@ -62,7 +62,8 @@ public class SoundPlayer {
             initSounds(context);
         } else {
             float volume = 1f;
-            sp.play(spMap.get(soundID), volume, volume, 1, 0, 1f);
+            if (spMap.containsKey(soundID))
+                sp.play(spMap.get(soundID), volume, volume, 1, 0, 1f);
         }
     }
 }

@@ -47,8 +47,7 @@ public class ICSeeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // TODO Uncomment this code to receive strict mode warnings
-
+        // Uncomment this code to receive strict mode warnings
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 //            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
 //                            .detectActivityLeaks()

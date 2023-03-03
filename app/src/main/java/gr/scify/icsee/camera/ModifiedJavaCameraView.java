@@ -34,7 +34,7 @@ public class ModifiedJavaCameraView extends ModifiedCameraBridgeViewBase impleme
 
     private static final int MAGIC_TEXTURE_ID = 10;
     private static final String TAG = "JavaCameraView";
-
+    SurfaceTexture mSurfaceTexture;
     private Mat mBaseMat;
     private byte[] mBuffer;
     private Mat[] mFrameChain;
@@ -172,8 +172,9 @@ public class ModifiedJavaCameraView extends ModifiedCameraBridgeViewBase impleme
                     mFrameChain[1] = new Mat();
 
                     AllocateCache();
-
-                    SurfaceTexture mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
+                    if (mSurfaceTexture != null)
+                        mSurfaceTexture.release();
+                    mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
                     mCamera.setPreviewTexture(mSurfaceTexture);
 
                     // Update camera parameters
@@ -254,6 +255,7 @@ public class ModifiedJavaCameraView extends ModifiedCameraBridgeViewBase impleme
 
         /* Now release camera */
         releaseCamera();
+        mSurfaceTexture.release();
     }
 
     public void onPreviewFrame(byte[] frame, Camera arg1) {

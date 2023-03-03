@@ -29,11 +29,11 @@ public class LocaleManager {
     /**
      * Set the app's locale to the one specified by the given String.
      *
-     * @param context
+     * @param context    the given context (Activity)
      * @param localeSpec a locale specification as used for Android resources (NOTE: does not
      *                   support country and variant codes so far); the special string "system" sets
      *                   the locale to the locale specified in system settings
-     * @return
+     * @return the updated context (Activity)
      */
     public static Context updateLocale(Context context, String localeSpec) {
         Locale locale;

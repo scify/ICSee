@@ -76,52 +76,49 @@ public class TouchImageView extends AppCompatImageView {
         m = new float[9];
         setImageMatrix(matrix);
         setScaleType(ScaleType.MATRIX);
-        setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mScaleDetector.onTouchEvent(event);
-                PointF curr = new PointF(event.getX(), event.getY());
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        Log.i(TAG, "down");
-                        mHandler.postDelayed(mLongPressed, LONG_PRESS_TIME);
-                        last.set(curr);
-                        start.set(last);
-                        mode = DRAG;
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        if (mode == DRAG) {
-                            Log.i(TAG, "drag");
-                            float deltaX = curr.x - last.x;
-                            float deltaY = curr.y - last.y;
-                            Log.i(TAG, "deltaX: " + String.valueOf((int) deltaX) + " deltaY: " + String.valueOf((int) deltaY));
-                            if ((int) deltaX > 0 || (int) deltaY > 0) {
-                                //Log.i(TAG, "remove");
-                                mHandler.removeCallbacks(mLongPressed);
-                            }
-                            float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
-                            float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
-                            matrix.postTranslate(fixTransX, fixTransY);
-                            fixTrans();
-                            last.set(curr.x, curr.y);
+        setOnTouchListener((v, event) -> {
+            mScaleDetector.onTouchEvent(event);
+            PointF curr = new PointF(event.getX(), event.getY());
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    Log.i(TAG, "down");
+                    mHandler.postDelayed(mLongPressed, LONG_PRESS_TIME);
+                    last.set(curr);
+                    start.set(last);
+                    mode = DRAG;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (mode == DRAG) {
+                        Log.i(TAG, "drag");
+                        float deltaX = curr.x - last.x;
+                        float deltaY = curr.y - last.y;
+                        Log.i(TAG, "deltaX: " + String.valueOf((int) deltaX) + " deltaY: " + String.valueOf((int) deltaY));
+                        if ((int) deltaX > 0 || (int) deltaY > 0) {
+                            //Log.i(TAG, "remove");
+                            mHandler.removeCallbacks(mLongPressed);
                         }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        mHandler.removeCallbacks(mLongPressed);
-                        mode = NONE;
-                        int xDiff = (int) Math.abs(curr.x - start.x);
-                        int yDiff = (int) Math.abs(curr.y - start.y);
-                        if (xDiff < CLICK && yDiff < CLICK)
-                            performClick();
-                        break;
-                    case MotionEvent.ACTION_POINTER_UP:
-                        mode = NONE;
-                        break;
-                }
-                setImageMatrix(matrix);
-                invalidate();
-                return false; // indicate event was handled
+                        float fixTransX = getFixDragTrans(deltaX, viewWidth, origWidth * saveScale);
+                        float fixTransY = getFixDragTrans(deltaY, viewHeight, origHeight * saveScale);
+                        matrix.postTranslate(fixTransX, fixTransY);
+                        fixTrans();
+                        last.set(curr.x, curr.y);
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    mHandler.removeCallbacks(mLongPressed);
+                    mode = NONE;
+                    int xDiff = (int) Math.abs(curr.x - start.x);
+                    int yDiff = (int) Math.abs(curr.y - start.y);
+                    if (xDiff < CLICK && yDiff < CLICK)
+                        performClick();
+                    break;
+                case MotionEvent.ACTION_POINTER_UP:
+                    mode = NONE;
+                    break;
             }
+            setImageMatrix(matrix);
+            invalidate();
+            return false; // indicate event was handled
         });
 
 

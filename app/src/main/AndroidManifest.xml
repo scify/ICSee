@@ -40,10 +40,6 @@
                 android:value="gr.scify.icsee.ICSeeStartActivity" />
         </activity>
         <activity
-            android:name=".ImgViewerActivity"
-            android:exported="false"
-            android:label="@string/title_activity_img_viewer" />
-        <activity
             android:name=".ICSeeRealtimeActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
@@ -73,7 +69,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".camera.ImageView"
+            android:name=".ImageViewerActivity"
             android:label="@string/title_activity_image_edit"
             android:screenOrientation="landscape" />
     </application>
