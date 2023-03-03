@@ -188,8 +188,9 @@ public class ICSeeStartActivity extends LocalizedActivity {
     protected void initOpenCV() {
         mOpenCVCallBack = new ModifiedLoaderCallback(mContext, mProgressBar, mDialog, ICSeeStartActivity.this);
         Log.i(TAG, "Trying to load OpenCV library");
-        if (!OpenCVLoader.initDebug(true)) {
-            Log.e("OpenCV", "Unable to load OpenCV!");
+        boolean canLoad = OpenCVLoader.initDebug();
+        if (!canLoad) {
+            Log.e("OpenCV", "Unable to load OpenCV! Trying the old way (OpenCV Manager app");
             // here we try to open the OpenCVManager app
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mOpenCVCallBack);
         } else {
