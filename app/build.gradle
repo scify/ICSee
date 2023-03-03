@@ -19,7 +19,7 @@ android {
         applicationId "gr.scify.icsee"
         minSdkVersion 16
         targetSdkVersion 33
-        versionCode 44
+        versionCode 45
         versionName "5.1.2"
     }
 
