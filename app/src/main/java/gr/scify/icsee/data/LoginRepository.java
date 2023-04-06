@@ -21,6 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import gr.scify.icsee.BuildConfig;
 import gr.scify.icsee.ICSeeApplication;
 import gr.scify.icsee.R;
 import gr.scify.icsee.data.model.LoggedInUser;
@@ -35,12 +36,14 @@ public class LoginRepository {
     public static final String BASE_URL = "https://kubernetes.pasiphae.eu/shapes/asapa/auth/";
     protected String action = "login";
 
+    protected String shapesDatalakeKey;
+
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
 
     // private constructor : singleton access
     private LoginRepository() {
-
+        this.shapesDatalakeKey = BuildConfig.SHAPES_DATALAKE_KEY;
     }
 
     public static LoginRepository getInstance() {
@@ -102,7 +105,7 @@ public class LoginRepository {
             public Map<String, String> getHeaders() {
                 return new HashMap<String, String>() {{
                     put("X-Pasiphae-Auth", token);
-                    put("X-Shapes-Key", "7Msbb3w^SjVG%j"); //API_HEADER_VALUE is provided by shapes
+                    put("X-Shapes-Key", shapesDatalakeKey); //API_HEADER_VALUE is provided by shapes
                     put("Content-Type", "application/json; charset=utf-8");
                 }};
             }
@@ -161,7 +164,7 @@ public class LoginRepository {
             @Override
             public Map<String, String> getHeaders() {
                 return new HashMap<String, String>() {{
-                    put("X-Shapes-Key", "7Msbb3w^SjVG%j"); //API_HEADER_VALUE is provided by shapes
+                    put("X-Shapes-Key", shapesDatalakeKey); //API_HEADER_VALUE is provided by shapes
                     put("Content-Type", "application/json; charset=utf-8");
                 }};
             }

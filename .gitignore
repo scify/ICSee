@@ -34,3 +34,4 @@ google-services.json
 
 # Release files
 app/release
+secrets.properties

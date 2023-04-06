@@ -12,6 +12,10 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
 }
 
+File secretsPropertiesFile = rootProject.file("secrets.properties")
+Properties secretsProperties = new Properties()
+secretsProperties.load(new FileInputStream(secretsPropertiesFile))
+
 android {
     namespace 'gr.scify.icsee'
     compileSdkVersion 33
@@ -21,6 +25,7 @@ android {
         targetSdkVersion 33
         versionCode 45
         versionName "5.1.2"
+        buildConfigField("String", "SHAPES_DATALAKE_KEY", secretsProperties['SHAPES_DATALAKE_KEY'])
     }
 
     buildTypes {
