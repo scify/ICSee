@@ -38,6 +38,9 @@ import android.os.strictmode.Violation;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import io.sentry.SentryLevel;
+import io.sentry.android.core.SentryAndroid;
+
 
 public class ICSeeApplication extends Application {
 
@@ -59,6 +62,17 @@ public class ICSeeApplication extends Application {
 //                    })
 //                    .build());
 //        }
+        SentryAndroid.init(this, options -> {
+            options.setDsn(BuildConfig.SENTRY_DSN);
+            // Add a callback that will be used before the event is sent to Sentry.
+            // With this callback, you can modify the event or, when returning null, also discard the event.
+            options.setBeforeSend((event, hint) -> {
+                if (SentryLevel.DEBUG.equals(event.getLevel()))
+                    return null;
+                else
+                    return event;
+            });
+        });
         queue = Volley.newRequestQueue(this);
     }
 }

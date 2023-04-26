@@ -35,6 +35,7 @@ import gr.scify.icsee.controllers.AnalyticsController;
 import gr.scify.icsee.data.LoginRepository;
 import gr.scify.icsee.data.StringVolleyCallback;
 import gr.scify.icsee.login.LoginActivity;
+import io.sentry.Sentry;
 
 public class ICSeeStartActivity extends LocalizedActivity {
     protected Context mContext;

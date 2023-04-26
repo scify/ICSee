@@ -23,18 +23,18 @@ This is a Gradle-based project. The required Open-CV library is included in the 
 Properties files setup
 -----------
 
-First make sure that a `SENTRY_DSN` variable exists in `local.properties`. If you use Sentry, you can put the Sentry DSN value there:
+Make sure to add a `secrets.properties` file in the root project directory. Initially, this file should look like this:
+
+```text
+SHAPES_DATALAKE_KEY=
+```
+Also make sure that a `SENTRY_DSN` variable exists in `secrets.properties`. If you use Sentry, you can put the Sentry DSN value there:
 
 Example:
 
 ```text
-SENTRY_DSN=https://test@sentry.test.org/1
-```
-
-Also, make sure to add a `secrets.properties` file in the root project directory. Initially, this file should look like this:
-
-```text
 SHAPES_DATALAKE_KEY=
+SENTRY_DSN="https://test@sentry.test.org/1"
 ```
 
 Deployment

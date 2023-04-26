@@ -25,9 +25,10 @@ android {
         applicationId "gr.scify.icsee"
         minSdkVersion 16
         targetSdkVersion 33
-        versionCode 45
-        versionName "5.1.2"
+        versionCode 46
+        versionName "5.1.3"
         buildConfigField("String", "SHAPES_DATALAKE_KEY", secretsProperties['SHAPES_DATALAKE_KEY'])
+        buildConfigField("String", "SENTRY_DSN", secretsProperties['SENTRY_DSN'])
     }
 
     buildTypes {
