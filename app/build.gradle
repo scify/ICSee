@@ -4,6 +4,12 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
+sentry {
+    autoUpload = true
+    uploadNativeSymbols = false
+    includeNativeSources = false
+}
+
 dependencies {
     implementation 'com.quickbirdstudios:opencv:3.4.15'
     implementation 'androidx.appcompat:appcompat:1.6.1'

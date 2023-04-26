@@ -37,6 +37,14 @@ SHAPES_DATALAKE_KEY=
 SENTRY_DSN="https://test@sentry.test.org/1"
 ```
 
+In addition, make sure to make a copy of `sentry.properties.example`:
+
+```bash
+cp sentry.properties.example sentry.properties
+```
+
+And fill out the fields in the file.
+
 Deployment
 ----------
 This Application is deployed as a normal Android app.

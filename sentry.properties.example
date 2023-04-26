@@ -1,0 +1,4 @@
+defaults.url=https://sentry.YOUR_ORG.org
+defaults.org=ORG_NAME
+defaults.project=icsee-android
+auth.token=123
