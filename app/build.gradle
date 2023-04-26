@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id "io.sentry.android.gradle" version "3.3.0"
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 dependencies {

@@ -20,6 +20,17 @@ The minimum SDK version is 16 (Android 4.1).
 A device with a camera is required. For the auto-focus feature, the camera should support auto-focus.
 This is a Gradle-based project. The required Open-CV library is included in the Android project (see `app/build.gradle` file).
 
+Properties files setup
+-----------
+
+First make sure that a `SENTRY_DSN` variable exists in `local.properties`. If you use Sentry, you can put the Sentry DSN value there:
+
+Example:
+
+```text
+SENTRY_DSN=https://test@sentry.test.org/1
+```
+
 Also, make sure to add a `secrets.properties` file in the root project directory. Initially, this file should look like this:
 
 ```text
