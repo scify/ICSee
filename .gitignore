@@ -36,3 +36,4 @@ google-services.json
 app/release
 secrets.properties
 sentry.properties
+*.properties
