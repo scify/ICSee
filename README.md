@@ -77,7 +77,7 @@ Sponsors
 <table>
 <tr>
 <td>
-<a href="http://www.scify.gr/en/" title="SciFY website" rel="home" target="_blank"><img width="150px" src="https://scify.org/wp-content/uploads/2023/10/logo-scify-header@2x.png" alt="SciFY logo" title="SciFY logo"></a>
+<a href="http://www.scify.gr/en/" title="SciFY website" rel="home" target="_blank"><img width="150px" src="https://raw.githubusercontent.com/scify/ICSee/master/app/src/main/res/drawable/scify_logo_108.png" alt="SciFY logo" title="SciFY logo"></a>
 </td>
 <td>
 <a href="http://www.latsis-foundation.org/" title="Ίδρυμα Λάτση" rel="home" target="_blank"><img width="150px" src="https://www.neolaia.gr/wp-content/uploads/2019/05/idryma_latsi-1.jpg" alt="Ίδρυμα Λάτση logo" title="Ίδρυμα Λάτση logo"></a>
