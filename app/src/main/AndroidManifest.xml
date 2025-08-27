@@ -28,6 +28,7 @@
         android:logo="@drawable/icsee_logo"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <meta-data android:name="io.sentry.dsn" android:value="${sentryDsn}" />
+        <meta-data android:name="io.sentry.traces.sample-rate" android:value="0.0" />
         <!-- Support for 16KB memory page sizes on Android 15+ -->
         <property
             android:name="android.app.16kb_page_size.enabled"

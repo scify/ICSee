@@ -50,8 +50,8 @@ android {
         applicationId "gr.scify.icsee"
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 49
-        versionName "5.1.5"
+        versionCode 50
+        versionName "5.1.6"
         buildConfigField("String", "SHAPES_DATALAKE_KEY", secretsProperties['SHAPES_DATALAKE_KEY'])
         manifestPlaceholders = [
                 sentryDsn: sentryProps.getProperty("defaults.dsn", "YOUR_DEFAULT_DSN_IF_NOT_FOUND_DEBUG") // Added _DEBUG for clarity
