@@ -1,13 +1,6 @@
 plugins {
     id 'com.android.application'
-    id "io.sentry.android.gradle" version "4.11.0"
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-}
-
-sentry {
-    autoUpload = true
-    uploadNativeSymbols = false
-    includeNativeSources = false
 }
 
 dependencies {
@@ -15,26 +8,54 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.12.0'
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5"
-    implementation 'com.google.code.gson:gson:2.10.1'
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6"
+    implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'com.android.volley:volley:1.2.1'
+    implementation 'io.sentry:sentry-android:4.2.0'
 }
 
 File secretsPropertiesFile = rootProject.file("secrets.properties")
 Properties secretsProperties = new Properties()
 secretsProperties.load(new FileInputStream(secretsPropertiesFile))
 
+// Sentry properties loading
+def sentryProps = new Properties()
+// Use rootProject.file to reliably point to sentry.properties in the project root
+def sentryPropsFile = rootProject.file("sentry.properties")
+
+println "Looking for Sentry properties file at: ${sentryPropsFile.absolutePath}"
+
+if (sentryPropsFile.exists()) {
+    println "Sentry properties file found."
+    try {
+        sentryPropsFile.withInputStream { stream ->
+            sentryProps.load(stream)
+        }
+        def dsnValue = sentryProps.getProperty("defaults.dsn")
+        println "DSN from sentry.properties (defaults.dsn): '${dsnValue}'"
+        if (dsnValue == null) {
+            println "Warning: 'defaults.dsn' not found in sentry.properties."
+        }
+    } catch (Exception e) {
+        println "Error loading Sentry properties: ${e.getMessage()}"
+    }
+} else {
+    println "Sentry properties file NOT found."
+}
+
 android {
     namespace 'gr.scify.icsee'
-    compileSdkVersion 34
+    compileSdkVersion 36
     defaultConfig {
         applicationId "gr.scify.icsee"
         minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 48
-        versionName "5.1.4"
+        targetSdkVersion 36
+        versionCode 49
+        versionName "5.1.5"
         buildConfigField("String", "SHAPES_DATALAKE_KEY", secretsProperties['SHAPES_DATALAKE_KEY'])
-        buildConfigField("String", "SENTRY_DSN", secretsProperties['SENTRY_DSN'])
+        manifestPlaceholders = [
+                sentryDsn: sentryProps.getProperty("defaults.dsn", "YOUR_DEFAULT_DSN_IF_NOT_FOUND_DEBUG") // Added _DEBUG for clarity
+        ]
     }
 
     buildTypes {
@@ -60,6 +81,13 @@ android {
     bundle {
         language {
             enableSplit = false
+        }
+    }
+    
+    // Enable 16KB page size testing and optimization
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
         }
     }
 }

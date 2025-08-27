@@ -31,15 +31,9 @@
 package gr.scify.icsee;
 
 import android.app.Application;
-import android.os.Build;
-import android.os.StrictMode;
-import android.os.strictmode.Violation;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-
-import io.sentry.SentryLevel;
-import io.sentry.android.core.SentryAndroid;
 
 
 public class ICSeeApplication extends Application {
@@ -50,29 +44,6 @@ public class ICSeeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // Uncomment this code to receive strict mode warnings
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-//            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-//                            .detectActivityLeaks()
-//                            .detectAll()
-//                    .detectLeakedClosableObjects()
-//                    .penaltyListener(this.getMainExecutor(), (Violation v) -> {
-//                        v.fillInStackTrace();
-//                        v.printStackTrace();
-//                    })
-//                    .build());
-//        }
-        SentryAndroid.init(this, options -> {
-            options.setDsn(BuildConfig.SENTRY_DSN);
-            // Add a callback that will be used before the event is sent to Sentry.
-            // With this callback, you can modify the event or, when returning null, also discard the event.
-            options.setBeforeSend((event, hint) -> {
-                if (SentryLevel.DEBUG.equals(event.getLevel()))
-                    return null;
-                else
-                    return event;
-            });
-        });
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(getApplicationContext());
     }
 }
