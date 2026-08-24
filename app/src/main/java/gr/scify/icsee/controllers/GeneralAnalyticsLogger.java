@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import java.util.Set;
 
 import gr.scify.icsee.ICSeeApplication;
-import gr.scify.icsee.data.LoginRepository;
 import gr.scify.icsee.interfaces.IAnalyticsLogger;
 
 public class GeneralAnalyticsLogger implements IAnalyticsLogger {
@@ -26,7 +25,6 @@ public class GeneralAnalyticsLogger implements IAnalyticsLogger {
             jsonObject.put("action", eventName);
             jsonObject.put("value", eventValue);
             jsonObject.put("payload", bundleToJSON(additionalPayload));
-            jsonObject.put("token", LoginRepository.getInstance().getStoredAuthToken(c));
         } catch (JSONException e) {
             e.printStackTrace();
         }

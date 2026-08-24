@@ -1,22 +1,17 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 dependencies {
-    implementation 'com.quickbirdstudios:opencv:3.4.15'
+    implementation 'org.opencv:opencv:4.14.0'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.12.0'
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6"
     implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'io.sentry:sentry-android:4.2.0'
+    implementation 'io.sentry:sentry-android:8.50.1'
 }
-
-File secretsPropertiesFile = rootProject.file("secrets.properties")
-Properties secretsProperties = new Properties()
-secretsProperties.load(new FileInputStream(secretsPropertiesFile))
 
 // Sentry properties loading
 def sentryProps = new Properties()
@@ -43,23 +38,47 @@ if (sentryPropsFile.exists()) {
     println "Sentry properties file NOT found."
 }
 
+// Keystore properties loading (for signing release builds)
+def keystoreProps = new Properties()
+def keystorePropsFile = rootProject.file("keystore.properties")
+def hasKeystoreConfig = keystorePropsFile.exists()
+
+if (hasKeystoreConfig) {
+    keystorePropsFile.withInputStream { stream -> keystoreProps.load(stream) }
+} else {
+    println "keystore.properties not found - release builds will be unsigned. See README.md on how to create it."
+}
+
 android {
     namespace 'gr.scify.icsee'
-    compileSdkVersion 36
+    compileSdkVersion 37
     defaultConfig {
         applicationId "gr.scify.icsee"
         minSdkVersion 21
-        targetSdkVersion 36
-        versionCode 50
-        versionName "5.1.6"
-        buildConfigField("String", "SHAPES_DATALAKE_KEY", secretsProperties['SHAPES_DATALAKE_KEY'])
+        targetSdkVersion 37
+        versionCode 54
+        versionName "5.1.8"
         manifestPlaceholders = [
-                sentryDsn: sentryProps.getProperty("defaults.dsn", "YOUR_DEFAULT_DSN_IF_NOT_FOUND_DEBUG") // Added _DEBUG for clarity
+                sentryDsn: sentryProps.getProperty("defaults.dsn", "")
         ]
+    }
+
+    if (hasKeystoreConfig) {
+        signingConfigs {
+            release {
+                storeFile rootProject.file(keystoreProps['storeFile'])
+                storePassword keystoreProps['storePassword']
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+            }
+        }
     }
 
     buildTypes {
         release {
+            if (hasKeystoreConfig) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -74,10 +93,12 @@ android {
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
-    lintOptions {
+    lint {
         abortOnError false
     }
+    ndkVersion "28.2.13676358"
     bundle {
         language {
             enableSplit = false

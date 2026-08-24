@@ -7,12 +7,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.12.1'
+        classpath 'com.android.tools.build:gradle:9.3.0'
     }
 }
 
 plugins {
-    id 'com.android.application' version '8.12.1' apply false
-    id 'com.android.library' version '8.12.1' apply false
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
+    id 'com.android.application' version '9.3.0' apply false
+    id 'com.android.library' version '9.3.0' apply false
 }

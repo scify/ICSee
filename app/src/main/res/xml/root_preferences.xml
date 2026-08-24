@@ -6,12 +6,6 @@
         android:key="app_preferences"
         android:title="@string/pref_title">
 
-        <SwitchPreferenceCompat
-            android:id="@+id/shapes_mode"
-            android:summary="@string/shapes_mode_preference_summary"
-            android:key="@string/prefs_shapes_mode_key"
-            app:title="@string/shapes_mode" />
-
         <ListPreference
             android:entries="@array/interface_language_names"
             android:entryValues="@array/interface_language_values"

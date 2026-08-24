@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.opencv.android.LoaderCallbackInterface;
-
 import gr.scify.icsee.camera.ModifiedLoaderCallback;
 
 public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
@@ -45,7 +43,7 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         switch (mOpenCVCallBack.processStatus) {
-            case LoaderCallbackInterface.SUCCESS: {
+            case ModifiedLoaderCallback.SUCCESS: {
                 Log.i(TAG, "OpenCV loaded successfully");
                 // Prepare new intent
                 Intent intent = new Intent(mContext, ICSeeRealtimeActivity.class);
@@ -53,10 +51,6 @@ public class AsyncProgressCheck extends AsyncTask<Void, Void, Void> {
                 mContext.finish();
                 mContext.startActivity(intent);
                 break;
-            }
-            case LoaderCallbackInterface.INSTALL_CANCELED: {
-                Log.i(TAG, "OpenCV installation cancelled by user.");
-                return;
             }
             default: {
                 Log.i(TAG, "OpenCV didn't load successfully");

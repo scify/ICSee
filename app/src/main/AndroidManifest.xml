@@ -34,10 +34,6 @@
             android:name="android.app.16kb_page_size.enabled"
             android:value="true" />
         <activity
-            android:name=".login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".ICSeeSettingsActivity"
             android:exported="false"
             android:label="@string/menu_settings">
@@ -60,19 +56,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter android:label="filter_view_http_icsee">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="gr.scify.icsee"
-                    android:scheme="https" />
-                <data
-                    android:host="gr.scify.icsee"
-                    android:scheme="app" />
             </intent-filter>
         </activity>
         <activity
